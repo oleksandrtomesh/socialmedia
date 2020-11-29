@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  flex-direction: row;
+  margin: 1%;
+  color: blue !important;
+}
+
+.item img{
+  width: 50px;
+  border-radius: 50%;
+}
+
+.item div{
+  
+}

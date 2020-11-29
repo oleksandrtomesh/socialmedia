@@ -9,7 +9,7 @@ body{
 
 .app-wrapper{
   margin: 0 auto;
-  width: 1200px;
+  width: 80%;
   display: grid;
   grid-template-rows: 60PX 1fr;
   grid-template-columns: 2fr 10fr;

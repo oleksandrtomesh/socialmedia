@@ -2,10 +2,11 @@
     grid-area: content;
     display: grid;
     grid-gap: 1rem;
-    grid-template-rows: 20% 1fr;
+    grid-template-rows: 20% 30%;
     grid-template-areas: 
     "profile-layout-photo"
-    "profile-info";
+    "profile-info"
+    "MyPosts";
     background-color: #FFFAF0;
   }
   
@@ -22,9 +23,5 @@
   .profile_info img{
     margin: 1%;
     border-radius: 50%;
-    width: 20%;
-  }
-
-  .item {
-    color: blue !important;
+    width: 25%;
   }
