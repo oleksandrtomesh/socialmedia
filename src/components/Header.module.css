@@ -1,0 +1,13 @@
+.header{
+    grid-area: header;
+    background-color: #2F4F4F;
+    border-radius: 5px;
+   }
+
+.logo{
+    width: 100px;
+    display: block;
+    margin-top: 0.2%;
+    margin-left: 10px;
+    border-radius: 100%;
+  }

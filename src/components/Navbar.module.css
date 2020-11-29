@@ -1,0 +1,26 @@
+.nav{
+    grid-area: nav;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 5%;
+  }
+  
+  .nav a{
+    font-size: larger;
+    text-decoration: none;
+    color: black;
+  }
+  .nav div{
+    margin-bottom: 5%;
+  }
+
+  .item {
+      color: red !important;
+  }
+
+  .item.active{
+    color: burlywood !important;
+  }
+
+  

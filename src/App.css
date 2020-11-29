@@ -5,17 +5,7 @@
 body{
   background-color: #FFFAF0;
 }
-ul{
-  list-style-type: georgian;
-}
 
-.logo{
-  width: 100px;
-  display: block;
-  margin-top: 0.2%;
-  margin-left: 10px;
-  border-radius: 100%;
-}
 
 .app-wrapper{
   margin: 0 auto;
@@ -30,39 +20,7 @@ ul{
   background-color: #FFFAF0;
 }
 
-.header{
- grid-area: header;
- background-color: #2F4F4F;
- border-radius: 5px;
-}
 
-.nav{
-  grid-area: nav;
-  background-color: white;
-  box-sizing: border-box;
-  border-radius: 5px;
-  padding: 5%;
-}
 
-.nav a{
-  font-size: larger;
-  text-decoration: none;
-  color: black;
-}
 
-.content{
-  grid-area: content;
-  display: grid;
-  grid-gap: 5px;
-  grid-template-rows: 20% 1fr;
-  grid-template-areas: 
-  "profile-layout-photo"
-  "profile-info";
-  background-color: white;
-}
 
-.profile-layout-photo img{
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-}
