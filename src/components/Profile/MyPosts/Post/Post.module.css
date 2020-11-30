@@ -10,6 +10,8 @@
   border-radius: 50%;
 }
 
-.item div{
-  
+.like{
+  float: right;
+  display: flex;
+  flex-direction: column;
 }
