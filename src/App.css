@@ -20,6 +20,10 @@ body{
   background-color: #FFFAF0;
 }
 
+.app-wrapper-content{
+  grid-area: content;
+}
+
 
 
 

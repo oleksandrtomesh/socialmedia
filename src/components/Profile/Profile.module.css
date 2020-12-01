@@ -1,5 +1,4 @@
 .content{
-    grid-area: content;
     display: grid;
     grid-gap: 1rem;
     grid-template-rows: 20% 30%;
