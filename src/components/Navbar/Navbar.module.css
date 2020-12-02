@@ -9,18 +9,17 @@
   .nav a{
     font-size: larger;
     text-decoration: none;
-    color: black;
   }
   .nav div{
     margin-bottom: 5%;
   }
 
   .item {
-      color: red !important;
+      color: red;
   }
 
-  .item.active{
-    color: burlywood !important;
+  a.activeLink{
+    color: burlywood;
   }
 
   
