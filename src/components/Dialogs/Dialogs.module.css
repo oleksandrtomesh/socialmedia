@@ -1,0 +1,21 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 10px;
+}
+
+.dialog{
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+}
+
+.message{
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+}

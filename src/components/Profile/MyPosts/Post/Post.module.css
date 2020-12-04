@@ -1,17 +1,32 @@
 .item {
+  display: grid;
+  grid-template-rows: 2rem 2rem 2rem;
+  grid-gap: 10px;
+  margin-bottom: 1rem;
+  margin-top: 5px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 4px rgb(189, 185, 185);
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+
+.item .postInfo{
   display: flex;
-  flex-direction: row;
-  margin: 1%;
-  color: blue !important;
 }
 
 .item img{
   width: 50px;
+  height: 50px;
   border-radius: 50%;
 }
 
-.like{
-  float: right;
-  display: flex;
-  flex-direction: column;
+.item .name{
+  margin-left: 5px;
+  padding-top: 5px;
+}
+
+.message{
+  margin: 1rem 0;
+
 }

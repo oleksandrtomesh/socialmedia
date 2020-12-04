@@ -4,6 +4,7 @@
     box-sizing: border-box;
     border-radius: 5px;
     padding: 5%;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
   }
   
   .nav a{
@@ -15,11 +16,15 @@
   }
 
   .item {
-      color: red;
+    color: black;
+  }
+
+  .item:hover{
+    text-decoration: underline;
   }
 
   a.activeLink{
-    color: burlywood;
+    color: rgb(145, 145, 145);
   }
 
   

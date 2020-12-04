@@ -2,6 +2,7 @@
     grid-area: header;
     background-color: #2F4F4F;
     border-radius: 5px;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
    }
 
 .logo{

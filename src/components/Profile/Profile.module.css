@@ -1,26 +1,31 @@
 .content{
     display: grid;
     grid-gap: 1rem;
-    grid-template-rows: 20% 30%;
+    grid-template-rows: 10rem 17rem;
     grid-template-areas: 
     "profile-layout-photo"
     "profile-info"
     "MyPosts";
     background-color: #FFFAF0;
+    box-sizing: border-box;    
   }
   
   .profile_layout_photo img{
     width: 100%;
     height: 100%;
-    border-radius: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 4px rgb(122, 120, 120);
   }
-  .profile_info{
+  .profile_info{ 
+    display: grid;
+    grid-template-columns: 2fr 4fr;
     background-color: white;
     box-sizing: border-box;
-    border-radius: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
   }
   .profile_info img{
-    margin: 1%;
-    border-radius: 50%;
-    width: 25%;
+    margin: 10%;
+    border-radius: 5px;
+    width: 200px;
   }

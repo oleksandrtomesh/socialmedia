@@ -1,0 +1,12 @@
+.dialog{
+    margin: 1rem 0;
+}
+
+.dialog:hover{
+    background-color: ghostwhite;
+    cursor: pointer;
+}
+
+.dialog:active{
+    color: gray;
+}

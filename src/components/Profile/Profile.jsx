@@ -1,3 +1,4 @@
+import Info from './Info/Info';
 import MyPosts from './MyPosts/MyPosts';
 import c from './Profile.module.css';
 
@@ -11,6 +12,7 @@ const Profile = () => {
         <div className={c.profile_photo}>
           <img src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg" alt="profile photo"></img>
         </div>
+        <Info />
       </div>
       <MyPosts />
     </div>
