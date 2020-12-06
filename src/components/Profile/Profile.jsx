@@ -2,7 +2,8 @@ import Info from './Info/Info';
 import MyPosts from './MyPosts/MyPosts';
 import c from './Profile.module.css';
 
-const Profile = () => {
+
+const Profile = (props) => {
   return (
     <div className={c.content}>
       <div className={c.profile_layout_photo}>
@@ -14,7 +15,7 @@ const Profile = () => {
         </div>
         <Info />
       </div>
-      <MyPosts />
+      <MyPosts postData={props.postData} />
     </div>
   );
 }
