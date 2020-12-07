@@ -1,3 +1,5 @@
+import Friends from "../components/Navbar/Friends/Friends";
+
 let state = {
     profilePage: {
         postData: [
@@ -23,7 +25,18 @@ let state = {
             {id: 6, name: "Vasia"},
             {id: 7, name: "Igor"}
         ]
-    }
+    },
+    friendsItems: [
+        {id: 1, name: "Tania"},
+        {id: 2, name: "Pietia"},
+        {id: 3, name: "Sasha"},
+        {id: 4, name: "Vova"},
+        {id: 4, name: "Vova"},
+        {id: 4, name: "Vova"},
+        {id: 4, name: "Vova"},
+        {id: 4, name: "Vova"},
+        {id: 4, name: "Vova"}
+    ]
 };
 
 export default state;

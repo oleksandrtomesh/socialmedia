@@ -27,4 +27,22 @@
     color: rgb(145, 145, 145);
   }
 
-  
+  .friendsItems{
+    grid-area: friends;
+    margin-top: 1rem;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 5%;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
+  }
+
+  .friendsItems h3{
+    margin-bottom: 1rem;
+  }
+
+
+  .friends{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
