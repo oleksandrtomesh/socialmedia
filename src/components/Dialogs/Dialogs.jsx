@@ -1,8 +1,10 @@
 import Dialog from './Dialog/Dialog'
 import c from './Dialogs.module.css'
 import Messages from './Messages/Messages'
+import NewMessages from './NewMessage/NewMessage'
 
 const Dialogs = (props) => {
+
 
     let dialogElements = props.dialogPage.dialogData.map( d => <Dialog name={d.name} id={d.id} /> )
 
@@ -17,6 +19,9 @@ const Dialogs = (props) => {
             <div className={c.message}>
                 <h3>Messages</h3>
                 { messageElements }
+            </div>
+            <div>
+                <NewMessages />
             </div>
         </div>
     )

@@ -1,10 +1,15 @@
 .dialogs{
     display: grid;
     grid-template-columns: 2fr 10fr;
+    grid-template-rows: 8fr 2fr;
     grid-gap: 10px;
+    grid-template-areas: 
+    "dialog message"
+    "dialog addNewMessage";
 }
 
 .dialog{
+    grid-area: dialog;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
@@ -13,9 +18,11 @@
 }
 
 .message{
+    grid-area: message;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
     padding: 1rem 2rem;
     box-sizing: border-box;
 }
+
