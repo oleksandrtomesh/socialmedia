@@ -39,4 +39,16 @@ let state = {
     ]
 };
 
+//Створюю функцію, котра буде брати значення з textarea на сторінці MyPosts і створювати новий пост
+//в об'єкті state. Імпортую цю функцію в index.js і прокидую через props в MyPosts
+export let addPost = (newPost) => {
+    let newPostObj = {
+        id: 5,
+        message: newPost,
+        likeCounter: 0
+    };
+    state.profilePage.postData.push(newPostObj);
+}
+
+
 export default state;
