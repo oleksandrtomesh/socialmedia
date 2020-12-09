@@ -1,9 +1,27 @@
+import state, { addPost, subscriber } from './redux/state';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './App.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
-import renderEntireTree from './render';
-import state, { addPost } from './redux/state';
+import { updateTextArea } from './redux/state';
 
 
-renderEntireTree(state, addPost);
+//Об'єкт state i функцію addPost не можна імпортувати з state
+//щоб не було циклічної залежностіб тому в файл renderв функцію renderEntireTree
+//прокидуємо їх через props
+let renderEntireTree = (state) => {
+ReactDOM.render(
+    <React.StrictMode>
+        <App state={state} addPost={addPost} updateTextArea={updateTextArea} />
+    </React.StrictMode>,
+document.getElementById('root')
+);
+}
+
+renderEntireTree(state);
+
+subscriber(renderEntireTree);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -1,5 +1,4 @@
-import Friends from "../components/Navbar/Friends/Friends";
-import renderEntireTree from "../render";
+let renderEntireTree;
 
 let state = {
     profilePage: {
@@ -11,7 +10,7 @@ let state = {
             {id: 5, message: "It's my fourth post", likeCounter: 16},
             {id: 6, message: "It's my fifth post", likeCounter: 17  }
         ],
-        newPostText: "it"
+        newPostText: ""
     },
     dialogPage: {
         messageData:[
@@ -42,25 +41,47 @@ let state = {
 };
 
 //Створюю функцію, котра буде брати значення з textarea (котре передається в state.profilePage.newPostText,)
-//на сторінці MyPosts і створювати новий пост
-//в об'єкті state.profilePage.postData. Імпортую цю функцію в render.js і прокидую через props в MyPosts
+//на сторінці MyPosts і створювати новий пост в об'єкті state.profilePage.postData.
+//Імпортую цю функцію в render.js і прокидую через props в MyPosts
 //Функція renderEntireTree перемалбовує цілу сторінку, якщо власне було вписане значення в текст ареа і вислане
-//тим самим воно додалось до об'єкту state.profilePage.postData
-export let addPost = () => {
+//тим самим воно додалось до об'єкту state.profilePage.postData і потім зануляє значення в текстареа зануленням значення в 
+//state.profilePage.newPostText
+export const addPost = () => {
     let newPostObj = {
         id: 5,
         message: state.profilePage.newPostText,
         likeCounter: 0
     };
     state.profilePage.postData.unshift(newPostObj);
-    renderEntireTree(state, addPost);
+    state.profilePage.newPostText = "";
+    renderEntireTree(state);
 }
 
-//Функція updateTextArea приймає в собе значення (Це значення береться за допомогою onChange в файлі MyPosts
+//Функція updateTextArea приймає в себе значення (Це значення береться за допомогою onChange в файлі MyPosts
 // з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
-export let updateTextArea = (newText) => {
+
+export const updateTextArea = (newText) => {
+    //тут немає +, тому що onChange ловить дані в момент вводу в textarea
+    //наприкад, якшо в textarea введено "а" ы ми вписуємо "б"
+    //то в моменті вписаня спрацьовує onChange і запускає функцію onPostChange
+    //яка в свою чергу приймає значення елементу в момент вписання, 
+    //тобто там буде значення "аб" і вже тут ми присвоюємо його state.profilePage.newPostText
     state.profilePage.newPostText = newText;
-    renderEntireTree(state, addPost);
+    console.log(window.status = state);
+    renderEntireTree(state);
+}
+
+//створюємо функцію котра власне і буде приймати функцію (така функція називається callback)
+//ця функція створюється для того, щоб callbackom перекинути функцію з файлу index.js (функцію котра перемальльовує
+//все дерево renderEntireTree після зміни state)
+//без імпорту, щоб не створювалась циклічна залежність
+
+export const subscriber = (observer) => {
+    renderEntireTree = observer; //почитати про observer - це патерн
+
+    //якщо ми не пишемо лет в функції біля зміної, то ця зміна якщо не находить
+    //оголошення себе в середині даної функції випригує за її межі і шукає значення 
+    //глобально. В нашому випадку вона оголоше з самого верху
 }
 
 

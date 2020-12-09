@@ -7,10 +7,9 @@ const MyPosts = (props) => {
   let newPostElement = React.createRef();
 
   //функція котра власне бере значення з state а саме state.profilePage.nePostText і додає до 
-  //об'єкту state.profilePage.postData і потім зануляє значення в текстареа за допомогою функції updateTextArea
+  //об'єкту state.profilePage.postData 
   let addPost = () => {
       props.addPost();
-      props.updateTextArea('');
   }
 
   //Атрибут onChange ловить спробу ввести якусь значення в textarea
