@@ -1,4 +1,5 @@
 import Friends from "../components/Navbar/Friends/Friends";
+import renderEntireTree from "../render";
 
 let state = {
     profilePage: {
@@ -9,7 +10,8 @@ let state = {
             {id: 4, message: "It's my third post", likeCounter: 15},
             {id: 5, message: "It's my fourth post", likeCounter: 16},
             {id: 6, message: "It's my fifth post", likeCounter: 17  }
-        ]
+        ],
+        newPostText: "it"
     },
     dialogPage: {
         messageData:[
@@ -39,15 +41,26 @@ let state = {
     ]
 };
 
-//Створюю функцію, котра буде брати значення з textarea на сторінці MyPosts і створювати новий пост
-//в об'єкті state. Імпортую цю функцію в index.js і прокидую через props в MyPosts
-export let addPost = (newPost) => {
+//Створюю функцію, котра буде брати значення з textarea (котре передається в state.profilePage.newPostText,)
+//на сторінці MyPosts і створювати новий пост
+//в об'єкті state.profilePage.postData. Імпортую цю функцію в render.js і прокидую через props в MyPosts
+//Функція renderEntireTree перемалбовує цілу сторінку, якщо власне було вписане значення в текст ареа і вислане
+//тим самим воно додалось до об'єкту state.profilePage.postData
+export let addPost = () => {
     let newPostObj = {
         id: 5,
-        message: newPost,
+        message: state.profilePage.newPostText,
         likeCounter: 0
     };
-    state.profilePage.postData.push(newPostObj);
+    state.profilePage.postData.unshift(newPostObj);
+    renderEntireTree(state, addPost);
+}
+
+//Функція updateTextArea приймає в собе значення (Це значення береться за допомогою onChange в файлі MyPosts
+// з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
+export let updateTextArea = (newText) => {
+    state.profilePage.newPostText = newText;
+    renderEntireTree(state, addPost);
 }
 
 
