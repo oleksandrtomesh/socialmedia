@@ -22,6 +22,7 @@ const MyPosts = (props) => {
     props.updateTextArea(text);
   }
 
+  //map приймає масив і за допомогою функції створє з даного масиву, новий масив
   let postElemnts = props.postData.map( p => <Post message={p.message} likeCounter={p.likeCounter} /> )
   
   return (

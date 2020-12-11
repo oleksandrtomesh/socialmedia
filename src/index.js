@@ -1,27 +1,32 @@
-import state, { addPost, subscriber } from './redux/state';
+import store from './redux/state';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { updateTextArea } from './redux/state';
-
 
 //Об'єкт state i функцію addPost не можна імпортувати з state
 //щоб не було циклічної залежностіб тому в файл renderв функцію renderEntireTree
 //прокидуємо їх через props
+
 let renderEntireTree = (state) => {
 ReactDOM.render(
     <React.StrictMode>
-        <App state={state} addPost={addPost} updateTextArea={updateTextArea} />
+
+        {/* bind закріпляє this для методує де використовує
+            тобто в цьому випадку деб ми не використали addPost або updateTextArea
+            з this, this буде об'єкт store */}
+            
+        <App state={state} addPost={store.addPost.bind(store)} updateTextArea={store.updateTextArea.bind(store)} />
     </React.StrictMode>,
 document.getElementById('root')
 );
 }
 
-renderEntireTree(state);
+renderEntireTree(store.getState());
 
-subscriber(renderEntireTree);
+//передаємо функцію renderEntireTree в store щоб там використати в addPost
+store.subscriber(renderEntireTree);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
