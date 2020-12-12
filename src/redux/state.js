@@ -1,3 +1,6 @@
+const ADD_POST = 'ADD-POST';
+const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
+
 let store = {
     // "_" означає, що не можна звертатись до властивості об'єкта ззовні
     _state: {
@@ -96,5 +99,12 @@ let store = {
     }
 
 };
+
+//створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
+//до компоненти
+export const addPostActionCreator = () => ({type: ADD_POST})
+
+export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
+
 
 export default store;

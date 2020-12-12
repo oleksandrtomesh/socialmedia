@@ -1,4 +1,5 @@
 import React from 'react';
+import { addPostActionCreator, updateTextAreaActionCreator } from '../../../redux/state';
 import c from './MyPosts.module.css';
 import Post from './Post/Post';
 
@@ -6,10 +7,15 @@ const MyPosts = (props) => {
   //створюємо зміну посилання і додаємо її до текстареа
   let newPostElement = React.createRef();
 
+
+
   //функція котра власне бере значення з state а саме state.profilePage.nePostText і додає до 
   //об'єкту state.profilePage.postData 
   let addPost = () => {
-      props.dispatch({type: 'ADD-POST'});
+      //dispatch передаємо функцію action creator   
+      // яка імпортується з файлу state.js
+      //ця функцыя повертає об'єкт action 
+      props.dispatch(addPostActionCreator());
   }
 
   //Атрибут onChange ловить спробу ввести якусь значення в textarea
@@ -19,8 +25,7 @@ const MyPosts = (props) => {
 
   let onPostChange = () => {
     let text = newPostElement.current.value;
-    const action = { type: 'UPDATE-TEXT-AREA', newText: text };
-    props.dispatch(action);
+    props.dispatch(updateTextAreaActionCreator(text));
   }
 
   //map приймає масив і за допомогою функції створє з даного масиву, новий масив
