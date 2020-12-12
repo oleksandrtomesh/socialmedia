@@ -9,7 +9,7 @@ const MyPosts = (props) => {
   //функція котра власне бере значення з state а саме state.profilePage.nePostText і додає до 
   //об'єкту state.profilePage.postData 
   let addPost = () => {
-      props.addPost();
+      props.dispatch({type: 'ADD-POST'});
   }
 
   //Атрибут onChange ловить спробу ввести якусь значення в textarea
@@ -19,7 +19,8 @@ const MyPosts = (props) => {
 
   let onPostChange = () => {
     let text = newPostElement.current.value;
-    props.updateTextArea(text);
+    const action = { type: 'UPDATE-TEXT-AREA', newText: text };
+    props.dispatch(action);
   }
 
   //map приймає масив і за допомогою функції створє з даного масиву, новий масив

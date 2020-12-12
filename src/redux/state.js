@@ -48,53 +48,53 @@ let store = {
         return store._state;
     },
 
-//Створюю функцію (метод), котра буде брати значення з textarea (котре передається в state.profilePage.newPostText,)
-//на сторінці MyPosts і створювати новий пост в об'єкті state.profilePage.postData.
-//Імпортую цю функцію в render.js і прокидую через props в MyPosts
-//Функція renderEntireTree перемалбовує цілу сторінку, якщо власне було вписане значення в текст ареа і вислане
-//тим самим воно додалось до об'єкту state.profilePage.postData і потім зануляє значення в текстареа зануленням значення в 
-//state.profilePage.newPostText
-    addPost(){
-        let newPostObj = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likeCounter: 0
-        };
-        this._state.profilePage.postData.unshift(newPostObj);
-        this._callSubscribe(this._state);
-        this._state.profilePage.newPostText = "";
-    },
-
-    
-//Функція(метод) updateTextArea приймає в себе значення (Це значення береться за допомогою onChange в файлі MyPosts
-// з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
-    updateTextArea(newText){
-    //тут немає +, тому що onChange ловить дані в момент вводу в textarea
-    //наприкад, якшо в textarea введено "а" ы ми вписуємо "б"
-    //то в моменті вписаня спрацьовує onChange і запускає функцію onPostChange
-    //яка в свою чергу приймає значення елементу в момент вписання, 
-    //тобто там буде значення "аб" і вже тут ми присвоюємо його state.profilePage.newPostText
-    //і потім renderEntireTree перемальовує сторінку вже з значенням "аб" в textarea
-        this._state.profilePage.newPostText = newText;
-        this._callSubscribe(this._state);    
-    },
-
-//створюємо функцію котра власне і буде приймати функцію
-//ця функція створюється для того, щоб callbackom перекинути функцію з файлу index.js (функцію котра перемальльовує
-//все дерево renderEntireTree після зміни state)
-//без імпорту, щоб не створювалась циклічна залежність
+    //створюємо функцію котра власне і буде приймати функцію
+    //ця функція створюється для того, щоб callbackom перекинути функцію з файлу index.js (функцію котра перемальльовує
+    //все дерево renderEntireTree після зміни state)
+    //без імпорту, щоб не створювалась циклічна залежність
 
     subscriber(observer){
         this._callSubscribe = observer; //почитати про observer - це патерн
-    }
+    },
 
     //якщо ми не пишемо лет в функції біля зміної, то ця зміна якщо не находить
     //оголошення себе в середині даної функції випригує за її межі і шукає значення 
     //глобально. В нашому випадку вона оголоше з самого верху 
 
+    //в dispatch записуються всі методи які ми використовуємо в проекті. Action - це об'єт,Action обов'язково має мати key type
+    //щоб визвати відповідний метод, потрібно прокинути dispatch куди нам потрібно і потім
+    //props.dispatch({type: 'ADD-POST'}) визвати таким чином props.dispatch({type: 'UPDATE-TEXT-AREA', newText: text})
+    dispatch(action){
+        //Створюю функцію (метод), котра буде брати значення з textarea (котре передається в state.profilePage.newPostText,)
+        //на сторінці MyPosts і створювати новий пост в об'єкті state.profilePage.postData.
+        //Імпортую цю функцію в render.js і прокидую через props в MyPosts
+        //Функція renderEntireTree перемалбовує цілу сторінку, якщо власне було вписане значення в текст ареа і вислане
+        //тим самим воно додалось до об'єкту state.profilePage.postData і потім зануляє значення в текстареа зануленням значення в 
+        //state.profilePage.newPostText
+        if (action.type === 'ADD-POST') {
+            let newPostObj = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likeCounter: 0
+            };
+            this._state.profilePage.postData.unshift(newPostObj);
+            this._callSubscribe(this._state);
+            this._state.profilePage.newPostText = "";
+        } 
+        //Функція(метод) updateTextArea приймає в себе значення (Це значення береться за допомогою onChange в файлі MyPosts
+        // з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
+        else if (action.type === 'UPDATE-TEXT-AREA') {
+            //тут немає +, тому що onChange ловить дані в момент вводу в textarea
+            //наприкад, якшо в textarea введено "а" ы ми вписуємо "б"
+            //то в моменті вписаня спрацьовує onChange і запускає функцію onPostChange
+            //яка в свою чергу приймає значення елементу в момент вписання, 
+            //тобто там буде значення "аб" і вже тут ми присвоюємо його state.profilePage.newPostText
+            //і потім renderEntireTree перемальовує сторінку вже з значенням "аб" в textarea
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscribe(this._state);   
+        }
+    }
+
 };
-
-
-
 
 export default store;
