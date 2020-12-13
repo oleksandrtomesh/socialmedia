@@ -1,4 +1,5 @@
 import React from 'react';
+import { addMessageActionCreator, updateMessageAreaActionCreator } from '../../../redux/state';
 import c from './NewMessages.module.css';
 
 const NewMessages = (props) => {
@@ -9,8 +10,20 @@ const NewMessages = (props) => {
 
     //Функція addNewMessage берез значення з посилання refNewMessageб тобто з нашої textarea
     let addNewMessage = () => {
-        let text = refNewMessage.current.value;
-        alert(text);
+        props.dispatch(addMessageActionCreator());
+    };
+
+    //функцію updateMassageArea визиває textarea коли в ній відбувається подія 
+    //зміни onChange і тим самим textarea перелає в функцію об'єкт події (яка називається event)
+    //і за допомогою event ми можемомо дістатися об'кта
+    //в якому відбулася зміна в нашому випадку це textarea
+    let updateMassageArea = (event) => {
+        //тобто в ми беремо значення в textarea за допомогою target
+        //event - це дія котра відбулася в textarea
+        //event.target - вказує де саме відбулася дія (тут це textarea)
+        //event.target.value; - бере значення в об'єкті де відбулася дія
+        let text = event.target.value;
+        props.dispatch(updateMessageAreaActionCreator(text));
     }
     
 
@@ -18,7 +31,7 @@ const NewMessages = (props) => {
         <div className={c.addNewMessage}>
 
             {/* В textarea ми додаемо за допомогою атрибуту ref посилання, яке записано у змінну refNewMessage*/}
-            <textarea ref={refNewMessage} name="newMessage" id="newMessage" cols="30" rows="10"></textarea>
+            <textarea onChange={updateMassageArea} ref={refNewMessage} value={props.newMessageText}></textarea>
 
             {/* в button добавляємо атрибут onClick, який в свою чергу приймає функцію "addNewMessage",
             котра визветься при тому як користувач нажме на кнопку "Send" */}

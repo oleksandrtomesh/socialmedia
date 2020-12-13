@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 
 let store = {
     // "_" означає, що не можна звертатись до властивості об'єкта ззовні
@@ -28,7 +30,8 @@ let store = {
                 {id: 5, name: "Marina"},
                 {id: 6, name: "Vasia"},
                 {id: 7, name: "Igor"}
-            ]
+            ],
+            newMessageText: ""
         },
         friendsItems: [
             {id: 1, name: "Tania"},
@@ -96,6 +99,19 @@ let store = {
             this._state.profilePage.newPostText = action.newText;
             this._callSubscribe(this._state);   
         }
+        else if (action.type === 'ADD-MESSAGE') {
+                let newMessageObj = {
+                    id: 5,
+                    message: this._state.dialogPage.newMessageText,
+                };
+                this._state.dialogPage.messageData.push(newMessageObj);
+                this._callSubscribe(this._state);
+                this._state.dialogPage.newMessageText = "";
+        }
+        else if (action.type === 'UPDATE-MESSAGE-AREA'){
+            this._state.dialogPage.newMessageText = action.newText;
+            this._callSubscribe(this._state); 
+        }
     }
 
 };
@@ -105,6 +121,10 @@ let store = {
 export const addPostActionCreator = () => ({type: ADD_POST})
 
 export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
+
+export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
+
+export const updateMessageAreaActionCreator = (text) => ({ type: UPDATE_MESSAGE_AREA, newText: text })
 
 
 export default store;
