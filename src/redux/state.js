@@ -1,3 +1,7 @@
+import dialogsReducer from "./dialogs-reducer";
+import friendsItemsReducer from "./friendItems-reducer";
+import profileReducer from "./profile-reducer";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
 const ADD_MESSAGE = 'ADD-MESSAGE';
@@ -71,60 +75,22 @@ let store = {
     //щоб визвати відповідний метод, потрібно прокинути dispatch куди нам потрібно і потім
     //props.dispatch({type: 'ADD-POST'}) визвати таким чином props.dispatch({type: 'UPDATE-TEXT-AREA', newText: text})
     dispatch(action){
-        //Створюю функцію (метод), котра буде брати значення з textarea (котре передається в state.profilePage.newPostText,)
-        //на сторінці MyPosts і створювати новий пост в об'єкті state.profilePage.postData.
-        //Імпортую цю функцію в render.js і прокидую через props в MyPosts
-        //Функція renderEntireTree перемалбовує цілу сторінку, якщо власне було вписане значення в текст ареа і вислане
-        //тим самим воно додалось до об'єкту state.profilePage.postData і потім зануляє значення в текстареа зануленням значення в 
-        //state.profilePage.newPostText
-        if (action.type === 'ADD-POST') {
-            let newPostObj = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likeCounter: 0
-            };
-            this._state.profilePage.postData.unshift(newPostObj);
-            this._callSubscribe(this._state);
-            this._state.profilePage.newPostText = "";
-        } 
-        //Функція(метод) updateTextArea приймає в себе значення (Це значення береться за допомогою onChange в файлі MyPosts
-        // з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
-        else if (action.type === 'UPDATE-TEXT-AREA') {
-            //тут немає +, тому що onChange ловить дані в момент вводу в textarea
-            //наприкад, якшо в textarea введено "а" ы ми вписуємо "б"
-            //то в моменті вписаня спрацьовує onChange і запускає функцію onPostChange
-            //яка в свою чергу приймає значення елементу в момент вписання, 
-            //тобто там буде значення "аб" і вже тут ми присвоюємо його state.profilePage.newPostText
-            //і потім renderEntireTree перемальовує сторінку вже з значенням "аб" в textarea
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscribe(this._state);   
-        }
-        else if (action.type === 'ADD-MESSAGE') {
-                let newMessageObj = {
-                    id: 5,
-                    message: this._state.dialogPage.newMessageText,
-                };
-                this._state.dialogPage.messageData.push(newMessageObj);
-                this._callSubscribe(this._state);
-                this._state.dialogPage.newMessageText = "";
-        }
-        else if (action.type === 'UPDATE-MESSAGE-AREA'){
-            this._state.dialogPage.newMessageText = action.newText;
-            this._callSubscribe(this._state); 
-        }
+        //Вже в самому dispatch створюємо функції reducer котрі поміщаємо в інші файли 
+        //і передаємо їм тільтки той state, що стосуэться їх сторінок. І також передаємо в ці функції 
+        //action (це об'єкт в якому зберігуються ключові значення такі як type i t.d )
+        //а вже в цих функціях виконується зміна стeйту при зміні UI
+        //тобто вже там знаходяться функції
+        //і після того як усі редюсери повернули нам стети, ми повідомлюємо підпинсника,
+        // що наш стейт змінився і потрібно перемалювати новий інтефейс
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogPage = dialogsReducer(this._state.dialogPage, action);
+        this._state.friendsItems = friendsItemsReducer(this._state.friendsItems, action);
+
+        this._callSubscribe(this._state);
+
     }
 
 };
-
-//створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
-//до компоненти
-export const addPostActionCreator = () => ({type: ADD_POST})
-
-export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
-
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
-
-export const updateMessageAreaActionCreator = (text) => ({ type: UPDATE_MESSAGE_AREA, newText: text })
-
 
 export default store;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { addMessageActionCreator, updateMessageAreaActionCreator } from '../../../redux/state';
+import { addMessageActionCreator, updateMessageAreaActionCreator } from '../../../redux/dialogs-reducer';
 import c from './NewMessages.module.css';
 
 const NewMessages = (props) => {
@@ -31,7 +31,7 @@ const NewMessages = (props) => {
         <div className={c.addNewMessage}>
 
             {/* В textarea ми додаемо за допомогою атрибуту ref посилання, яке записано у змінну refNewMessage*/}
-            <textarea onChange={updateMassageArea} ref={refNewMessage} value={props.newMessageText}></textarea>
+            <textarea onChange={updateMassageArea} ref={refNewMessage} placeholder="Enter your message" value={props.newMessageText}></textarea>
 
             {/* в button добавляємо атрибут onClick, який в свою чергу приймає функцію "addNewMessage",
             котра визветься при тому як користувач нажме на кнопку "Send" */}
