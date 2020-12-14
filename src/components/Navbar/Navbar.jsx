@@ -8,6 +8,7 @@ const Navbar = (props) => {
   //тобто в прикладі нижче ми перетворюємо масив котрий прийшов через пропси з файлу state.js
   //в компоненту <Friends id={friendsItems.id} name={friendsItems.name}/> передаючи в неї дані
   //id i name
+  
   let friendItem = props.friendsItems.map(friendsItems => <Friends id={friendsItems.id} name={friendsItems.name} />)
 
 

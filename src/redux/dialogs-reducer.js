@@ -1,7 +1,29 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 
-const dialogsReducer = (state, action) => {
+//wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
+//do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
+let initialState = {
+    messageData:[
+        {id: 1, message: "Hello"},
+        {id: 1, message: "How are you"}
+    ],
+    dialogData: [
+        {id: 1, name: "Tania"},
+        {id: 2, name: "Pietia"},
+        {id: 3, name: "Sasha"},
+        {id: 4, name: "Vova"},
+        {id: 5, name: "Marina"},
+        {id: 6, name: "Vasia"},
+        {id: 7, name: "Igor"}
+    ],
+    newMessageText: ""
+};
+
+//w takyj sposib state = initialState wstanowlujetsia znaczenia za zamowczuwaniam
+//tobto jakszczo w dialogsReducer ne pryjszow rzoden state, to w state bude peredano
+//initialState 
+const dialogsReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_MESSAGE:

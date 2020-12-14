@@ -11,12 +11,11 @@ import Settings from './components/Settings/Settings';
 
 
 const App = (props) => {
-  
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
-        <Navbar friendsItems={props.state.friendsItems} />
+        <Navbar friendsItems={props.state.friendsItems.friendsItems} />
         <div className="app-wrapper-content">
           <Route path="/dialogs" render={ () => 
           <Dialogs 
