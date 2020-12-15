@@ -1,10 +1,9 @@
 import Dialog from './Dialog/Dialog'
 import c from './Dialogs.module.css'
 import Messages from './Messages/Messages'
-import NewMessages from './NewMessage/NewMessage'
+import NewMessageContainer from './NewMessage/NewMessageContainer'
 
 const Dialogs = (props) => {
-
 
     let dialogElements = props.dialogPage.dialogData.map( d => <Dialog name={d.name} id={d.id} /> )
 
@@ -21,7 +20,7 @@ const Dialogs = (props) => {
                 { messageElements }
             </div>
             <div>
-                <NewMessages dispatch={props.dispatch} newMessageText={props.dialogPage.newMessageText} />
+                <NewMessageContainer store={props.store}/>
             </div>
         </div>
     )

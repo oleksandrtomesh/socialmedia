@@ -17,7 +17,7 @@ ReactDOM.render(
             тобто в цьому випадку деб ми не використали dispatch
             з this, this буде об'єкт store */}
             
-        <App state={state} dispatch={store.dispatch.bind(store)} />
+        <App state={state} dispatch={store.dispatch.bind(store)} store={store} />
     </React.StrictMode>,
 document.getElementById('root')
 );
