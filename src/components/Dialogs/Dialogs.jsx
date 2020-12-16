@@ -20,7 +20,7 @@ const Dialogs = (props) => {
                 { messageElements }
             </div>
             <div>
-                <NewMessageContainer store={props.store}/>
+                <NewMessageContainer />
             </div>
         </div>
     )

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './App.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
 
 //Об'єкт state i функцію addPost не можна імпортувати з state
 //щоб не було циклічної залежностіб тому в файл renderв функцію renderEntireTree
@@ -12,12 +13,11 @@ import reportWebVitals from './reportWebVitals';
 let renderEntireTree = (state) => {
 ReactDOM.render(
     <React.StrictMode>
-
-        {/* bind закріпляє this для методує де використовує
-            тобто в цьому випадку деб ми не використали dispatch
-            з this, this буде об'єкт store */}
-            
-        <App state={state} dispatch={store.dispatch.bind(store)} store={store} />
+        {/* Provider, tse komponenta kotra beretsia z biblioteki
+        react-redux i potribna dla wykorystania connect w naszomu codi */}
+        <Provider store={store}>        
+            <App />
+        </Provider>
     </React.StrictMode>,
 document.getElementById('root')
 );

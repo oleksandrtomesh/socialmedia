@@ -1,12 +1,12 @@
+import { connect } from 'react-redux';
 import Dialogs from './Dialogs'
 
-
-const DialogsContainer = (props) => {
-    debugger;
-    let dialogPage = props.store.getState().dialogPage;
-
-    return <Dialogs dialogPage={dialogPage} store={props.store} />   
-    
+let mapStateToProps = (state) => {
+    return {
+        dialogPage: state.dialogPage
+    }
 }
+
+const DialogsContainer = connect(mapStateToProps)(Dialogs);
 
 export default DialogsContainer;

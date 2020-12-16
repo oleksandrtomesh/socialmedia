@@ -9,7 +9,7 @@ const Navbar = (props) => {
   //в компоненту <Friends id={friendsItems.id} name={friendsItems.name}/> передаючи в неї дані
   //id i name
   
-  let friendItem = props.friendsItems.map(friendsItems => <Friends id={friendsItems.id} name={friendsItems.name} />)
+  let friendItem = props.friendsItems.friendsItems.map(friendsItems => <Friends id={friendsItems.id} name={friendsItems.name} />)
 
 
   return (
