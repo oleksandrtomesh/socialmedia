@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 //щоб не було циклічної залежностіб тому в файл renderв функцію renderEntireTree
 //прокидуємо їх через props
 
-let renderEntireTree = (state) => {
 ReactDOM.render(
     <React.StrictMode>
         {/* Provider, tse komponenta kotra beretsia z biblioteki
@@ -21,20 +20,7 @@ ReactDOM.render(
     </React.StrictMode>,
 document.getElementById('root')
 );
-}
 
-renderEntireTree(store.getState());
-
-//передаємо функцію renderEntireTree в store щоб там використати в addPost i updateTextArea
-//creatStore awtomatyczno stworuje funkciju subscribe, tomu my moemo peredyty w cu funkciju jakus
-//inszu funkciju (callback) kotra bude wykonuwatys, koly bude zminuwatys nasz state
-store.subscribe( () => {
-    //createStore takorz awtomatyczno stworuje funkciju getState() za dopomogoju jakoji my morzemo 
-    //otrymaty wes state
-    let state =store.getState();
-    //i peredaty jogo w funkciju dla peremaluwania cilogo derewa
-    renderEntireTree(state);
-});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

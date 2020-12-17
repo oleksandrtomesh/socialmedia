@@ -26,19 +26,25 @@ let initialState = {
 const dialogsReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case ADD_MESSAGE:
+        case ADD_MESSAGE:{
             let newMessageObj = {
                 id: 5,
                 message: state.newMessageText,
             };
-            state.messageData.push(newMessageObj);
-            state.newMessageText = "";
-            return state;
-        case UPDATE_MESSAGE_AREA:
-            state.newMessageText = action.newText;
-            return state
+            let stateCopy = {...state};
+            stateCopy.messageData = [...state.messageData];
+            stateCopy.messageData.push(newMessageObj);
+            stateCopy.newMessageText = "";
+            return stateCopy;
+        }
+        case UPDATE_MESSAGE_AREA:{
+            let stateCopy = {...state};
+            stateCopy.newMessageText = action.newText;
+            return stateCopy;
+        }
         default:
             return state;
+            
     }
 };
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
