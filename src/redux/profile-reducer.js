@@ -22,7 +22,7 @@ const profileReducer = (state = initialState, action) => {
         //тим самим воно додалось до об'єкту state.profilePage.postData і потім зануляє значення в текстареа зануленням значення в 
         //state.profilePage.newPostText
         switch (action.type) {
-            case ADD_POST:{
+            case ADD_POST:
                 let newPostObj = {
                     id: 5,
                     message: state.newPostText,
@@ -33,12 +33,11 @@ const profileReducer = (state = initialState, action) => {
                 //приймає такі самі дані мусить повертати такий самий результат.
                 //в connect є свій subscriber котрий перемальовує сторінку коли помічає, що dispatch 
                 //повернув якесь значення
-                let stateCopy = {...state};
-                stateCopy.postData = [...state.postData];
-                stateCopy.postData.unshift(newPostObj);
-                stateCopy.newPostText = "";
-                return stateCopy;
-            }
+                return {
+                    ...state,
+                    postData: [newPostObj, ...state.postData],
+                    newPostText: ""
+                };
         //Функція(метод) updateTextArea приймає в себе значення (Це значення береться за допомогою onChange в файлі MyPosts
         // з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
 
@@ -49,9 +48,10 @@ const profileReducer = (state = initialState, action) => {
                 //яка в свою чергу приймає значення елементу в момент вписання, 
                 //тобто там буде значення "аб" і вже тут ми присвоюємо його state.profilePage.newPostText
                 //і потім renderEntireTree перемальовує сторінку вже з значенням "аб" в textarea
-                let stateCopy ={...state};
-                stateCopy.newPostText = action.newText;
-                return stateCopy;
+                return {
+                    ...state,
+                    newPostText: action.newText
+                };
             }
             default:
                 return state;

@@ -26,21 +26,24 @@ let initialState = {
 const dialogsReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case ADD_MESSAGE:{
+        case ADD_MESSAGE:
             let newMessageObj = {
                 id: 5,
                 message: state.newMessageText,
             };
-            let stateCopy = {...state};
-            stateCopy.messageData = [...state.messageData];
-            stateCopy.messageData.push(newMessageObj);
-            stateCopy.newMessageText = "";
-            return stateCopy;
-        }
+            //powertajemo odrazu nowyj state, ne stworiujuczy zminoji
+            return {
+                ...state,
+                //koly my wpysujemo pisla spred operatora vlastywist kotra  
+                //je w nashomu state to my tym samym perepysujemo ciu wlastywist
+                messageData: [...state.messageData, newMessageObj],
+                newMessageText: ""
+            };
         case UPDATE_MESSAGE_AREA:{
-            let stateCopy = {...state};
-            stateCopy.newMessageText = action.newText;
-            return stateCopy;
+            return {
+                ...state,
+                newMessageText: action.newText
+            };
         }
         default:
             return state;
