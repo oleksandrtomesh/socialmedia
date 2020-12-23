@@ -44,7 +44,7 @@ const usersReducer = (state = initialState, action) => {
         //w SET_USERS my kopijujemo nasz state.users i dodajemo do niogo 
         //users kotri pryjdut do nas w state
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...action.users]}
 
         default:
             return state;

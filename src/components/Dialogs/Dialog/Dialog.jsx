@@ -1,4 +1,4 @@
-import { NavLink, Route } from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 import c from './Dialog.module.css'
 
 const Dialog = (props) => {
