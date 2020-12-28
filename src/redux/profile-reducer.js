@@ -1,6 +1,7 @@
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
+const SET_USER_PROFILE ='SET_USER_PROFILE';
 
 let initialState = {
     postData: [
@@ -11,7 +12,8 @@ let initialState = {
         {id: 5, message: "It's my fourth post", likeCounter: 16},
         {id: 6, message: "It's my fifth post", likeCounter: 17  }
     ],
-    newPostText: ""
+    newPostText: "",
+    userProfile: null
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -52,6 +54,13 @@ const profileReducer = (state = initialState, action) => {
                     ...state,
                     newPostText: action.newText
                 };
+            };
+
+            case SET_USER_PROFILE: {
+                return {
+                    ...state,
+                    userProfile: action.profile
+                }
             }
             default:
                 return state;
@@ -61,7 +70,7 @@ const profileReducer = (state = initialState, action) => {
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл MyPosts
 export const addPostActionCreator = () => ({type: ADD_POST})
-
 export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
+export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 
 export default profileReducer;

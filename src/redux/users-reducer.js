@@ -76,11 +76,11 @@ const usersReducer = (state = initialState, action) => {
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл NewMessage
 
-export const followedAC = (userId) => ({type: FOLLOWED, userId})
-export const unfollowedAC = (userId) => ({ type: UNFOLLOWED, userId})
-export const setUsersAC = (users) => ({ type: SET_USERS, users})
-export const selectPageAC = (currentPage) => ({ type: SELECT_PAGE, currentPage})
-export const setTotalCountAC = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount})
-export const toggleIsFetchingAC = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching})
+export const follow = (userId) => ({type: FOLLOWED, userId})
+export const unfollow = (userId) => ({ type: UNFOLLOWED, userId})
+export const setUsers = (users) => ({ type: SET_USERS, users})
+export const selectPage = (currentPage) => ({ type: SELECT_PAGE, currentPage})
+export const setTotalCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount})
+export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching})
 
 export default usersReducer;

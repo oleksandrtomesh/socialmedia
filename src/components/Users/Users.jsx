@@ -1,6 +1,7 @@
 import React from 'react';
 import c from './UsersPage.module.css';
 import userPhoto from "../../assets/images/avatar.png";
+import { NavLink } from 'react-router-dom';
 
 let Users = (props) => {
 
@@ -28,24 +29,28 @@ let Users = (props) => {
                 })}
             </div>
             {
-                props.users.map(u => <div key={u.id}>
+                props.users.map(user => <div key={user.id}>
                     <div>
                         <div>
-                            {/* jakszczo na serweri w objekti objekt photos maje wlastywist small = null,
+                            {/* za dopomogoju NavLink pry natysneni na avu korystuwacza perenosymos na storinku korystuwacza */}
+                            <NavLink to={"/profile/" + user.id}>
+                                {/* jakszczo na serweri w objekti objekt photos maje wlastywist small = null,
                                 to wykorystowujemo standartnu kartynku */}
-                            <img alt="small avatar" className={c.profileImg} src={u.photos.small !== null ? u.photos.small : userPhoto} />
+                                <img alt="small avatar" className={c.profileImg} 
+                                src={user.photos.small !== null ? user.photos.small : userPhoto} />
+                            </NavLink>
                         </div>
                         <div>
                             {/* jakszczo w state followed = true */}
-                            {u.followed
+                            {user.followed
                                 //to wykonajetsia tsia umowa przy natysneni na knopku
-                                ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
+                                ? <button onClick={() => props.unfollow(user.id)}>Unfollow</button>
                                 //jakszczo false to wykonajetsia tsia
-                                : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                                : <button onClick={() => props.follow(user.id)}>Follow</button>}
                         </div>
                     </div>
                     <div>
-                        <div>{u.name}</div>
+                        <div>{user.name}</div>
                         <div>{"u.status"}</div>
                         <div>{"u.location.country"}</div>
                         <div>{"u.location.city"}</div>

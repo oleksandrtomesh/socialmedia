@@ -1,17 +1,24 @@
+import Loader from '../commonElements/loader/loader';
 import Info from './Info/Info';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import c from './Profile.module.css';
 
 
 const Profile = (props) => {
+
+  if(!props.userProfile){
+    return(<Loader />)
+  }
+
+  debugger;
   return (
     <div className={c.content}>
       <div className={c.profile_layout_photo}>
-        <img src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="profile layout photo"></img>
+        <img src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg" alt="profile layout"></img>
       </div>
       <div className={c.profile_info}>
         <div className={c.profile_photo}>
-          <img src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg" alt="profile photo"></img>
+          <img src={props.userProfile.photos.large} alt="profile"></img>
         </div>
         <Info />
       </div>
