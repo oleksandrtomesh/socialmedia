@@ -17,7 +17,11 @@ const App = (props) => {
         <NavbarContainer />
         <div className="app-wrapper-content">
           <Route path="/dialogs" render={ () => <DialogsContainer/>} />
-          <Route path="/profile"render={ () => <ProfileContainer />} />
+          {/* W path zapysujemo "/profile/:userId?" dla withRoute, szczob w 
+          objekti match jakyj powertaje funkcja withRout w params zjawywsia id korystuwacza,
+          kotryj ja wykorystowuju dla togo szczoby z serwera zaprosyty widpowidni dani
+          znak "?" oznaczje, szczo parametr pisla "/profile" opcjonalnyj */}
+          <Route path="/profile/:userId?"render={ () => <ProfileContainer />} />
           <Route path="/users" render={ () => <UsersContainer />} />
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />

@@ -20,7 +20,7 @@ const Profile = (props) => {
         <div className={c.profile_photo}>
           <img src={props.userProfile.photos.large} alt="profile"></img>
         </div>
-        <Info />
+        <Info userProfile={props.userProfile}/>
       </div>
       <MyPostsContainer
       store={props.store}

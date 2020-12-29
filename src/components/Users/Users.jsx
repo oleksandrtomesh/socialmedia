@@ -32,7 +32,7 @@ let Users = (props) => {
                 props.users.map(user => <div key={user.id}>
                     <div>
                         <div>
-                            {/* za dopomogoju NavLink pry natysneni na avu korystuwacza perenosymos na storinku korystuwacza */}
+                            {/* za dopomogoju NavLink pry natysneni na avu korystuwacza w Users perenosymos na storinku korystuwacza */}
                             <NavLink to={"/profile/" + user.id}>
                                 {/* jakszczo na serweri w objekti objekt photos maje wlastywist small = null,
                                 to wykorystowujemo standartnu kartynku */}
