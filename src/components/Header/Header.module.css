@@ -3,12 +3,22 @@
     background-color: #2F4F4F;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
-   }
+}
 
 .logo{
     width: 100px;
-    display: block;
     margin-top: 0.2%;
     margin-left: 10px;
     border-radius: 100%;
   }
+
+.login {
+  float: right;
+  margin: 1rem;
+}
+
+.login a {
+  color: antiquewhite;
+  font-size: 20px;
+  text-decoration: none;
+}

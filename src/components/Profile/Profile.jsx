@@ -10,7 +10,6 @@ const Profile = (props) => {
     return(<Loader />)
   }
 
-  debugger;
   return (
     <div className={c.content}>
       <div className={c.profile_layout_photo}>

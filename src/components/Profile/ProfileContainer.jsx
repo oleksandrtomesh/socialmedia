@@ -11,7 +11,14 @@ class ProfileContainer extends React.Component {
 
   componentDidMount = () => {
     let userId = this.props.match.params.userId;
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {this.props.setUserProfile(response.data)})
+    if(!userId){
+      userId = 13492;
+      debugger;
+    }
+    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
+      this.props.setUserProfile(response.data)
+      debugger;
+    })
   };
 
   render = () => {return <Profile {...this.props} />};
@@ -22,5 +29,12 @@ class ProfileContainer extends React.Component {
 let wuthUserIdProfileContainer = withRouter(ProfileContainer);
 
 //w mapStateToProps zakydaju z state dani profile zagrueni z servera
-let mapStateToProps = (state) => ({userProfile: state.profilePage.userProfile});
+let mapStateToProps = (state) => {
+  return{
+    userProfile: state.profilePage.userProfile,
+    isAuth: state.authorization.isAuth,
+    authUserId: state.authorization
+  };
+}
+
 export default connect(mapStateToProps,{setUserProfile})(wuthUserIdProfileContainer);

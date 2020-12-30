@@ -3,6 +3,7 @@ import dialogsReducer from "./dialogs-reducer";
 import friendsItemsReducer from "./friendItems-reducer";
 import profileReducer from "./profile-reducer";
 import usersReducer from "./users-reducer";
+import authReducer from './auth-reducer';
 
 //combineReducer wlasne zajmajetsia pojednuwaniam reduseriv i dodaje ich do funkciji createStore,
 //jaka w swoje chergu stworuje state
@@ -10,7 +11,8 @@ let reducers = combineReducers ({
     profilePage: profileReducer,
     dialogPage: dialogsReducer,
     friendsItems: friendsItemsReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    authorization: authReducer
 })
 
 let store = createStore(reducers);
