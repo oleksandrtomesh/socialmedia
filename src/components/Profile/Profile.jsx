@@ -2,6 +2,7 @@ import Loader from '../commonElements/loader/loader';
 import Info from './Info/Info';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import c from './Profile.module.css';
+import avatar from '../../assets/images/avatar.png';
 
 
 const Profile = (props) => {
@@ -17,7 +18,7 @@ const Profile = (props) => {
       </div>
       <div className={c.profile_info}>
         <div className={c.profile_photo}>
-          <img src={props.userProfile.photos.large} alt="profile"></img>
+          <img src={props.userProfile.photos.large !== null ? props.userProfile.photos.large : avatar } alt="profile"></img>
         </div>
         <Info userProfile={props.userProfile}/>
       </div>

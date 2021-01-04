@@ -1,19 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { follow, selectPage, setTotalCount, setUsers, toggleIsFetching, unfollow } from '../../redux/users-reducer';
+import {
+    follow,
+    selectPage,
+    setTotalCount,
+    setUsers,
+    toggleIsFetching,
+    unfollow,
+    toggleIsFollowFetching
+} from '../../redux/users-reducer';
 import * as axios from 'axios';
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
+import usersAPI from '../../api/api';
+
 
 class UsersPage extends React.Component {
 
     componentDidMount = () => {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users`).then(response => {
+        usersAPI.getUsers().then(data => {
             this.props.toggleIsFetching(false);
-            this.props.setUsers(response.data.items);
-            if (response.data.totalCount < 100){        
-                this.props.setTotalCount(response.data.totalCount);
+            this.props.setUsers(data.items);
+            if (data.totalCount < 100){        
+                this.props.setTotalCount(data.totalCount);
             } else {
                 this.props.setTotalCount(100);
             }
@@ -26,9 +36,12 @@ class UsersPage extends React.Component {
     onPageChange = (pageNumber) => {
         this.props.selectPage(pageNumber);
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+        //w metodi getUsers inkapsulowano zapyt do servera za dopomogoju axios
+        //wsia informcjia pro tsiu funkcji znachodytsia w src/api/api.js 
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
+                debugger;
             this.props.toggleIsFetching(false);
-            this.props.setUsers(response.data.items);    
+            this.props.setUsers(data.items);    
         });
     }
 
@@ -45,7 +58,10 @@ class UsersPage extends React.Component {
                     users={this.props.users}
                     onPageChange={this.onPageChange}
                     unfollow={this.props.unfollow}
-                    follow={this.props.follow} />}
+                    follow={this.props.follow} 
+                    toggleIsFollowFetching={this.props.toggleIsFollowFetching}
+                    isFollowFetching={this.props.isFollowFetching}
+                    />}
             </div>
         )
     }
@@ -57,7 +73,8 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        isFollowFetching: state.usersPage.isFollowFetching
     };
 };
 
@@ -95,4 +112,5 @@ let mapStateToProps = (state) => {
 //a connect zi swojeji storony stworyt dla nas dispatch. Tobto my wykorystowujemo funcji action creator dla stworenia
 //objektu i tsej odjekt poti dispatczytsia w reduser i tam wże wyzywajetsia neobchidna funkcjia
 
-export default connect(mapStateToProps, { follow, unfollow, setUsers, selectPage, setTotalCount, toggleIsFetching})(UsersPage) 
+export default connect(mapStateToProps, 
+    { follow, unfollow, setUsers, selectPage, setTotalCount, toggleIsFetching, toggleIsFollowFetching})(UsersPage) 

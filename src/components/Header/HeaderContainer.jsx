@@ -9,6 +9,7 @@ class HeaderContainer extends React.Component {
     componentDidMount = () => {
         axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {
             //withCredentials oznaczasje, szczo my prirypliajemo cookies do naszogo zapytu na server
+            //a w cookies je informacja szczo my zalogowani
             withCredentials: true
         }).then(response => {
             if (response.data.resultCode === 0) {

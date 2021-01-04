@@ -4,6 +4,8 @@ const SET_USERS = 'SET-USERS';
 const SELECT_PAGE = 'SELECT-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOW_FETCHING = 'TOGGLE_IS_FOLLOW_FETCHING';
+
 
 //wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
 //do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
@@ -12,7 +14,8 @@ let initialState = {
     pageSize: 8,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    isFollowFetching: []
 };
 
 //w takyj sposib state = initialState wstanowlujetsia znaczenia za zamowczuwaniam
@@ -68,6 +71,15 @@ const usersReducer = (state = initialState, action) => {
         case TOGGLE_IS_FETCHING:
             return{...state, isFetching: action.isFetching};
 
+        //TOGGLE_IS_FOLLOW_FETCHING perekluczaje isFollowFetching w state na true czy false
+        //w zalenosti czy ide zapyt na serwer. True - todi knopka bude zadizajblena
+        //false, knopka dostupna, szczob na nei natysnuty
+        case TOGGLE_IS_FOLLOW_FETCHING:
+            return{...state, 
+                isFollowFetching: action.isFetching 
+                ? [...state.isFollowFetching, action.userId] 
+                : state.isFollowFetching.filter(id => id != action.userId)
+            }
         default:
             return state;
             
@@ -82,5 +94,6 @@ export const setUsers = (users) => ({ type: SET_USERS, users})
 export const selectPage = (currentPage) => ({ type: SELECT_PAGE, currentPage})
 export const setTotalCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount})
 export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching})
+export const toggleIsFollowFetching = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOW_FETCHING, isFetching, userId})
 
 export default usersReducer;
