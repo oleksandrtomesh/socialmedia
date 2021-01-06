@@ -1,9 +1,10 @@
-import {createStore, combineReducers} from "redux";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import dialogsReducer from "./dialogs-reducer";
 import friendsItemsReducer from "./friendItems-reducer";
 import profileReducer from "./profile-reducer";
 import usersReducer from "./users-reducer";
 import authReducer from './auth-reducer';
+import thunkMiddleware from 'redux-thunk'
 
 //combineReducer wlasne zajmajetsia pojednuwaniam reduseriv i dodaje ich do funkciji createStore,
 //jaka w swoje chergu stworuje state
@@ -15,7 +16,11 @@ let reducers = combineReducers ({
     authorization: authReducer
 })
 
-let store = createStore(reducers);
+//thunkMiddleware wnedrjaje poserednij etap przy stworeni stora
+//jakyj wmije pracuwaty z funkcijamy, tobto zmoe rozkukorzuwaty funkcijy
+//thunkcreator i dispatczyty z nych actiony
+//potribno skaczatu 'redux-thunk' za dopomogoju npm abo yarn
+let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 window.store = store;
 

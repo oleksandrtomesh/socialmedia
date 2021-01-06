@@ -1,15 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import {
-    follow,
     selectPage,
-    setTotalCount,
-    setUsers,
+    getUsers,
+    unfollowUser,
+    followUser,
     toggleIsFetching,
-    unfollow,
-    toggleIsFollowFetching
+    setUsers
 } from '../../redux/users-reducer';
-import * as axios from 'axios';
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
 import usersAPI from '../../api/api';
@@ -18,16 +16,9 @@ import usersAPI from '../../api/api';
 class UsersPage extends React.Component {
 
     componentDidMount = () => {
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers().then(data => {
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(data.items);
-            if (data.totalCount < 100){        
-                this.props.setTotalCount(data.totalCount);
-            } else {
-                this.props.setTotalCount(100);
-            }
-        });
+        //tse funkcija thunk creator, jaka stworujetsia w user-redux
+        //i mistyt w sobi wsu logiku taku jak pobrania users z servera, pokazuwania krutilky, doky jde zagruzka useriw
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     //tse obrobnyk podiji, funkcija, kotra pry natysteniu na storinku
@@ -61,6 +52,8 @@ class UsersPage extends React.Component {
                     follow={this.props.follow} 
                     toggleIsFollowFetching={this.props.toggleIsFollowFetching}
                     isFollowFetching={this.props.isFollowFetching}
+                    unfollowUser={this.props.unfollowUser}
+                    followUser={this.props.followUser}
                     />}
             </div>
         )
@@ -74,7 +67,7 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        isFollowFetching: state.usersPage.isFollowFetching
+        isFollowFetching: state.usersPage.isFollowFetching,
     };
 };
 
@@ -113,4 +106,8 @@ let mapStateToProps = (state) => {
 //objektu i tsej odjekt poti dispatczytsia w reduser i tam wże wyzywajetsia neobchidna funkcjia
 
 export default connect(mapStateToProps, 
-    { follow, unfollow, setUsers, selectPage, setTotalCount, toggleIsFetching, toggleIsFollowFetching})(UsersPage) 
+    //w mapDispatch to props morzna peredawaty i actionCreator, jaki budut zadispatczeni w store
+    //i takorz morzna peredawaty thunkkreator
+    { selectPage, toggleIsFetching, setUsers,
+        //thunk creators 
+        getUsers, unfollowUser, followUser})(UsersPage) 

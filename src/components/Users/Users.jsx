@@ -2,7 +2,6 @@ import React from 'react';
 import c from './UsersPage.module.css';
 import userPhoto from "../../assets/images/avatar.png";
 import { NavLink } from 'react-router-dom';
-import usersAPI from '../../api/api';
 
 let Users = (props) => {
 
@@ -45,26 +44,17 @@ let Users = (props) => {
                             {/* jakszczo w state followed = true */}
                             {user.followed
                                 //to wykonajetsia tsia umowa przy natysneni na knopku
-                                ? <button disabled={props.isFollowFetching.some(id => id === user.id)} onClick={() => {
-                                    //unfollowUser is in api.js
-                                    props.toggleIsFollowFetching(true, user.id);
-                                    usersAPI.unfollowUser(user.id)
-                                    .then(data => {
-                                        if (data.resultCode === 0)
-                                            {props.unfollow(user.id)}
-                                        props.toggleIsFollowFetching(false, user.id);
-                                    });
+                                ? <button disabled={props.isFollowFetching.some(id => id === user.id  )} onClick={() => {
+
+                                    //unfollowUser it is thunk creator in user-reducer
+                                    props.unfollowUser(user.id);
+
                                 }}>Unfollow</button>
                                 //jakszczo false to wykonajetsia tsia
                                 : <button disabled={props.isFollowFetching.some(id => id === user.id)} onClick={() => {
-                                        
-                                        props.toggleIsFollowFetching(true, user.id);
-                                        usersAPI.followUser(user.id)
-                                        .then(data => {
-                                            if (data.resultCode === 0)
-                                                {props.follow(user.id)}
-                                            props.toggleIsFollowFetching(false, user.id);
-                                        });
+
+                                        //followUser it is thunk creator in user-reducer
+                                        props.followUser(user.id)
 
                                 }}>Follow</button>}
                         </div>

@@ -1,3 +1,4 @@
+import { profileAPI } from '../api/api';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
@@ -43,7 +44,7 @@ const profileReducer = (state = initialState, action) => {
         //Функція(метод) updateTextArea приймає в себе значення (Це значення береться за допомогою onChange в файлі MyPosts
         // з textarea) і додає його в stateв властивіть newPostText і перемальовує ще раз цілу сторінку renderEntireTree
 
-            case UPDATE_TEXT_AREA:{
+            case UPDATE_TEXT_AREA: {
                 //тут немає +, тому що onChange ловить дані в момент вводу в textarea
                 //наприкад, якшо в textarea введено "а" ы ми вписуємо "б"
                 //то в моменті вписаня спрацьовує onChange і запускає функцію onPostChange
@@ -71,6 +72,17 @@ const profileReducer = (state = initialState, action) => {
 //до компоненти і імпортую їх в файл MyPosts
 export const addPostActionCreator = () => ({type: ADD_POST})
 export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
+export const setProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
+
+//thunk creators 
+
+export const setUserProfile = (userId) => {
+    return ((dispatch) => {
+            profileAPI.getUserProfile(userId).then(data => {
+                dispatch(setProfile(data))
+            })
+        }
+    )
+}
 
 export default profileReducer;

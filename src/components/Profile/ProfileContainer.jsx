@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -8,17 +7,15 @@ import Profile from './Profile';
 
 
 class ProfileContainer extends React.Component {
-
+  
   componentDidMount = () => {
+    debugger;
     let userId = this.props.match.params.userId;
     if(!userId){
       userId = 13492;
       debugger;
     }
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
-      this.props.setUserProfile(response.data)
-      debugger;
-    })
+    this.props.setUserProfile(userId);
   };
 
   render = () => {return <Profile {...this.props} />};
@@ -26,7 +23,7 @@ class ProfileContainer extends React.Component {
 
 //obertaju ProfileContainer szcze odnoju containernoju komponentoju, jaka prokyduje
 //w Profile container dani z URL
-let wuthUserIdProfileContainer = withRouter(ProfileContainer);
+let withUserIdProfileContainer = withRouter(ProfileContainer);
 
 //w mapStateToProps zakydaju z state dani profile zagrueni z servera
 let mapStateToProps = (state) => {
@@ -37,4 +34,4 @@ let mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps,{setUserProfile})(wuthUserIdProfileContainer);
+export default connect(mapStateToProps,{setUserProfile})(withUserIdProfileContainer);

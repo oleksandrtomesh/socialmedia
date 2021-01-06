@@ -1,3 +1,5 @@
+import usersAPI from "../api/api";
+
 const FOLLOWED = 'FOLLOWED';
 const UNFOLLOWED = 'UNFOLLOWED';
 const SET_USERS = 'SET-USERS';
@@ -75,10 +77,16 @@ const usersReducer = (state = initialState, action) => {
         //w zalenosti czy ide zapyt na serwer. True - todi knopka bude zadizajblena
         //false, knopka dostupna, szczob na nei natysnuty
         case TOGGLE_IS_FOLLOW_FETCHING:
+            //w returni robymo kopiju state
             return{...state, 
                 isFollowFetching: action.isFetching 
+                //jakszczo dispatch w action creator powertaje true
+                //dodajemo do masywu isFollowFetching w state nomer id korystuwacza kotrogo followym czy unfollowym
                 ? [...state.isFollowFetching, action.userId] 
-                : state.isFollowFetching.filter(id => id != action.userId)
+                //jakszczo false to za dopomogoju filter powertajemo nowyj masyw w kotromu we ne bude
+                //id korystuwacziw kotri we po zapyti na server i tym samym knopka foloow/unfollow na tych 
+                //korystuwaczach nie bude disabled
+                : state.isFollowFetching.filter(id => id !== action.userId)
             }
         default:
             return state;
@@ -88,6 +96,7 @@ const usersReducer = (state = initialState, action) => {
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл NewMessage
 
+//action creators
 export const follow = (userId) => ({type: FOLLOWED, userId})
 export const unfollow = (userId) => ({ type: UNFOLLOWED, userId})
 export const setUsers = (users) => ({ type: SET_USERS, users})
@@ -95,5 +104,52 @@ export const selectPage = (currentPage) => ({ type: SELECT_PAGE, currentPage})
 export const setTotalCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount})
 export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching})
 export const toggleIsFollowFetching = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOW_FETCHING, isFetching, userId})
+
+//thunk creators
+
+//thunks kreator tse funkcija, jaka za dopomogoju zamykania peredaje w thunk neobhidni parametry
+export const getUsers = (currentPage, pageSize) => {
+    //thunk - tse funkcija, kotra prujmaje w sebe dispatch i w seredyni dispatczyt action creatory
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setUsers(data.items));
+            if (data.totalCount < 100) {
+                dispatch(setTotalCount(data.totalCount));
+            } else {
+                dispatch(setTotalCount(100));
+            }
+        });
+    }
+};
+
+export const unfollowUser = (userId) => {
+    //thunk - tse funkcija, kotra prujmaje w sebe dispatch i w seredyni dispatczyt action creatory
+    return (dispatch) => {
+        dispatch(toggleIsFollowFetching(true, userId));
+        usersAPI.unfollowUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unfollow(userId));
+                }
+                dispatch(toggleIsFollowFetching(false, userId));
+            });
+    }
+};
+
+export const followUser = (userId) => {
+    //thunk - tse funkcija, kotra prujmaje w sebe dispatch i w seredyni dispatczyt action creatory
+    return (dispatch) => {
+        dispatch(toggleIsFollowFetching(true, userId));
+        usersAPI.followUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(userId));
+                }
+                dispatch(toggleIsFollowFetching(false, userId));
+            });
+    }
+}
 
 export default usersReducer;

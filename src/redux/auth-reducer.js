@@ -1,3 +1,4 @@
+import { headerAPI } from '../api/api';
 
 const ADD_DATA = 'ADD_DATA';
 
@@ -32,6 +33,23 @@ const authReducer = (state = initialState, action) => {
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл NewMessage
 
-export const addAuthUserData = (id, login, email) => ({type: ADD_DATA, data: {id, login, email}})
+export const addAuthUserData = (id, login, email) => ({type: ADD_DATA, data: {id, login, email}});
+
+//thunkCreator for auth user
+export const authUser = () => {
+    return (dispatch) => {
+        headerAPI.authUser()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    let {
+                        id,
+                        login,
+                        email
+                    } = data.data;
+                    dispatch(addAuthUserData(id, login, email));
+                }
+            })
+    }
+}
 
 export default authReducer;
