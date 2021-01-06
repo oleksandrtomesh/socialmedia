@@ -11,6 +11,7 @@ import {
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
 import usersAPI from '../../api/api';
+import { Redirect } from 'react-router-dom';
 
 
 class UsersPage extends React.Component {
@@ -38,6 +39,9 @@ class UsersPage extends React.Component {
 
 
     render = () => {
+
+        if (!this.props.isAuth) return (<Redirect to="/login"/>)
+        
         return (
             <div>
                 {this.props.isFetching 
@@ -68,6 +72,7 @@ let mapStateToProps = (state) => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         isFollowFetching: state.usersPage.isFollowFetching,
+        isAuth: state.authorization.isAuth
     };
 };
 
