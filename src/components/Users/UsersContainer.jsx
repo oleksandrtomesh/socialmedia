@@ -11,7 +11,7 @@ import {
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
 import usersAPI from '../../api/api';
-import { Redirect } from 'react-router-dom';
+import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
 
 
 class UsersPage extends React.Component {
@@ -39,8 +39,6 @@ class UsersPage extends React.Component {
 
 
     render = () => {
-
-        if (!this.props.isAuth) return (<Redirect to="/login"/>)
         
         return (
             <div>
@@ -63,6 +61,8 @@ class UsersPage extends React.Component {
         )
     }
 }
+
+let RedirectComponent = withAuthRedirect(UsersPage);
 
 let mapStateToProps = (state) => {
     return {
@@ -115,4 +115,4 @@ export default connect(mapStateToProps,
     //i takorz morzna peredawaty thunkkreator
     { selectPage, toggleIsFetching, setUsers,
         //thunk creators 
-        getUsers, unfollowUser, followUser})(UsersPage) 
+        getUsers, unfollowUser, followUser})(RedirectComponent);

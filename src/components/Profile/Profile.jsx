@@ -6,7 +6,6 @@ import avatar from '../../assets/images/avatar.png';
 
 
 const Profile = (props) => {
-
   if(!props.userProfile){
     return(<Loader />)
   }

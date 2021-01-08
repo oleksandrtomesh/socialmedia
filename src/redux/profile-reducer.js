@@ -74,12 +74,15 @@ export const addPostActionCreator = () => ({type: ADD_POST})
 export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
 export const setProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 
-//thunk creators 
+//thunk creators powertaje inszu funkciju, kotra robyt zapyt na serwer i potim dispatchyt ci dani 
+//w state za dopomogoju action creatora
 
 export const setUserProfile = (userId) => {
     return ((dispatch) => {
-            profileAPI.getUserProfile(userId).then(data => {
-                dispatch(setProfile(data))
+            
+            profileAPI.getUserProfile(userId).then(response => {
+                debugger;
+                dispatch(setProfile(response.data))
             })
         }
     )
