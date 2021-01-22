@@ -3,6 +3,7 @@ import { profileAPI } from '../api/api';
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
 const SET_USER_PROFILE ='SET_USER_PROFILE';
+const SET_USER_STATUS = 'SET_USER_STATUS';
 
 let initialState = {
     postData: [
@@ -14,7 +15,8 @@ let initialState = {
         {id: 6, message: "It's my fifth post", likeCounter: 17  }
     ],
     newPostText: "",
-    userProfile: null
+    userProfile: null,
+    userStatus: ""
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -28,7 +30,7 @@ const profileReducer = (state = initialState, action) => {
             case ADD_POST:
                 let newPostObj = {
                     id: 5,
-                    message: state.newPostText,
+                    message: action.newPostText,
                     likeCounter: 0
                 };
                 //w reducery передаємо копію стейта, тому що згідно теорією чистих функцій,
@@ -62,6 +64,13 @@ const profileReducer = (state = initialState, action) => {
                     ...state,
                     userProfile: action.profile
                 }
+            };
+
+            case SET_USER_STATUS: {
+                return {
+                    ...state,
+                    userStatus: action.status
+                }
             }
             default:
                 return state;
@@ -70,20 +79,46 @@ const profileReducer = (state = initialState, action) => {
 
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл MyPosts
-export const addPostActionCreator = () => ({type: ADD_POST})
-export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text })
-export const setProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
+export const addPost = (newPostText) => ({type: ADD_POST, newPostText});
+export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text });
+export const setProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
 
 //thunk creators powertaje inszu funkciju, kotra robyt zapyt na serwer i potim dispatchyt ci dani 
 //w state za dopomogoju action creatora
+export const addNewPost = (newPostText) => {
+    return (dispatch) => dispatch(addPost(newPostText))
+};
 
 export const setUserProfile = (userId) => {
     return ((dispatch) => {
-            
             profileAPI.getUserProfile(userId).then(response => {
-                debugger;
-                dispatch(setProfile(response.data))
+                dispatch(setProfile(response.data));
             })
+        }
+    )
+}
+
+export const setStatus = (userId) => {
+    return ((dispatch) => {
+        profileAPI.getUserStatus(userId)
+            .then(response => {
+                dispatch(setUserStatus(response.data))
+                }
+            )
+        }
+    )
+};
+
+export const updateStatus = (status) => {
+    return ((dispatch) => {
+            profileAPI.updateUserStatus(status)
+                .then(response => {
+                    if (response.resultCode === 0 ){
+                        dispatch(setUserStatus(status))
+                    }
+                }
+            )
         }
     )
 }

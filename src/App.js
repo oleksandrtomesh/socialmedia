@@ -16,7 +16,7 @@ const App = (props) => {
         <HeaderContainer />
         <NavbarContainer />
         <div className="app-wrapper-content">
-          <Route path="/login"render={ () => <Login />} />
+          <Route path="/login" render={ () => <Login />} />
           <Route path="/dialogs" render={ () => <DialogsContainer/>} />
           {/* W path zapysujemo "/profile/:userId?" dla withRoute, szczob w 
           objekti match jakyj powertaje funkcja withRout w params zjawywsia id korystuwacza,

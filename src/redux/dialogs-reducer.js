@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 
 //wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
 //do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
@@ -17,7 +16,6 @@ let initialState = {
         {id: 6, name: "Vasia"},
         {id: 7, name: "Igor"}
     ],
-    newMessageText: ""
 };
 
 //w takyj sposib state = initialState wstanowlujetsia znaczenia za zamowczuwaniam
@@ -29,7 +27,7 @@ const dialogsReducer = (state = initialState, action) => {
         case ADD_MESSAGE:
             let newMessageObj = {
                 id: 5,
-                message: state.newMessageText,
+                message: action.message,
             };
             //powertajemo odrazu nowyj state, ne stworiujuczy zminoji
             return {
@@ -39,12 +37,7 @@ const dialogsReducer = (state = initialState, action) => {
                 messageData: [...state.messageData, newMessageObj],
                 newMessageText: ""
             };
-        case UPDATE_MESSAGE_AREA:{
-            return {
-                ...state,
-                newMessageText: action.newText
-            };
-        }
+            
         default:
             return state;
             
@@ -53,7 +46,13 @@ const dialogsReducer = (state = initialState, action) => {
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл NewMessage
 
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
-export const updateMessageAreaActionCreator = (text) => ({ type: UPDATE_MESSAGE_AREA, newText: text })
+export const addMessageActionCreator = (message) => ({type: ADD_MESSAGE, message})
+
+//thunk creator
+
+export const addMessage = (message) => {
+    return (dispatch) => dispatch(addMessageActionCreator(message))
+};
+
 
 export default dialogsReducer;

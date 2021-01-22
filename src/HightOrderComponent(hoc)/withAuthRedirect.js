@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 //tut stworuju okremyj mapStateToProps i prokyduju wlastywist isAuth z state
 //szczob okremo ne prokyduwaty w konrzij komponenti
 let mapStateToPropsForRedirect = (state) =>{
-    debugger;
     return {
         isAuth: state.authorization.isAuth
     }

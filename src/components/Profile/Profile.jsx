@@ -19,11 +19,9 @@ const Profile = (props) => {
         <div className={c.profile_photo}>
           <img src={props.userProfile.photos.large !== null ? props.userProfile.photos.large : avatar } alt="profile"></img>
         </div>
-        <Info userProfile={props.userProfile}/>
+        <Info userProfile={props.userProfile} userStatus={props.userStatus} updateStatus={props.updateStatus}/>
       </div>
-      <MyPostsContainer
-      store={props.store}
-      />
+      <MyPostsContainer />
     </div>
   );
 }

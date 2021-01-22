@@ -11,6 +11,7 @@ import {
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
 import usersAPI from '../../api/api';
+import { compose } from 'redux';
 import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
 
 
@@ -31,7 +32,6 @@ class UsersPage extends React.Component {
         //w metodi getUsers inkapsulowano zapyt do servera za dopomogoju axios
         //wsia informcjia pro tsiu funkcji znachodytsia w src/api/api.js 
         usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-                debugger;
             this.props.toggleIsFetching(false);
             this.props.setUsers(data.items);    
         });
@@ -62,7 +62,6 @@ class UsersPage extends React.Component {
     }
 }
 
-let RedirectComponent = withAuthRedirect(UsersPage);
 
 let mapStateToProps = (state) => {
     return {
@@ -75,6 +74,11 @@ let mapStateToProps = (state) => {
         isAuth: state.authorization.isAuth
     };
 };
+
+export default compose(
+    connect(mapStateToProps,{ selectPage, toggleIsFetching, setUsers, getUsers, unfollowUser, followUser}),
+    withAuthRedirect
+)(UsersPage);
 
 //zamist funkcji mapDispatchToProps kotra stworuje callbacki, można w connect 2 parametrom peredaty 
 //object z action creatoriw. Tse skoroczuje kod
@@ -110,9 +114,9 @@ let mapStateToProps = (state) => {
 //a connect zi swojeji storony stworyt dla nas dispatch. Tobto my wykorystowujemo funcji action creator dla stworenia
 //objektu i tsej odjekt poti dispatczytsia w reduser i tam wże wyzywajetsia neobchidna funkcjia
 
-export default connect(mapStateToProps, 
+//export default connect(mapStateToProps, 
     //w mapDispatch to props morzna peredawaty i actionCreator, jaki budut zadispatczeni w store
     //i takorz morzna peredawaty thunkkreator
-    { selectPage, toggleIsFetching, setUsers,
+    //{ selectPage, toggleIsFetching, setUsers,
         //thunk creators 
-        getUsers, unfollowUser, followUser})(RedirectComponent);
+        //getUsers, unfollowUser, followUser})(RedirectComponent);

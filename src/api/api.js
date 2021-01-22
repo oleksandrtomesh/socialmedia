@@ -49,6 +49,28 @@ export const profileAPI = {
         return(
             instance.get(`profile/` + userId )
         )
+    },
+
+    //get user status from server
+    getUserStatus(userId){
+        return(
+            instance.get(`profile/status/` + userId)
+        )
+    },
+    
+    //update login user status
+    updateUserStatus(status){
+        return(
+            instance.put(`profile/status`, {status: status})
+        )
+    }
+}
+
+export const loginApi = {
+    login(values){
+        return(
+            instance.post(`auth/login`, values)
+        )
     }
 }
 
