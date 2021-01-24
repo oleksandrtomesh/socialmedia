@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, Form } from 'react-final-form';
 import c from './NewMessages.module.css';
+import { Input } from '../../commonElements/formComponent';
+import { composeValidators, required, maxLengthCreator } from '../../../utilits/validators';
 
 const NewMessages = (props) => {
 
@@ -10,16 +12,6 @@ const NewMessages = (props) => {
         props.addMessage(value.message);
     };
 
-    const required = v => {
-        if (!v || v === '' ) {
-            return "required"
-        } 
-
-        return null
-        
-    }
-
-
     return (
         <Form
             onSubmit={addNewMessage}
@@ -27,14 +19,13 @@ const NewMessages = (props) => {
             render={({handleSubmit})=>(
                 
                 <form onSubmit={handleSubmit} className={c.addNewMessage}>
-
-                    {/* В textarea ми додаемо за допомогою атрибуту ref посилання, яке записано у змінну refNewMessage*/}
-                    <Field className={c.textarea} name="message" component="input" placeholder="Enter your message" validate={required}/>
-
-                    {/* в button добавляємо атрибут onClick, який в свою чергу приймає функцію "addNewMessage",
-                    котра визветься при тому як користувач нажме на кнопку "Send" */}
+                    <Field className={c.textarea} 
+                        name="message" 
+                        component={Input} 
+                        placeholder="Enter your message" 
+                        validate={composeValidators(required, maxLengthCreator(30))}
+                    />
                     <button type="submit" >Send</button>
-            
                 </form>
                 )
             }

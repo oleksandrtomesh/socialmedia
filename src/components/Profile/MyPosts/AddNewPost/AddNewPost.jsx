@@ -1,6 +1,8 @@
 import React from 'react';
 import c from './AddNewPost.module.css';
 import { Field, Form } from 'react-final-form';
+import { maxLengthCreator, composeValidators, required } from '../../../../utilits/validators';
+import { Textarea } from '../../../commonElements/formComponent';
 
 const AddNewPost = (props) => {
 
@@ -11,22 +13,17 @@ const AddNewPost = (props) => {
       props.addNewPost(value.newPostText);
       
   }
-  
-  const required = v => {
-    if (!v || v === '' ) {
-        return "required"
-    } 
-
-    return null
     
-}
-  
   return (
   <div className={c.Textarea}>
     <Form onSubmit={addPost}
       render={ ({handleSubmit}) => (
           <form onSubmit={handleSubmit}>
-            <Field className={c.inputField} name="newPostText" component="input" placeholder="Something new?" validate={required}/>
+            <Field className={c.inputField} 
+              name="newPostText" 
+              component= {Textarea} 
+              placeholder="Something new?" 
+              validate={composeValidators(required, maxLengthCreator(30))}/>
             <button type="submit">Submit</button>
           </form>
         )

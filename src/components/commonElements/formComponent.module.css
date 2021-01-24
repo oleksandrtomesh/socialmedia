@@ -1,0 +1,16 @@
+.formControl.error input,
+.formControl.error textarea {
+    border: 2px solid red;
+}
+
+.formControl.error div {
+    color: red;
+    margin: 0;
+    padding: 0;
+}
+
+.formControl {
+    display: inline-block;
+    width: 80%;
+    height: 30px;
+}

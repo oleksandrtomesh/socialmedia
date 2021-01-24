@@ -1,6 +1,8 @@
 import {Form, Field} from 'react-final-form'
 import { loginApi } from '../../api/api';
 import { setUserProfile } from '../../redux/profile-reducer';
+import { Input } from '../commonElements/formComponent';
+import { composeValidators, maxLengthCreator, required } from '../../utilits/validators';
 
 
 
@@ -15,8 +17,6 @@ const Login = (props) => {
       }
     });
   }
-
-  const required = v => (v ? undefined : "required")
   
   return(
   <Form
@@ -26,10 +26,10 @@ const Login = (props) => {
           <h1>Login</h1>
           <form onSubmit={handleSubmit}>
             <div>
-              <Field name={"email"} component={"input"} validate={required}/>
+              <Field name={"email"} component={Input} validate={composeValidators(required, maxLengthCreator(30))}/>
             </div>
             <div>
-              <Field name={"password"} component={"input"} validate={required} />
+              <Field name={"password"} component={Input} validate={composeValidators(required, maxLengthCreator(30))} />
             </div>
             <div>
               <Field name={"rememberMe"} component={"input"} type={"checkbox"} />
