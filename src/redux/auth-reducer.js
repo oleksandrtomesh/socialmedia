@@ -1,4 +1,4 @@
-import { headerAPI } from '../api/api';
+import { headerAPI, loginApi } from '../api/api';
 
 const ADD_DATA = 'ADD_DATA';
 
@@ -23,7 +23,7 @@ const authReducer = (state = initialState, action) => {
                 data: action.data,
                 //jakszczo do nas prychodiat korystuwaci z servera, to my wstanowlujemo isAuth = true
                 //szczob pokazatu, szczo korystuwa zaloguwawsia
-                isAuth: true
+                isAuth: action.isAuth
             };
         default:
             return state;
@@ -33,7 +33,7 @@ const authReducer = (state = initialState, action) => {
 //створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
 //до компоненти і імпортую їх в файл NewMessage
 
-export const addAuthUserData = (id, login, email) => ({type: ADD_DATA, data: {id, login, email}});
+export const addAuthUserData = (id, login, email, isAuth) => ({type: ADD_DATA, data: {id, login, email}, isAuth});
 
 //thunkCreator for auth user
 export const authUser = () => {
@@ -46,10 +46,26 @@ export const authUser = () => {
                         login,
                         email
                     } = data.data;
-                    dispatch(addAuthUserData(id, login, email));
+                    dispatch(addAuthUserData(id, login, email, true));
                 }
             })
     }
+}
+
+export const login = (values) => (dispatch) => {
+    loginApi.login(values).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(authUser());
+        }
+    });
+}
+
+export const logout = () => (dispatch) => {
+    loginApi.logout().then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(addAuthUserData(null, null, null, false))
+        }
+    });
 }
 
 export default authReducer;

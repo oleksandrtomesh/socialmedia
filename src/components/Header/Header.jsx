@@ -2,6 +2,11 @@ import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = (props) => {
+
+    const onSubmit = () =>{
+        props.logout()
+    }
+
     return (
         <header className={styles.header}>
             <img className={styles.logo} src="https://logofirmy.net/wp-content/uploads/2020/04/Huawei-Logo-2018%E2%80%93.....jpg">
@@ -10,6 +15,7 @@ const Header = (props) => {
                 {props.isAuth 
                     ? <NavLink to={"/profile/"}>{props.authData.login}</NavLink>
                     :<NavLink to='/login'>Login</NavLink>}
+                <button onClick={onSubmit}>Logout</button>
             </div>
         </header>
     );

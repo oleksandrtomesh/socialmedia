@@ -1,8 +1,7 @@
 import {Form, Field} from 'react-final-form'
-import { loginApi } from '../../api/api';
-import { setUserProfile } from '../../redux/profile-reducer';
 import { Input } from '../commonElements/formComponent';
 import { composeValidators, maxLengthCreator, required } from '../../utilits/validators';
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -11,11 +10,11 @@ import { composeValidators, maxLengthCreator, required } from '../../utilits/val
 const Login = (props) => {
   
   const onSubmit = (values) => {
-    loginApi.login(values).then(response => {
-      if (response.data.resultCode === 0) {
-        setUserProfile(response.data.data.userId);
-      }
-    });
+    props.login(values);
+  }
+
+  if (props.isAuth === true){
+    return <Redirect to="/profile" />
   }
   
   return(
@@ -29,7 +28,7 @@ const Login = (props) => {
               <Field name={"email"} component={Input} validate={composeValidators(required, maxLengthCreator(30))}/>
             </div>
             <div>
-              <Field name={"password"} component={Input} validate={composeValidators(required, maxLengthCreator(30))} />
+              <Field name={"password"} component={Input} type="password" validate={composeValidators(required, maxLengthCreator(30))} />
             </div>
             <div>
               <Field name={"rememberMe"} component={"input"} type={"checkbox"} />

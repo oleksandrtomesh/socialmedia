@@ -1,7 +1,6 @@
 import styles from "./formComponent.module.css"
 
 export const FormConstructor = ({input, meta, ...props}) => {
-    debugger;
     const hasError = meta.error && meta.touched;
     return (
         <span className={styles.formControl + " " + (hasError ? styles.error: "")}>

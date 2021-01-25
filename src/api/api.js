@@ -71,6 +71,12 @@ export const loginApi = {
         return(
             instance.post(`auth/login`, values)
         )
+    },
+
+    logout(){
+        return(
+            instance.delete(`auth/login`)
+        )
     }
 }
 
