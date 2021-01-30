@@ -5,6 +5,7 @@ import profileReducer from "./profile-reducer";
 import usersReducer from "./users-reducer";
 import authReducer from './auth-reducer';
 import thunkMiddleware from 'redux-thunk'
+import appReducer from './app-reducer';
 
 //combineReducer wlasne zajmajetsia pojednuwaniam reduseriv i dodaje ich do funkciji createStore,
 //jaka w swoje chergu stworuje state
@@ -13,7 +14,8 @@ let reducers = combineReducers ({
     dialogPage: dialogsReducer,
     friendsItems: friendsItemsReducer,
     usersPage: usersReducer,
-    authorization: authReducer
+    authorization: authReducer,
+    app: appReducer
 })
 
 //thunkMiddleware wnedrjaje poserednij etap przy stworeni stora

@@ -9,10 +9,24 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/LoginContainer';
+import React from 'react';
+import { connect } from 'react-redux';
+import { initialized } from './redux/app-reducer';
+import Loader from './components/commonElements/loader/loader';
 
-const App = (props) => {
-  return (
-      <div className="app-wrapper">
+
+class App extends React.Component {
+
+  componentDidMount = () => {
+    this.props.initialized();
+  }
+
+  render = () => {
+      if(!this.props.initialized){
+        return <Loader />
+      }
+
+      return <div className="app-wrapper">
         <HeaderContainer />
         <NavbarContainer />
         <div className="app-wrapper-content">
@@ -29,9 +43,15 @@ const App = (props) => {
           <Route path="/settings" component={Settings} />
         </div>
       </div>
-  );
+  };
+}
+
+let  mapDispatchToProps = (state) => {
+  return {
+    initialized: state.app.initialized
+  }
 }
 
 
 
-export default App;
+export default connect(mapDispatchToProps, {initialized})(App);

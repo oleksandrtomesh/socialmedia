@@ -1,12 +1,15 @@
 import { headerAPI, loginApi } from '../api/api';
 
+
 const ADD_DATA = 'ADD_DATA';
+const ERROR_SUBMIT = 'ERROR_SUBMIT'
 
 //wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
 //do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
 let initialState = {
     data: null,
-    isAuth: false
+    isAuth: false,
+    errorSubmitMessage: undefined
 };
 
 //w takyj sposib state = initialState wstanowlujetsia znaczenia za zamowczuwaniam
@@ -23,8 +26,15 @@ const authReducer = (state = initialState, action) => {
                 data: action.data,
                 //jakszczo do nas prychodiat korystuwaci z servera, to my wstanowlujemo isAuth = true
                 //szczob pokazatu, szczo korystuwa zaloguwawsia
-                isAuth: action.isAuth
+                isAuth: action.isAuth,
+                errorSubmitMessage: undefined
             };
+        case ERROR_SUBMIT:
+            return {
+                ...state,
+                errorSubmitMessage: action.errorSubmitMessage
+            }
+
         default:
             return state;
             
@@ -34,11 +44,12 @@ const authReducer = (state = initialState, action) => {
 //до компоненти і імпортую їх в файл NewMessage
 
 export const addAuthUserData = (id, login, email, isAuth) => ({type: ADD_DATA, data: {id, login, email}, isAuth});
+export const errorSubmit = (errorSubmitMessage) => ({type:ERROR_SUBMIT, errorSubmitMessage})
 
 //thunkCreator for auth user
 export const authUser = () => {
     return (dispatch) => {
-        headerAPI.authUser()
+        return headerAPI.authUser()
             .then(data => {
                 if (data.resultCode === 0) {
                     let {
@@ -48,16 +59,19 @@ export const authUser = () => {
                     } = data.data;
                     dispatch(addAuthUserData(id, login, email, true));
                 }
-            })
+            })        
     }
 }
 
 export const login = (values) => (dispatch) => {
-    loginApi.login(values).then(response => {
+    return loginApi.login(values).then(response => {
         if (response.data.resultCode === 0) {
             dispatch(authUser());
+        }else {
+            dispatch(errorSubmit(response.data.messages[0]))
         }
     });
+
 }
 
 export const logout = () => (dispatch) => {
