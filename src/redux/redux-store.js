@@ -22,7 +22,10 @@ let reducers = combineReducers ({
 //jakyj wmije pracuwaty z funkcijamy, tobto zmoe rozkukorzuwaty funkcijy
 //thunkcreator i dispatczyty z nych actiony
 //potribno skaczatu 'redux-thunk' za dopomogoju npm abo yarn
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+//let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 window.store = store;
 
