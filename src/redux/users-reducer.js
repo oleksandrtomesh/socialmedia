@@ -1,12 +1,11 @@
 import usersAPI from "../api/api";
 
-const FOLLOWED = 'FOLLOWED';
-const UNFOLLOWED = 'UNFOLLOWED';
 const SET_USERS = 'SET-USERS';
 const SELECT_PAGE = 'SELECT-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOW_FETCHING = 'TOGGLE_IS_FOLLOW_FETCHING';
+const TOGGLE_FOLLOWING = 'TOGGLE_FOLLOWING';
 
 
 //wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
@@ -17,6 +16,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
+    isFollow: false,
     isFollowFetching: []
 };
 
@@ -29,8 +29,7 @@ const usersReducer = (state = initialState, action) => {
     //wlastywist type
     switch (action.type) {
 
-        case FOLLOWED:
-            //powertajemo odrazu kopiju state, ne stworiujuczy zminoji
+        case TOGGLE_FOLLOWING:
             return {
                 ...state,
                 //map probigajetsia po wsich users w state i nam potribno tilky 
@@ -38,20 +37,10 @@ const usersReducer = (state = initialState, action) => {
                 //i ciomu useru pominiaty followed na true
                 users: state.users.map( u => {
                     if (u.id === action.userId){
-                        return {...u, followed: true};
+                        return {...u, followed: action.userFollowed }
                     }
+                        
                     return u;
-                })
-            };
-
-        case UNFOLLOWED:
-            return {
-                ...state,
-                users: state.users.map( u => {
-                    if (u.id === action.userId){
-                        return {...u, followed: false};
-                    }
-                    return u;   
                 })
             };
         
@@ -97,59 +86,53 @@ const usersReducer = (state = initialState, action) => {
 //до компоненти і імпортую їх в файл NewMessage
 
 //action creators
-export const follow = (userId) => ({type: FOLLOWED, userId})
-export const unfollow = (userId) => ({ type: UNFOLLOWED, userId})
 export const setUsers = (users) => ({ type: SET_USERS, users})
 export const selectPage = (currentPage) => ({ type: SELECT_PAGE, currentPage})
 export const setTotalCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount})
 export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching})
 export const toggleIsFollowFetching = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOW_FETCHING, isFetching, userId})
 
+export const toggleFollowing = (userId, userFollowed) => ({type: TOGGLE_FOLLOWING, userId, userFollowed})
+
 //thunk creators
 
 //thunks kreator tse funkcija, jaka za dopomogoju zamykania peredaje w thunk neobhidni parametry
 export const getUsers = (currentPage, pageSize) => {
     //thunk - tse funkcija, kotra prujmaje w sebe dispatch i w seredyni dispatczyt action creatory
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true));
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUsers(data.items));
-            if (data.totalCount < 100) {
-                dispatch(setTotalCount(data.totalCount));
-            } else {
-                dispatch(setTotalCount(100));
+        const data = await usersAPI.getUsers(currentPage, pageSize);
+        dispatch(toggleIsFetching(false));
+        dispatch(setUsers(data.items));
+        if (data.totalCount < 100) {
+            dispatch(setTotalCount(data.totalCount));
+        } else {
+            dispatch(setTotalCount(100));
+        }
+    }
+};
+
+
+export const toggleFollowingUser = (userId, userFollowed) => {
+
+    return async (dispatch) => {
+        dispatch(toggleIsFollowFetching(true, userId));
+        if (userFollowed === false){
+            let data = await usersAPI.followUser(userId);
+            if (data.resultCode === 0) {
+                dispatch(toggleFollowing(userId, true));
             }
-        });
+        };
+        if (userFollowed === true){
+            let data = await usersAPI.unfollowUser(userId);
+            if (data.resultCode === 0) {
+                dispatch(toggleFollowing(userId, false));
+            }
+        };
+        
+        dispatch(toggleIsFollowFetching(false, userId));
     }
-};
 
-export const unfollowUser = (userId) => {
-    //thunk - tse funkcija, kotra prujmaje w sebe dispatch i w seredyni dispatczyt action creatory
-    return (dispatch) => {
-        dispatch(toggleIsFollowFetching(true, userId));
-        usersAPI.unfollowUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(unfollow(userId));
-                }
-                dispatch(toggleIsFollowFetching(false, userId));
-            });
-    }
-};
-
-export const followUser = (userId) => {
-    //thunk - tse funkcija, kotra prujmaje w sebe dispatch i w seredyni dispatczyt action creatory
-    return (dispatch) => {
-        dispatch(toggleIsFollowFetching(true, userId));
-        usersAPI.followUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(follow(userId));
-                }
-                dispatch(toggleIsFollowFetching(false, userId));
-            });
-    }
 }
 
 export default usersReducer;

@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import {
     selectPage,
     getUsers,
-    unfollowUser,
-    followUser,
     toggleIsFetching,
-    setUsers
+    setUsers,
+    toggleFollowingUser
 } from '../../redux/users-reducer';
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
@@ -56,6 +55,7 @@ class UsersPage extends React.Component {
                     isFollowFetching={this.props.isFollowFetching}
                     unfollowUser={this.props.unfollowUser}
                     followUser={this.props.followUser}
+                    {...this.props}
                     />}
             </div>
         )
@@ -76,7 +76,7 @@ let mapStateToProps = (state) => {
 };
 
 export default compose(
-    connect(mapStateToProps,{ selectPage, toggleIsFetching, setUsers, getUsers, unfollowUser, followUser}),
+    connect(mapStateToProps,{ selectPage, toggleIsFetching, setUsers, getUsers, toggleFollowingUser}),
     withAuthRedirect
 )(UsersPage);
 

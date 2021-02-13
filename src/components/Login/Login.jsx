@@ -5,16 +5,13 @@ import { Redirect } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';
 
 
-
-
-
 const Login = (props) => {
-  
-  const onSubmit = values => {
-    let promise = props.login(values);
-    if(props.errorSubmitMessage !== undefined) {
-      return {[FORM_ERROR]: props.errorSubmitMessage}
-  }
+
+  const onSubmit = async values => {
+    let error = await props.login(values);
+    if (error !== undefined) {
+      return { [FORM_ERROR]: error }
+    }
   }
 
   if (props.isAuth === true){
