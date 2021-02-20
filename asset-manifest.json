@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/.github.io/socialnetwork/static/css/main.13c640d8.chunk.css",
+    "main.js": "/.github.io/socialnetwork/static/js/main.4f9857c5.chunk.js",
+    "main.js.map": "/.github.io/socialnetwork/static/js/main.4f9857c5.chunk.js.map",
+    "runtime-main.js": "/.github.io/socialnetwork/static/js/runtime-main.9ec346a9.js",
+    "runtime-main.js.map": "/.github.io/socialnetwork/static/js/runtime-main.9ec346a9.js.map",
+    "static/css/2.31ff0196.chunk.css": "/.github.io/socialnetwork/static/css/2.31ff0196.chunk.css",
+    "static/js/2.19473c32.chunk.js": "/.github.io/socialnetwork/static/js/2.19473c32.chunk.js",
+    "static/js/2.19473c32.chunk.js.map": "/.github.io/socialnetwork/static/js/2.19473c32.chunk.js.map",
+    "static/js/3.4f1c6576.chunk.js": "/.github.io/socialnetwork/static/js/3.4f1c6576.chunk.js",
+    "static/js/3.4f1c6576.chunk.js.map": "/.github.io/socialnetwork/static/js/3.4f1c6576.chunk.js.map",
+    "index.html": "/.github.io/socialnetwork/index.html",
+    "static/css/2.31ff0196.chunk.css.map": "/.github.io/socialnetwork/static/css/2.31ff0196.chunk.css.map",
+    "static/css/main.13c640d8.chunk.css.map": "/.github.io/socialnetwork/static/css/main.13c640d8.chunk.css.map",
+    "static/js/2.19473c32.chunk.js.LICENSE.txt": "/.github.io/socialnetwork/static/js/2.19473c32.chunk.js.LICENSE.txt",
+    "static/media/Spinner.7593a230.svg": "/.github.io/socialnetwork/static/media/Spinner.7593a230.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9ec346a9.js",
+    "static/css/2.31ff0196.chunk.css",
+    "static/js/2.19473c32.chunk.js",
+    "static/css/main.13c640d8.chunk.css",
+    "static/js/main.4f9857c5.chunk.js"
+  ]
+}
