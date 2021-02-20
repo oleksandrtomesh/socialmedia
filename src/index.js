@@ -5,7 +5,11 @@ import './App.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 //Об'єкт state i функцію addPost не можна імпортувати з state
 //щоб не було циклічної залежностіб тому в файл renderв функцію renderEntireTree
@@ -15,13 +19,13 @@ ReactDOM.render(
     <React.StrictMode>
         {/* BrowserRouter beretsia z biblioteki React i potribnyj, dla wykorystania 
         Rout w proecti (Route zminjuje adresu w URL) */}
-        <BrowserRouter>
+        <HashRouter>
         {/* Provider, tse komponenta kotra beretsia z biblioteki
         react-redux i potribna dla wykorystania connect w naszomu codi */}
             <Provider store={store}>        
                 <App />
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     </React.StrictMode>,
 document.getElementById('root')
 );

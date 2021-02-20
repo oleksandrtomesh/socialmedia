@@ -2,6 +2,7 @@ import React from 'react';
 import c from './UsersPage.module.css';
 import userPhoto from "../../../assets/images/avatar.png";
 import { NavLink } from 'react-router-dom';
+import Button from 'react-bootstrap/Button'
 
 let User = ({user, ...props}) => {
 
@@ -19,12 +20,12 @@ let User = ({user, ...props}) => {
             </div>
             <div>
                 {/* jakszczo w state followed = true */}
-                <button disabled={props.isFollowFetching.some(id => id === user.id)} onClick={() => {
+                <Button type="submit" variant="dark" disabled={props.isFollowFetching.some(id => id === user.id)} onClick={() => {
 
                     //unfollowUser it is thunk creator in user-reducer
                     props.toggleFollowingUser(user.id, user.followed);
 
-                }}>{user.followed ? "Unfollow" : "Follow"}</button>
+                }}>{user.followed ? "Unfollow" : "Follow"}</Button>
             </div>
         </div>
         <div>

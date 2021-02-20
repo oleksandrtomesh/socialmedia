@@ -1,16 +1,22 @@
 import React from 'react';
-import c from './UsersPage.module.css';
-import userPhoto from "../../assets/images/avatar.png";
-import { NavLink } from 'react-router-dom';
-import Pagination from './Pagination/Pagination';
+import styles from './UsersPage.module.css';
+import Pagination from 'react-js-pagination'
 import User from './User/User';
 
-let Users = (props) => {
+let Users = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) => {
 
 
     return (
         <div>
-            <Pagination {...props} />
+            <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={pageSize}
+                totalItemsCount={totalUsersCount}
+                pageRangeDisplayed={5}
+                onChange={onPageChange}
+                itemClass="page-item"
+                linkClass="page-link"
+            />
             {props.users.map(user => <User user={user} {...props}/>)}
         </div>
     );

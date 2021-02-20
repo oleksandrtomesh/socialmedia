@@ -5,3 +5,7 @@
 .selectedPage{
   font-weight: bold;
 }
+
+.activePage{
+  background-color: red !important;
+}

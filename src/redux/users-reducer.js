@@ -104,12 +104,8 @@ export const getUsers = (currentPage, pageSize) => {
         const data = await usersAPI.getUsers(currentPage, pageSize);
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
-        if (data.totalCount < 100) {
-            dispatch(setTotalCount(data.totalCount));
-        } else {
-            dispatch(setTotalCount(100));
-        }
-    }
+        dispatch(setTotalCount(data.totalCount));
+    };
 };
 
 
