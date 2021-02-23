@@ -4,6 +4,8 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
 const SET_USER_PROFILE ='SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
+const IS_FETCHING = 'IS_FETCHING'
 
 let initialState = {
     postData: [
@@ -16,7 +18,8 @@ let initialState = {
     ],
     newPostText: "",
     userProfile: null,
-    userStatus: ""
+    userStatus: "",
+    isFetching: false
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -70,8 +73,23 @@ const profileReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     userStatus: action.status
+                };
+            }
+
+            case SAVE_PHOTO_SUCCESS: {
+                return {
+                    ...state,
+                    userProfile: {...state.userProfile, photos: action.photos},
+                }
+            };
+
+            case IS_FETCHING: {
+                return {
+                    ...state,
+                    isFetching: action.isFetcing
                 }
             }
+
             default:
                 return state;
         }
@@ -82,7 +100,9 @@ const profileReducer = (state = initialState, action) => {
 export const addPost = (newPostText) => ({type: ADD_POST, newPostText});
 export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text });
 export const setProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
-export const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
+export const isFetching = (isFetcing) => ({type: IS_FETCHING, isFetcing})
 
 //thunk creators powertaje inszu funkciju, kotra robyt zapyt na serwer i potim dispatchyt ci dani 
 //w state za dopomogoju action creatora
@@ -121,6 +141,27 @@ export const updateStatus = (status) => {
             )
         }
     )
+}
+
+export const saveUserPhoto = (photo) => async (dispatch) => {
+    dispatch(isFetching(true))
+    const response = await profileAPI.updateUserPhoto(photo)
+        if (response.data.resultCode === 0 ){
+            debugger;
+            dispatch(savePhotoSuccess(response.data.data.photos))
+        }
+    dispatch(isFetching(false))
+}
+
+export const saveProfileInfo = (profile) => async (dispatch, getState) => {
+    const userId = getState().authorization.data.id;
+    const response = await profileAPI.updateUserProfile(profile)
+    if (response.data.resultCode === 0){
+        debugger;
+        dispatch(setUserProfile(userId))
+    } else {
+        return response.data.messages;
+    }
 }
 
 export default profileReducer;

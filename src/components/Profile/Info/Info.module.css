@@ -13,3 +13,7 @@
 .job{
   width: 16px;
 }
+
+.error{
+  color: red;
+}

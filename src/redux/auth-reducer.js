@@ -2,18 +2,17 @@ import { headerAPI, loginApi } from '../api/api';
 
 
 const ADD_DATA = 'ADD_DATA';
+const ADD_CAPTCHA_URL ='ADD_CAPTCHA_URL'
 
 //wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
 //do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
 let initialState = {
     data: null,
     isAuth: false,
-    errorSubmitMessage: undefined
+    errorSubmitMessage: undefined,
+    captcha: undefined  //captcha url if result code === 10
 };
 
-//w takyj sposib state = initialState wstanowlujetsia znaczenia za zamowczuwaniam
-//tobto jakszczo w dialogsReducer ne pryjszow rzoden state, to w state bude peredano
-//initialState 
 const authReducer = (state = initialState, action) => {
 
     switch (action.type) {
@@ -28,6 +27,13 @@ const authReducer = (state = initialState, action) => {
                 isAuth: action.isAuth,
                 errorSubmitMessage: undefined
             };
+        case ADD_CAPTCHA_URL:{
+            return {
+                ...state,
+                captcha: action.path
+
+            }
+        }
 
         default:
             return state;
@@ -37,6 +43,7 @@ const authReducer = (state = initialState, action) => {
 //до компоненти і імпортую їх в файл NewMessage
 
 export const addAuthUserData = (id, login, email, isAuth) => ({type: ADD_DATA, data: {id, login, email}, isAuth});
+export const addCaptchaUrl = (captchaUrl) => ({type: ADD_CAPTCHA_URL, path: captchaUrl})
 
 //thunkCreator for auth user
 export const authUser = () => {
@@ -58,7 +65,12 @@ export const login = (values) => {
         const response = await loginApi.login(values);
         if (response.data.resultCode === 0) {
             dispatch(authUser());
+            dispatch(addCaptchaUrl(undefined));
         } else {
+            if (response.data.resultCode === 10){
+                const captcha = await loginApi.getCaptcha()
+                dispatch(addCaptchaUrl(captcha.data.url))
+            }
             return response.data.messages[0]
         }
     };

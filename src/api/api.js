@@ -63,7 +63,22 @@ export const profileAPI = {
         return(
             instance.put(`profile/status`, {status: status})
         )
+    },
+
+    updateUserPhoto(photoFile){
+        const formData = new FormData();
+        formData.append('image', photoFile)
+        return(
+            instance.put(`profile/photo`, formData)
+        )
+    },
+
+    updateUserProfile(profile){
+        return(
+            instance.put(`profile`, profile)
+        )
     }
+
 }
 
 export const loginApi = {
@@ -76,6 +91,12 @@ export const loginApi = {
     logout(){
         return(
             instance.delete(`auth/login`)
+        )
+    },
+
+    getCaptcha(){
+        return(
+            instance.get(`security/get-captcha-url`)
         )
     }
 }

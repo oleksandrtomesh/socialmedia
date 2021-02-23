@@ -12,3 +12,15 @@ export const maxLengthCreator = (maxLength) => (value) => (value && value.length
     //tsia funkcja po czerzi wyklykaje validatory i prokyduje w nych za dopomogoju zamykania value z formy
 export const composeValidators = (...validators) => value => 
         validators.reduce((error, validator) => error || validator(value), undefined);
+
+
+export const checkError = (error, value) => {
+    const newValue = value[0].toUpperCase() + value.slice(1);
+    return( error && error.map(messages => {
+            if(messages.indexOf(newValue) >= 0){
+                return messages;
+            }
+            return undefined;
+        }))
+    }
+

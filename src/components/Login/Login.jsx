@@ -21,6 +21,7 @@ const Login = (props) => {
   return(
   <Form
     onSubmit ={onSubmit}
+    captcha = {props.captcha}
     validate={values => {
       const errors = {}
       if (!values.email) {
@@ -45,6 +46,11 @@ const Login = (props) => {
               <Field name={"rememberMe"} component={"input"} type={"checkbox"} />
               <span>remember me</span>
             </div>
+            {props.captcha &&
+              <div> 
+                <img src={props.captcha } alt="captcha"/>
+                <Field name="captcha" component={Input}/>
+              </div>}
             {submitError && <div>{submitError}</div>}
             <div>
               <button type="submit">Login</button>

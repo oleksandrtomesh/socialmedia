@@ -35,7 +35,13 @@ const ProfileStatusWithHooks = (props) => {
                         onBlur={deactivateStatusEditor}
                         type="text"
                         value={status} />
-                    : <span onDoubleClick={activateStatusEditor}> {status || `No Status`}</span>
+                    : <div>
+                        <span onDoubleClick={activateStatusEditor}> <b>Status: </b>{status || `No Status`}</span>
+                        <div>
+                            <i>DoubleClick to change</i>
+                        </div>
+                    </div>
+
             }
         </div>
     );
