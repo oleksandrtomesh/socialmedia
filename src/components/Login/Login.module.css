@@ -1,0 +1,22 @@
+.error{
+    color: red;
+    text-decoration: solid;
+}
+
+.loginForm .email{
+    margin-bottom: 10px;
+}
+
+.loginForm{
+    display: inline-block;
+    width: 20rem;
+    padding: 20px;
+    margin: 10% 30%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 4px rgb(189, 185, 185);
+}
+
+.loginForm button{
+    margin: 10px 20%;
+}

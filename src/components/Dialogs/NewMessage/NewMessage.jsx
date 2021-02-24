@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, Form } from 'react-final-form';
 import c from './NewMessages.module.css';
-import { Input } from '../../commonElements/formComponent';
+import { InputCustom } from '../../commonElements/formComponent';
 import { composeValidators, required, maxLengthCreator } from '../../../utilits/validators';
 
 const NewMessages = (props) => {
@@ -21,7 +21,7 @@ const NewMessages = (props) => {
                 <form onSubmit={handleSubmit} className={c.addNewMessage}>
                     <Field className={c.textarea} 
                         name="message" 
-                        component={Input} 
+                        component={InputCustom} 
                         placeholder="Enter your message" 
                         validate={composeValidators(required, maxLengthCreator(30))}
                     />

@@ -1,6 +1,6 @@
 .header{
     grid-area: header;
-    background-color: #2F4F4F;
+    background-color: #2d2d2d;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
 }

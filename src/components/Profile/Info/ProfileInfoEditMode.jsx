@@ -1,6 +1,6 @@
 import {Form, Field} from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
-import { Input, Textarea } from '../../commonElements/formComponent';
+import {Textarea, InputCustom } from '../../commonElements/formComponent';
 import styles from './Info.module.css'
 import {checkError} from "../../../utilits/validators"
 
@@ -23,7 +23,7 @@ const ProfileInfoEditMode = (props) => {
             render={({handleSubmit, submitError}) => {
                 return <form onSubmit={handleSubmit}>
                     <div>
-                        <b>Full name: </b><Field name="fullName" component={Input} />
+                        <b>Full name: </b><Field name="fullName" component={InputCustom} />
                     </div>
                     <div>
                         <b>About me: </b><Field name="aboutMe" component={Textarea} />
@@ -43,7 +43,7 @@ const ProfileInfoEditMode = (props) => {
                         <b>Contacts</b>: {Object.keys(props.userProfile.contacts).map(key => {
                             return <div>
                                     <b>{key}: </b>
-                                    <Field key={key} name={"contacts." + key} component={Input} placeholder={key} />
+                                    <Field key={key} name={"contacts." + key} component={InputCustom} placeholder={key} />
                                     {submitError && <div className={styles.error}>{checkError(submitError, key)}</div>}
                                 </div>
                         })}

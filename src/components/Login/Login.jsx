@@ -1,8 +1,11 @@
 import {Form, Field} from 'react-final-form'
-import { Input } from '../commonElements/formComponent';
+import { InputCustom, LogButton} from '../commonElements/formComponent';
 import { composeValidators, maxLengthCreator, required } from '../../utilits/validators';
 import { Redirect } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';
+import styles from './Login.module.css'
+import { Button } from '@material-ui/core';
+
 
 
 const Login = (props) => {
@@ -17,6 +20,7 @@ const Login = (props) => {
   if (props.isAuth === true){
     return <Redirect to="/profile" />
   }
+  
   
   return(
   <Form
@@ -34,26 +38,26 @@ const Login = (props) => {
     }}
     render={({handleSubmit, invalid, submitError, ...props})=> (
         <div>
-          <h1>Login</h1>
-          <form onSubmit={handleSubmit}>
+          <form className={styles.loginForm} onSubmit={handleSubmit}>
             <div>
-              <Field name={"email"} component={Input} validate={composeValidators(required, maxLengthCreator(30))}/>
+              <Field name={"email"} component={InputCustom} validate={composeValidators(required, maxLengthCreator(30))}/>
             </div>
             <div>
-              <Field name={"password"} component={Input} type="password" validate={composeValidators(required, maxLengthCreator(30))} />
+              <Field name={"password"} component={InputCustom} type="password" validate={composeValidators(required, maxLengthCreator(30))} />
             </div>
             <div>
-              <Field name={"rememberMe"} component={"input"} type={"checkbox"} />
+              <Field name={"rememberMe"} component="input" type={"checkbox"} />
               <span>remember me</span>
             </div>
             {props.captcha &&
               <div> 
                 <img src={props.captcha } alt="captcha"/>
-                <Field name="captcha" component={Input}/>
+                <Field name="captcha" component={InputCustom}/>
               </div>}
-            {submitError && <div>{submitError}</div>}
+            {submitError && <div className={styles.error}>{submitError}</div>}
             <div>
-              <button type="submit">Login</button>
+            <LogButton>Login</LogButton>
+              {/* <Button variant="contained" color="primary" type="submit">Login</Button>  */}
             </div>
           </form>
 

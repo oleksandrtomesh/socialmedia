@@ -1,6 +1,7 @@
 .formControl.error input,
 .formControl.error textarea {
     border: 2px solid red;
+    border-radius: 5px;
 }
 
 .formControl.error div {
@@ -9,8 +10,8 @@
     padding: 0;
 }
 
-.formControl {
-    display: inline-block;
-    width: 80%;
+.formControl input{
+    width: 120%;
     height: 30px;
 }
+
