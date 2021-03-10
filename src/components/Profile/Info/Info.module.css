@@ -1,5 +1,5 @@
 .info{
-  margin-top: 2rem;
+  margin: 1rem;
 }
 
 .info h1{
@@ -16,4 +16,20 @@
 
 .error{
   color: red;
+}
+
+.editMode{
+  margin: 1rem;
+}
+
+.editMode h4{
+  margin-bottom: 1rem;
+}
+
+h5{
+  margin-bottom: 1rem;
+}
+
+.profileStatus{
+  margin: 1rem;
 }

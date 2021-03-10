@@ -157,7 +157,6 @@ export const saveProfileInfo = (profile) => async (dispatch, getState) => {
     const userId = getState().authorization.data.id;
     const response = await profileAPI.updateUserProfile(profile)
     if (response.data.resultCode === 0){
-        debugger;
         dispatch(setUserProfile(userId))
     } else {
         return response.data.messages;

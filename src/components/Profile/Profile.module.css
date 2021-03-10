@@ -5,7 +5,7 @@
     "profile-layout-photo"
     "profile-info"
     "MyPosts";
-    background-color: #FFFAF0;
+    background-color: #F5F5F5;
     box-sizing: border-box;    
   }
   
@@ -26,4 +26,12 @@
     margin-left: 5%;
     border-radius: 5px;
     width: 300px;
+  }
+
+  .profile_photo{
+    margin: 1rem;
+  }
+
+  .profile_photo input{
+    margin: 1rem;
   }

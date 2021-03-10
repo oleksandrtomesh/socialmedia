@@ -1,13 +1,15 @@
 import React from 'react';
-import styles from './UsersPage.module.css';
+//import styles from './UsersPage.module.css';
 import Pagination from 'react-js-pagination'
 import User from './User/User';
+import styles from './UsersPage.module.css'
 
 let Users = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) => {
 
 
     return (
         <div>
+            <div className={styles.pagination}>
             <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={pageSize}
@@ -17,7 +19,8 @@ let Users = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) =
                 itemClass="page-item"
                 linkClass="page-link"
             />
-            {props.users.map(user => <User user={user} {...props}/>)}
+            </div>
+            {props.users.map(user => <User key={user.id} user={user}  {...props}/>)}
         </div>
     );
 }

@@ -3,6 +3,7 @@ import Info from './Info/Info';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import c from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
+import { Input } from '@material-ui/core';
 
 
 const Profile = (props) => {
@@ -30,7 +31,7 @@ const Profile = (props) => {
             ? <img src={props.userProfile.photos.large !== null ? props.userProfile.photos.large : avatar } alt="profile"></img>
             : <Loader />}
           <div>
-            { props.isOwner && <input type="file" onChange={selectedMainPhotoFile} />}
+            { props.isOwner && <Input type="file" onChange={selectedMainPhotoFile} />}
           </div>
         </div>
         

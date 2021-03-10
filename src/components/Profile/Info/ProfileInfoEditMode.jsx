@@ -1,6 +1,10 @@
 import {Form, Field} from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
-import {Textarea, InputCustom } from '../../commonElements/formComponent';
+import {
+    InputCustom,
+    RadioCustom,
+    CustomButton
+} from '../../commonElements/formComponent';
 import styles from './Info.module.css'
 import {checkError} from "../../../utilits/validators"
 
@@ -15,40 +19,39 @@ const ProfileInfoEditMode = (props) => {
         }
     }
     
-    return <div>
-        EditMode
+    return <div className={styles.editMode}>
+        <h4>Edit Mode</h4>
         <Form
             onSubmit={saveProfile}
             initialValues={props.userProfile}
             render={({handleSubmit, submitError}) => {
-                return <form onSubmit={handleSubmit}>
+                return <form onSubmit={handleSubmit} className={styles.editModeForm}>
                     <div>
-                        <b>Full name: </b><Field name="fullName" component={InputCustom} />
+                        <Field name="fullName" component={InputCustom} label="Full Name"/> 
                     </div>
                     <div>
-                        <b>About me: </b><Field name="aboutMe" component={Textarea} />
+                        <Field name="aboutMe" component={InputCustom} label="About Me"/> 
                         {submitError && <div className={styles.error}>{checkError(submitError, "AboutMe")}</div>}
                     </div>
                     <div>
-                        <b>Looking for job: </b><Field name="lookingForAJob" component="select">
+                        <b>Looking for job: </b><Field name="lookingForAJob" component={RadioCustom}>
                             <option value={true}>Yes</option>
                             <option value={false}>No</option>
                         </Field>
                     </div>
                     <div>
-                        <b>My professional skill</b><Field name="lookingForAJobDescription" component={Textarea} />
+                        <Field name="lookingForAJobDescription" label="My professional skill" component={InputCustom}/> 
                         {submitError && <div className={styles.error}>{checkError(submitError,"LookingForAJobDescription")}</div>}
                     </div>
                     <div>
-                        <b>Contacts</b>: {Object.keys(props.userProfile.contacts).map(key => {
-                            return <div>
-                                    <b>{key}: </b>
-                                    <Field key={key} name={"contacts." + key} component={InputCustom} placeholder={key} />
+                        <h5>Contacts:</h5> {Object.keys(props.userProfile.contacts).map(key => {
+                            return <div key={key}>
+                                    <Field  name={"contacts." + key} component={InputCustom} label={key} />
                                     {submitError && <div className={styles.error}>{checkError(submitError, key)}</div>}
                                 </div>
                         })}
                     </div>
-                    <button>Save</button> 
+                    <CustomButton>Save</CustomButton> 
                 </form>
                 }
             }

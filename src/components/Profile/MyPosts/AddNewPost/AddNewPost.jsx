@@ -2,29 +2,32 @@ import React from 'react';
 import c from './AddNewPost.module.css';
 import { Field, Form } from 'react-final-form';
 import { maxLengthCreator, composeValidators, required } from '../../../../utilits/validators';
-import { Textarea } from '../../../commonElements/formComponent';
+import { CustomButton, InputCustom } from '../../../commonElements/formComponent';
 
 const AddNewPost = (props) => {
 
-  //функція котра власне бере значення з state а саме state.profilePage.nePostText і додає до 
-  //об'єкту state.profilePage.postData 
   let addPost = (value) => {
-      //beremo funkciju addPost z naszoi componenty containera
       props.addNewPost(value.newPostText);
-      
+      value.newPostText = "";
   }
     
   return (
-  <div className={c.Textarea}>
+  <div>
     <Form onSubmit={addPost}
       render={ ({handleSubmit}) => (
-          <form onSubmit={handleSubmit}>
-            <Field className={c.inputField} 
+          <form onSubmit={handleSubmit} className={c.Textarea}>
+            <div>
+              <Field  className={c.inputField}
               name="newPostText" 
-              component= {Textarea} 
-              placeholder="Something new?" 
+              component= {InputCustom} 
+              label="Something new?"
               validate={composeValidators(required, maxLengthCreator(30))}/>
-            <button type="submit">Submit</button>
+            </div>
+            <div>
+              <CustomButton type="submit">Post</CustomButton>
+            </div>
+            
+            
           </form>
         )
         }

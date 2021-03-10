@@ -1,5 +1,5 @@
 import React from 'react';
-import c from './UsersPage.module.css';
+import styles from './UsersPage.module.css';
 import userPhoto from "../../../assets/images/avatar.png";
 import { NavLink } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
@@ -7,25 +7,21 @@ import Button from 'react-bootstrap/Button'
 let User = ({user, ...props}) => {
 
     return (
-    <div>
-        <div>
+    <div className={styles.item}>
+        <div className={styles.avatarButton}>
             <div>
-                {/* za dopomogoju NavLink pry natysneni na avu korystuwacza w Users perenosymos na storinku korystuwacza */}
                 <NavLink to={"/profile/" + user.id}>
-                    {/* jakszczo na serweri w objekti objekt photos maje wlastywist small = null,
-                                to wykorystowujemo standartnu kartynku */}
-                    <img alt="small avatar" className={c.profileImg}
+                    <img alt="small avatar" className={styles.profileImg}
                         src={user.photos.small !== null ? user.photos.small : userPhoto} />
                 </NavLink>
             </div>
             <div>
-                {/* jakszczo w state followed = true */}
-                <Button type="submit" variant="dark" disabled={props.isFollowFetching.some(id => id === user.id)} onClick={() => {
-
-                    //unfollowUser it is thunk creator in user-reducer
-                    props.toggleFollowingUser(user.id, user.followed);
-
-                }}>{user.followed ? "Unfollow" : "Follow"}</Button>
+                <Button type="submit" variant="dark" 
+                    disabled={props.isFollowFetching.some(id => id === user.id)} 
+                    onClick={() => {props.toggleFollowingUser(user.id, user.followed)}}
+                >
+                    {user.followed ? "Unfollow" : "Follow"}
+                </Button>
             </div>
         </div>
         <div>

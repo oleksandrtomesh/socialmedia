@@ -1,15 +1,15 @@
 import React from 'react';
-import { Field, Form } from 'react-final-form';
+import { Field, Form, } from 'react-final-form';
 import c from './NewMessages.module.css';
-import { InputCustom } from '../../commonElements/formComponent';
+import { InputCustom, CustomButton } from '../../commonElements/formComponent';
 import { composeValidators, required, maxLengthCreator } from '../../../utilits/validators';
 
 const NewMessages = (props) => {
 
-    //Функція addNewMessage bere znaczenia z on submir w final react form. W on submit wono popadaje za dopomogoju 
-    //handleSubmit
     let addNewMessage = (value) => {
         props.addMessage(value.message);
+        value.message = "";
+
     };
 
     return (
@@ -19,13 +19,17 @@ const NewMessages = (props) => {
             render={({handleSubmit})=>(
                 
                 <form onSubmit={handleSubmit} className={c.addNewMessage}>
-                    <Field className={c.textarea} 
-                        name="message" 
-                        component={InputCustom} 
-                        placeholder="Enter your message" 
-                        validate={composeValidators(required, maxLengthCreator(30))}
-                    />
-                    <button type="submit" >Send</button>
+                    <div>
+                        <Field className={c.textarea} 
+                            name="message" 
+                            component={InputCustom} 
+                            placeholder="Enter your message" 
+                            validate={composeValidators(required, maxLengthCreator(30))}
+                        />
+                    </div>
+                    <div>
+                        <CustomButton type="submit">Post</CustomButton>
+                    </div>
                 </form>
                 )
             }

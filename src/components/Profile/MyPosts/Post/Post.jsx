@@ -5,7 +5,7 @@ const Post = (props) => {
     <div>
       <div className={c.item}>
         <div className={c.postInfo}>
-          <img src="https://ps.w.org/wp-user-avatar/assets/icon-256x256.png?rev=1755722" alt="profile post image" />
+          <img src="https://ps.w.org/wp-user-avatar/assets/icon-256x256.png?rev=1755722" alt="postAvatar" />
           <div className={c.name}>
             <div>Oleksandr Tomesh</div>
             <div>04/12/2020</div>

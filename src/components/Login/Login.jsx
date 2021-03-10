@@ -1,10 +1,9 @@
 import {Form, Field} from 'react-final-form'
-import { InputCustom, LogButton} from '../commonElements/formComponent';
+import { InputCustom, CustomButton} from '../commonElements/formComponent';
 import { composeValidators, maxLengthCreator, required } from '../../utilits/validators';
 import { Redirect } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';
 import styles from './Login.module.css'
-import { Button } from '@material-ui/core';
 
 
 
@@ -56,7 +55,7 @@ const Login = (props) => {
               </div>}
             {submitError && <div className={styles.error}>{submitError}</div>}
             <div>
-            <LogButton>Login</LogButton>
+            <CustomButton>Login</CustomButton>
               {/* <Button variant="contained" color="primary" type="submit">Login</Button>  */}
             </div>
           </form>

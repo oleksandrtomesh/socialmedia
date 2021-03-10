@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styles from '../Info/Info.module.css'
 
 
 const ProfileStatusWithHooks = (props) => {
@@ -24,7 +25,7 @@ const ProfileStatusWithHooks = (props) => {
     }
 
     return (
-        <div>
+        <div className={styles.profileStatus}>
             {
                 //w zalenosto wid lokalnogo stetu, pokazujemo abo Span, jakszo editMode false
                 //pisla dobleClick editMode zminujetsia na true, za dopomogoju obrobnyka podij onDobleClick

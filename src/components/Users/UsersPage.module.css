@@ -1,11 +1,4 @@
-.profileImg{
-  width: 100px;
-}
-
-.selectedPage{
-  font-weight: bold;
-}
-
-.activePage{
-  background-color: red !important;
+.pagination{
+  width: 35%;
+  margin: 0 auto;
 }

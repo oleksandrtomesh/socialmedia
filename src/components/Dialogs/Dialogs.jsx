@@ -5,9 +5,9 @@ import NewMessageContainer from './NewMessage/NewMessageContainer'
 
 const Dialogs = (props) => {
 
-    let dialogElements = props.dialogPage.dialogData.map( d => <Dialog name={d.name} id={d.id} /> )
+    let dialogElements = props.dialogPage.dialogData.map( d => <Dialog key={d.name} name={d.name} id={d.id} /> )
 
-    let messageElements = props.dialogPage.messageData.map( m => <Messages text={m.message} id={m.id} />)
+    let messageElements = props.dialogPage.messageData.map( m => <Messages key={m.message} text={m.message} id={m.id} />)
 
     return (
         <div className={c.dialogs}>

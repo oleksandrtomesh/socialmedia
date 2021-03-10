@@ -36,7 +36,6 @@ export const initialized = () => {
     return (dispatch) => {
         //з thunkCreator нам повертається проміс
         let promise = dispatch(authUser());
-        debugger;
         //коли ми отримуємо resolve зі всіх промісів тоді dispatch (initializingSuccess) щоб властивіть 
         //initialized змінилась на true
         Promise.all([promise]).then(() => {
