@@ -57,8 +57,6 @@ const usersReducer = (state = initialState, action) => {
         case SET_TOTAL_COUNT:
             return {...state, totalUsersCount: action.totalCount};
 
-        //toggleIsFetching perekluczaje isFetching w state, true - tse koly ide zagruzka danych z servera
-        //false tse koly dani zarrzeni i ne potribno pokazuwaty kartynku zagruzky
         case TOGGLE_IS_FETCHING:
             return{...state, isFetching: action.isFetching};
 

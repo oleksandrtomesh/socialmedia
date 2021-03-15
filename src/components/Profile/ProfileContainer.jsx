@@ -7,10 +7,12 @@ import {
     setStatus,
     updateStatus,
     saveUserPhoto,
-    saveProfileInfo
+    saveProfileInfo,
+    isFetching
 } from '../../redux/profile-reducer';
 import Profile from './Profile';
 import { compose } from 'redux';
+import Loader from '../commonElements/loader/loader';
 
 
 
@@ -31,40 +33,38 @@ class ProfileContainer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if(this.props.match.params.userId !== prevProps.match.params.userId){
-      debugger;
       this.refreshProfile();
     }
   }
-
-  render = () => { return <Profile isOwner={!this.props.match.params.userId} {...this.props} />};
+d
+  render = () => { 
+    return (
+      <div>
+        {this.props.isProfileFetching
+          ?<Loader/>
+          :<Profile isOwner={!this.props.match.params.userId} {...this.props} />
+        }
+      </div>
+        )};
 }
 
 
-//w mapStateToProps zakydaju z state dani profile zagrueni z servera
 let mapStateToProps = (state) => {
   return{
     userProfile: state.profilePage.userProfile,
     authUserId: state.authorization,
     userStatus: state.profilePage.userStatus,
     authorizedUserId: state.authorization.data,
-    isFetching: state.profilePage.isFetching
+    isProfileFetching: state.profilePage.isFetching
   };
 }
 
 
 export default compose(
-  //3
-  //connect prokyduje propsy w container component
-  connect(mapStateToProps,{setUserProfile, setStatus, updateStatus, saveUserPhoto, saveProfileInfo}),
+  connect(mapStateToProps,{setUserProfile, setStatus, updateStatus, saveUserPhoto, saveProfileInfo, isFetching}),
 
-  //2
-  //pisla obertania withRedirect obertaju ProfileContainer szcze odnoju containernoju komponentoju, jaka prokyduje
-  //w Profile container dani z URL
   withRouter,
 
-  //1
-  //obertaju Componentu withAuthRedirect Hight Order Component, kotra powertaje w 
-  //URL /login, jakszczo korystuwach ne zalogowanyj, tym samy my ne moerzemo distatysia
-  //do kontentu, jakszo my ne zalogowani (isAuth = false)
+  //This is a HOC what verify does user login, if not redirect to "/login"
   withAuthRedirect
 )(ProfileContainer);

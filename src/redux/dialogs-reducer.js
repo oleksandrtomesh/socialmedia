@@ -4,17 +4,17 @@ const ADD_MESSAGE = 'ADD-MESSAGE';
 //do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
 let initialState = {
     messageData:[
-        {id: 1, message: "Hello"},
-        {id: 1, message: "How are you"}
+        {id: 1, message: "Hello World"},
+        {id: 2, message: "Here will be message section soon :-)"}
     ],
     dialogData: [
-        {id: 1, name: "Tania"},
-        {id: 2, name: "Pietia"},
-        {id: 3, name: "Sasha"},
-        {id: 4, name: "Vova"},
-        {id: 5, name: "Marina"},
-        {id: 6, name: "Vasia"},
-        {id: 7, name: "Igor"}
+        {id: 1, name: "User1"},
+        {id: 2, name: "User2"},
+        {id: 3, name: "User3"},
+        {id: 4, name: "User4"},
+        {id: 5, name: "User5"},
+        {id: 6, name: "User6"},
+        {id: 7, name: "User7"}
     ],
 };
 

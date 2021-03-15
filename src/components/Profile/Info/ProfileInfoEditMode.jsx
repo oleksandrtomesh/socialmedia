@@ -33,11 +33,9 @@ const ProfileInfoEditMode = (props) => {
                         <Field name="aboutMe" component={InputCustom} label="About Me"/> 
                         {submitError && <div className={styles.error}>{checkError(submitError, "AboutMe")}</div>}
                     </div>
-                    <div>
-                        <b>Looking for job: </b><Field name="lookingForAJob" component={RadioCustom}>
-                            <option value={true}>Yes</option>
-                            <option value={false}>No</option>
-                        </Field>
+                    <div className={styles.lookingForAJob}>
+                        <b>Looking for job: </b>
+                            <Field name="lookingForAJob" component='input' type='checkbox'/>
                     </div>
                     <div>
                         <Field name="lookingForAJobDescription" label="My professional skill" component={InputCustom}/> 

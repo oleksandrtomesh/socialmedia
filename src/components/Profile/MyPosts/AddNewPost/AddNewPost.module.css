@@ -8,14 +8,15 @@
 
 .Textarea {
     display: grid;
-    grid-template-columns: 82% 17%;
+    grid-template-columns: 82% 18%;
     grid-gap: 10px;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
     padding: 1.3rem 2rem;
     height: 6rem;
-    
+    margin: 0 auto;
+    width: 100%;
 }
 
 .Textarea .inputField{

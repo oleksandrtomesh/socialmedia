@@ -22,14 +22,11 @@
   margin: 1rem;
 }
 
-.editMode h4{
+.editMode h4,
+.editMode .lookingForAJob,
+h5
+{
   margin-bottom: 1rem;
 }
 
-h5{
-  margin-bottom: 1rem;
-}
 
-.profileStatus{
-  margin: 1rem;
-}

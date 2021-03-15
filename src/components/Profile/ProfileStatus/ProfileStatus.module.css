@@ -1,0 +1,8 @@
+.profileStatus{
+    margin: 1rem;
+    width: 100%;
+}
+
+.profileStatus span{
+    width: 80%;
+}

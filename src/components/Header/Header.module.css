@@ -3,6 +3,7 @@
     background-color: #2d2d2d;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
+    width: 100%;
 }
 
 .logo{
@@ -16,10 +17,10 @@
   display: flex;
   float: right;
   margin: 1%;
-  
 }
 
-.login a {
+.login a{
+  white-space: nowrap;
   color: antiquewhite;
   font-size: 20px;
   text-decoration: none;

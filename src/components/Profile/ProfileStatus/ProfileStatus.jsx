@@ -41,9 +41,6 @@ class ProfileStatus extends React.Component {
         return (
             <div>
                 {
-                    //w zalenosto wid lokalnogo stetu, pokazujemo abo Span, jakszo editMode false
-                    //pisla dobleClick editMode zminujetsia na true, za dopomogoju obrobnyka podij onDobleClick
-                    //i pokarzetsia input z autofocus, koly zaberemo autofocus to automatyczno zjawytsia <span>
                     this.state.editMode
                     ? <input autoFocus={true} 
                         onChange={this.onStatusChange} 

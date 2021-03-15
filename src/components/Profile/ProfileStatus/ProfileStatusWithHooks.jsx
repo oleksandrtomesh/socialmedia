@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../Info/Info.module.css'
+import styles from './ProfileStatus.module.css';
+import { TextField } from '@material-ui/core';
 
 
 const ProfileStatusWithHooks = (props) => {
 
-    //create state with help of useState (import from react)
-    //useState return array. Firs element it is value second emlemet it is func to change this value
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.userStatus);
     
@@ -27,16 +26,19 @@ const ProfileStatusWithHooks = (props) => {
     return (
         <div className={styles.profileStatus}>
             {
-                //w zalenosto wid lokalnogo stetu, pokazujemo abo Span, jakszo editMode false
-                //pisla dobleClick editMode zminujetsia na true, za dopomogoju obrobnyka podij onDobleClick
-                //i pokarzetsia input z autofocus, koly zaberemo autofocus to automatyczno zjawytsia <span>
                 editMode
-                    ? <input autoFocus={true}
-                        onChange={onStatusChange}
-                        onBlur={deactivateStatusEditor}
-                        type="text"
-                        value={status} />
-                    : <div>
+                    ? <div>
+                        <TextField autoFocus={true}
+                            onChange={onStatusChange}
+                            onBlur={deactivateStatusEditor}
+                            type="text"
+                            value={status} 
+                            label="Status"
+                            variant="outlined"
+                        />
+                    </div>
+                    
+                    : <div className={styles.status}>
                         <span onDoubleClick={activateStatusEditor}> <b>Status: </b>{status || `No Status`}</span>
                         <div>
                             <i>DoubleClick to change</i>

@@ -10,10 +10,11 @@ const Header = (props) => {
     }
 
     return (
+
         <header className={styles.header}>
             <div className={styles.login}>
-                {props.isAuth 
-                    ? <NavLink to={"/profile/"}>{props.authData.login}</NavLink>
+                {props.isAuth && props.userProfile
+                    ? <NavLink to={"/profile/"}><span>{props.userProfile.fullName}</span></NavLink>
                     :<NavLink to='/login'>Login</NavLink>}
                 <Button onClick={onSubmit} className={classes.LogoutButton} variant="contained" type="submit">Logout</Button>
             </div>

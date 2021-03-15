@@ -1,5 +1,5 @@
 import './App.css';
-import {Route } from 'react-router-dom';
+import {Redirect, Route, Switch } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -29,18 +29,18 @@ class App extends React.Component {
         <HeaderContainer />
         <NavbarContainer />
         <div className="app-wrapper-content">
+          <Switch>
+            <Route exact from="/" to="/profile" />
             <Route path="/login" render={ () => <LoginContainer />} />
             <Route path="/dialogs" render={ () => <DialogsContainer/>} />
-            {/* W path zapysujemo "/profile/:userId?" dla withRoute, szczob w 
-            objekti match jakyj powertaje funkcja withRout w params zjawywsia id korystuwacza,
-            kotryj ja wykorystowuju dla togo szczoby z serwera zaprosyty widpowidni dani
-            znak "?" oznaczje, szczo parametr pisla "/profile" opcjonalnyj */}
             <Route path="/profile/:userId?"render={ () => <ProfileContainer />} />
             <Route path="/users" render={ () => <UsersContainer />} />
             <Route path="/news" component={News} />
             <Route path="/music" component={Music} />
             <Route path="/settings" component={Settings} />
-            <Route exact path="/"render={ () => <ProfileContainer />} />  
+            <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
+            
+          </Switch>
         </div>
       </div>
   };

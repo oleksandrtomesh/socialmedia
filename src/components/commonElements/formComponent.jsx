@@ -2,7 +2,6 @@ import styles from "./formComponent.module.css";
 import TextField from "@material-ui/core/textfield";
 import {useStyles} from './formComponentCustomStyles';
 import { Button } from '@material-ui/core';
-import Radio from '@material-ui/core/Radio'; 
 import React from 'react'
 
 export const FormConstructor = ({input, meta, ...props}) => {
@@ -42,38 +41,6 @@ export const InputCustom = (props) => {
         </FormConstructor>
     )
 };
-
-export const RadioCustom = (props) => {
-    const [selectedValue, setSelectedValue] = React.useState('Yes');
-
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
-
-    return (
-        <div>
-            <Radio
-                checked={selectedValue === 'Yes'}
-                onChange={handleChange}
-                value="Yes"
-                name="lookingForAJobRadio"
-                label="Yes"
-            />
-            <Radio
-                checked={selectedValue === 'No'}
-                onChange={handleChange}
-                value="No"
-                name="lookingForAJobRadio"
-                label="No"
-            />
-
-        </div>
-    );
-}
-
-
-
-
 
 export const CustomButton = (props) => {
 

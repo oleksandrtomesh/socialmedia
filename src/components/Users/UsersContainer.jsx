@@ -17,19 +17,14 @@ import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
 class UsersPage extends React.Component {
 
     componentDidMount = () => {
-        //tse funkcija thunk creator, jaka stworujetsia w user-redux
-        //i mistyt w sobi wsu logiku taku jak pobrania users z servera, pokazuwania krutilky, doky jde zagruzka useriw
+        //get users for page 1
         this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
-    //tse obrobnyk podiji, funkcija, kotra pry natysteniu na storinku
-    //za dopomogoju dispatch peredeje w state currentPage i takorz
-    //daje zapyt na server, szczob otrymaty korystuwaciw dla widpowidniji storinky
     onPageChange = (pageNumber) => {
         this.props.selectPage(pageNumber);
         this.props.toggleIsFetching(true);
-        //w metodi getUsers inkapsulowano zapyt do servera za dopomogoju axios
-        //wsia informcjia pro tsiu funkcji znachodytsia w src/api/api.js 
+        //getUsers function what get users from server
         usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
             this.props.toggleIsFetching(false);
             this.props.setUsers(data.items);    
