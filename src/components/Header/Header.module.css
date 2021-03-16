@@ -3,7 +3,6 @@
     background-color: #2d2d2d;
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
-    width: 100%;
 }
 
 .logo{
@@ -16,7 +15,8 @@
 .login {
   display: flex;
   float: right;
-  margin: 1%;
+  margin-top: 8px;
+  margin-right: 20px;
 }
 
 .login a{
@@ -25,4 +25,10 @@
   font-size: 20px;
   text-decoration: none;
   padding-right: 5%; 
+}
+
+.login img{
+  max-width: 40px;
+  margin-right: 1rem;
+  border-radius: 50%;
 }

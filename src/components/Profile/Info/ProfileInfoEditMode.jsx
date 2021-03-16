@@ -2,7 +2,6 @@ import {Form, Field} from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 import {
     InputCustom,
-    RadioCustom,
     CustomButton
 } from '../../commonElements/formComponent';
 import styles from './Info.module.css'

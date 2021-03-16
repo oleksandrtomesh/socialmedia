@@ -45,5 +45,24 @@ export const InputCustom = (props) => {
 export const CustomButton = (props) => {
 
     const classes = useStyles()
-    return <Button className={classes.loginButton} variant="contained" type="submit">{props.children}</Button> 
+    return <Button className={classes.LoginButton} variant="contained" type="submit">{props.children}</Button> 
+}
+
+
+export const UploadButton = ({onChangeHandler, buttonAssign, ...props}) => {
+
+    const classes = useStyles()
+
+    return <label htmlFor="upload-photo">
+        <input
+            style={{ display: 'none' }}
+            id="upload-photo"
+            name="upload-photo"
+            type="file"
+            onChange={onChangeHandler}
+        />
+        <Button className={classes.UploadButton} variant="contained" component="span">
+            {buttonAssign}
+    </Button>
+    </label>
 }

@@ -3,6 +3,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 .loader img{
     margin: 0;

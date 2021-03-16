@@ -42,7 +42,7 @@ const ProfileInfo = (props) => {
         return <Contact key={key} contactTitle={key} contactValue={props.userProfile.contacts[key]} />
       })}
     </div>
-    {props.isOwner && <Button onClick={changeEditMode} className={classes.loginButton} variant="contained" type="submit">Edit Mode</Button> }
+    {props.isOwner && <Button onClick={changeEditMode} className={classes.LoginButton} variant="contained" type="submit">Edit Mode</Button> }
   </div>
 }
 

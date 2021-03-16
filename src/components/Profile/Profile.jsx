@@ -3,7 +3,8 @@ import Info from './Info/Info';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import c from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
-import { Input } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { UploadButton } from '../commonElements/formComponent';
 
 
 const Profile = (props) => {
@@ -27,8 +28,8 @@ const Profile = (props) => {
           {!props.isProfileFetching 
             ? <img src={props.userProfile.photos.large !== null ? props.userProfile.photos.large : avatar } alt="profile"></img>
             : <Loader />}
-          <div>
-            { props.isOwner && <Input type="file" onChange={selectedMainPhotoFile} />}
+          <div className={c.uploadButton}>
+            {props.isOwner && <UploadButton onChangeHandler={selectedMainPhotoFile} buttonAssign="Upload Profile Photo"/>}
           </div>
         </div>
         

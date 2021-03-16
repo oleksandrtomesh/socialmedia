@@ -1,12 +1,16 @@
 import { profileAPI } from '../api/api';
+import { saveAuthUserPhotoSuccess } from './auth-reducer';
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_TEXT_AREA ='UPDATE-TEXT-AREA';
-const SET_USER_PROFILE ='SET_USER_PROFILE';
-const SET_USER_STATUS = 'SET_USER_STATUS';
-const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
-const IS_FETCHING = 'IS_FETCHING'
 
+//actions
+const ADD_POST = 'app/profile-reducer/ADD-POST';
+const UPDATE_TEXT_AREA ='app/profile-reducer/UPDATE-TEXT-AREA';
+const SET_USER_PROFILE ='app/profile-reducer/SET_USER_PROFILE';
+const SET_USER_STATUS = 'app/profile-reducer/SET_USER_STATUS';
+const SAVE_PHOTO_SUCCESS = 'app/profile-reducer/SAVE_PHOTO_SUCCESS';
+const IS_FETCHING = 'app/profile-reducer/IS_FETCHING'
+
+//initial State
 let initialState = {
     postData: [
         {id: 1, message: "Hi, how are you?", likeCounter: 12},
@@ -22,6 +26,7 @@ let initialState = {
     isFetching: false
 };
 
+//Reducer
 const profileReducer = (state = initialState, action) => {
 
         switch (action.type) {
@@ -78,8 +83,7 @@ const profileReducer = (state = initialState, action) => {
         }
     }
 
-//створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
-//до компоненти і імпортую їх в файл MyPosts
+//Action Creators
 export const addPost = (newPostText) => ({type: ADD_POST, newPostText});
 export const updateTextAreaActionCreator = (text) => ({ type: UPDATE_TEXT_AREA, newText: text });
 export const setProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
@@ -87,8 +91,9 @@ export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
 export const isFetching = (isFetching) => ({type: IS_FETCHING, isFetching})
 
-//thunk creators powertaje inszu funkciju, kotra robyt zapyt na serwer i potim dispatchyt ci dani 
-//w state za dopomogoju action creatora
+
+//side effects, Thinks
+
 export const addNewPost = (newPostText) => {
     return (dispatch) => dispatch(addPost(newPostText))
 };
@@ -128,7 +133,8 @@ export const saveUserPhoto = (photo) => async (dispatch) => {
     dispatch(isFetching(true))
     const response = await profileAPI.updateUserPhoto(photo)
         if (response.data.resultCode === 0 ){
-            dispatch(savePhotoSuccess(response.data.data.photos))
+            dispatch(savePhotoSuccess(response.data.data.photos));
+            dispatch(saveAuthUserPhotoSuccess(response.data.data.photos));
         }
     dispatch(isFetching(false))
 }

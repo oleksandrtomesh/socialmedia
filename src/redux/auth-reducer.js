@@ -1,53 +1,67 @@
-import { headerAPI, loginApi } from '../api/api';
+import { headerAPI, loginApi, profileAPI } from '../api/api';
 
+//Actions
+const ADD_DATA = 'app/auth-reducer/ADD_DATA';
+const ADD_CAPTCHA_URL ='app/auth-reducer/ADD_CAPTCHA_URL';
+const AUTH_USER_PROFILE = 'app/auth-reducer/AUTH_USER_PROFILE';
+const SAVE_PHOTO_SUCCESS = 'app/auth-reducer/SAVE_PHOTO_SUCCESS';
 
-const ADD_DATA = 'ADD_DATA';
-const ADD_CAPTCHA_URL ='ADD_CAPTCHA_URL'
-
-//wstanowluju initialState kotryj bude peredano jak poczatowe znaczenia state
-//do redusera, bo w inszomu wypadku w reducer pryjde znaczenia "undefined" i bude pomylka
+//Initia State
 let initialState = {
     data: null,
-    isAuth: false,
-    errorSubmitMessage: undefined,
-    captcha: undefined  //captcha url if result code === 10
+    isAuth: false,  //check if user login
+    captcha: undefined,  //captcha url if result code === 10
+    authUserProfile: null
 };
 
+
+//Reducer
 const authReducer = (state = initialState, action) => {
 
     switch (action.type) {
+
         case ADD_DATA:
             return {
                 ...state,
-                //koly my wpysujemo pisla spred operatora vlastywist kotra  
-                //je w nashomu state to my tym samym perepysujemo ciu wlastywist
                 data: action.data,
-                //jakszczo do nas prychodiat korystuwaci z servera, to my wstanowlujemo isAuth = true
-                //szczob pokazatu, szczo korystuwa zaloguwawsia
                 isAuth: action.isAuth,
-                errorSubmitMessage: undefined
             };
-        case ADD_CAPTCHA_URL:{
+
+        case ADD_CAPTCHA_URL:
             return {
                 ...state,
                 captcha: action.path
+            };
 
-            }
-        }
+        case AUTH_USER_PROFILE:
+            return{
+                ...state,
+                authUserProfile: action.userProfile
+            };
+
+            case SAVE_PHOTO_SUCCESS: 
+                return {
+                    ...state,
+                    authUserProfile: {...state.authUserProfile, photos: action.photos},
+                }
+            ;
 
         default:
             return state;
     }
 };
-//створюємо ActionCreatore, щоб не помилитись при тому як передаємо dispatch 
-//до компоненти і імпортую їх в файл NewMessage
+
+
+//Action Creators
 
 export const addAuthUserData = (id, login, email, isAuth) => ({type: ADD_DATA, data: {id, login, email}, isAuth});
-export const addCaptchaUrl = (captchaUrl) => ({type: ADD_CAPTCHA_URL, path: captchaUrl})
+export const addCaptchaUrl = (captchaUrl) => ({type: ADD_CAPTCHA_URL, path: captchaUrl});
+export const addAuthUserProfile = (userProfile) => ({type: AUTH_USER_PROFILE, userProfile});
+export const saveAuthUserPhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
 
-//thunkCreator for auth user
-export const authUser = () => {
-    return async (dispatch) => {
+//side effect, thunks
+
+export const authUser = () => async (dispatch) => {
         const data = await headerAPI.authUser()
         if (data.resultCode === 0) {
             let {
@@ -56,9 +70,10 @@ export const authUser = () => {
                 email
             } = data.data;
             dispatch(addAuthUserData(id, login, email, true));
+            const response = await profileAPI.getUserProfile(id)
+            dispatch(addAuthUserProfile(response.data));
         }
     }
-}
 
 export const login = (values) => {
     return async (dispatch) => {

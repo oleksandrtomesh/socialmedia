@@ -7,7 +7,7 @@ export const useStyles = makeStyles({
         width: '100%',
         marginBottom: '15px'
     },
-    loginButton:{
+    LoginButton:{
         width: '10rem',
         background: 'linear-gradient(45deg, gray, #2d2d2d)',
         color: 'white'
@@ -17,6 +17,11 @@ export const useStyles = makeStyles({
         width: '10rem',
         background: 'white',
         color: 'black'
+    },
+
+    UploadButton: {
+        background: 'linear-gradient(45deg, gray, #2d2d2d)',
+        color: 'white'
     }
     
 })
