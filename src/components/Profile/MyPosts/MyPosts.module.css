@@ -1,6 +1,6 @@
 .MyPosts {
     display: grid;
-    grid-template-rows: 7rem 1fr;
+    grid-template-rows: 5rem 1fr;
     grid-gap: 10px;
     grid-area: MyPosts;
 }

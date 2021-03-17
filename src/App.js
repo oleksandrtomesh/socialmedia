@@ -4,7 +4,6 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import NavbarContainer from './components/Navbar/NavbarContainer';
-//import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/LoginContainer';
 import React, { lazy } from 'react';
@@ -13,6 +12,7 @@ import { initialized } from './redux/app-reducer';
 import Loader from './components/commonElements/loader/loader';
 import { Suspense } from 'react';
 
+//use React.lazy for code-splitting
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = lazy(() => import ('./components/Users/UsersContainer'));

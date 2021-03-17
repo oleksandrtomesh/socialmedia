@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, Form, } from 'react-final-form';
 import c from './NewMessages.module.css';
 import { InputCustom, CustomButton } from '../../commonElements/formComponent';
-import { composeValidators, required, maxLengthCreator } from '../../../utilits/validators';
+import {maxLengthCreator } from '../../../utilits/validators';
 
 const NewMessages = (props) => {
 
@@ -24,7 +24,7 @@ const NewMessages = (props) => {
                             name="message" 
                             component={InputCustom} 
                             placeholder="Enter your message" 
-                            validate={composeValidators(required, maxLengthCreator(30))}
+                            validate={maxLengthCreator(150)}
                         />
                     </div>
                     <div>

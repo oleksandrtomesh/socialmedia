@@ -1,7 +1,7 @@
 import React from 'react';
 import c from './AddNewPost.module.css';
 import { Field, Form } from 'react-final-form';
-import { maxLengthCreator, composeValidators, required } from '../../../../utilits/validators';
+import { maxLengthCreator} from '../../../../utilits/validators';
 import { CustomButton, InputCustom } from '../../../commonElements/formComponent';
 
 const AddNewPost = (props) => {
@@ -21,7 +21,7 @@ const AddNewPost = (props) => {
               name="newPostText" 
               component= {InputCustom} 
               label="Something new?"
-              validate={composeValidators(required, maxLengthCreator(30))}/>
+              validate={maxLengthCreator(150)}/>
             </div>
             <div>
               <CustomButton type="submit">Post</CustomButton>

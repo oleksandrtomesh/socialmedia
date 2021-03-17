@@ -2,7 +2,7 @@ import styles from "./formComponent.module.css";
 import TextField from "@material-ui/core/textfield";
 import {useStyles} from './formComponentCustomStyles';
 import { Button } from '@material-ui/core';
-import React from 'react'
+import React from 'react'; 
 
 export const FormConstructor = ({input, meta, ...props}) => {
     const hasError = meta.error && meta.touched;
@@ -26,19 +26,20 @@ export const Textarea = (props) => {
 }
 
 export const InputCustom = (props) => {
+
     const classes = useStyles()
     const {input, meta, children, ...restProps} = props;
     return (
-        <FormConstructor {...props}>
             <TextField 
                 className={classes.textField}
                 variant="outlined"
                 color="primary" 
                 label={input.name}
                 size="small"
+                error={meta.error && meta.touched}
+                helperText={meta.touched ? meta.error : undefined}
                 {...input} 
                 {...restProps} />
-        </FormConstructor>
     )
 };
 

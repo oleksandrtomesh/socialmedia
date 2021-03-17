@@ -7,13 +7,12 @@
     border-radius: 5px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
     padding: 1.3rem 2rem;
-    height: 6rem;
+    height: 5rem;
 }
 .addNewMessage .textarea{
     width: 100%;
-    box-sizing: border-box;
 }
 
 .addNewMessage button {
-    padding: 12px;
+    padding: 8px;
 }

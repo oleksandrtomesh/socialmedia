@@ -25,16 +25,6 @@ const Login = (props) => {
   <Form
     onSubmit ={onSubmit}
     captcha = {props.captcha}
-    validate={values => {
-      const errors = {}
-      if (!values.email) {
-        errors.email = 'Required'
-      }
-      if (!values.password) {
-        errors.password = 'Required'
-      }
-      return errors
-    }}
     render={({handleSubmit, invalid, submitError, ...props})=> (
         <div>
           <form className={styles.loginForm} onSubmit={handleSubmit}>
