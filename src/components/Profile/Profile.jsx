@@ -3,7 +3,6 @@ import Info from './Info/Info';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import c from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
-import { Button } from '@material-ui/core';
 import { UploadButton } from '../commonElements/formComponent';
 
 

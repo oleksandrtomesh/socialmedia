@@ -1,4 +1,5 @@
 import { headerAPI, loginApi, profileAPI } from '../api/api';
+import { UserProfileType, PhotosType } from '../types/types';
 
 //Actions
 const ADD_DATA = 'app/auth-reducer/ADD_DATA';
@@ -6,17 +7,25 @@ const ADD_CAPTCHA_URL ='app/auth-reducer/ADD_CAPTCHA_URL';
 const AUTH_USER_PROFILE = 'app/auth-reducer/AUTH_USER_PROFILE';
 const SAVE_PHOTO_SUCCESS = 'app/auth-reducer/SAVE_PHOTO_SUCCESS';
 
-//Initia State
-let initialState = {
-    data: null,
+//Initial State
+type DataType = {
+    id: number | null
+    login: string | null
+    email: string | null
+}
+
+
+let initialState= {
+    data: null as DataType | null,
     isAuth: false,  //check if user login
     captcha: undefined,  //captcha url if result code === 10
-    authUserProfile: null
+    authUserProfile: null as UserProfileType | null,
 };
 
+type InitialStateType = typeof initialState
 
 //Reducer
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action:any):InitialStateType => {
 
     switch (action.type) {
 
@@ -52,16 +61,40 @@ const authReducer = (state = initialState, action) => {
 };
 
 
-//Action Creators
 
-export const addAuthUserData = (id, login, email, isAuth) => ({type: ADD_DATA, data: {id, login, email}, isAuth});
-export const addCaptchaUrl = (captchaUrl) => ({type: ADD_CAPTCHA_URL, path: captchaUrl});
-export const addAuthUserProfile = (userProfile) => ({type: AUTH_USER_PROFILE, userProfile});
-export const saveAuthUserPhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
+
+//Action Creators
+type AuthReducerActionCreatorType = {
+    type: typeof ADD_DATA
+    data: DataType
+    isAuth: boolean
+}
+export const addAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean):AuthReducerActionCreatorType => 
+    ({type: ADD_DATA, data: {id, login, email}, isAuth});
+
+type AddCaptchaUrlType = {
+    type: typeof ADD_CAPTCHA_URL
+    path: string | undefined
+}
+export const addCaptchaUrl = (captchaUrl: string | undefined):AddCaptchaUrlType => ({type: ADD_CAPTCHA_URL, path: captchaUrl});
+
+type addAuthUserProfileActionCreatorType ={
+    type: typeof AUTH_USER_PROFILE
+    userProfile: UserProfileType
+}
+export const addAuthUserProfile = (userProfile: UserProfileType):addAuthUserProfileActionCreatorType => 
+    ({type: AUTH_USER_PROFILE, userProfile});
+
+type saveAuthUserPhotoSuccessActionCreatorType ={
+    type: typeof SAVE_PHOTO_SUCCESS
+    photos: PhotosType
+}
+export const saveAuthUserPhotoSuccess = (photos: PhotosType):saveAuthUserPhotoSuccessActionCreatorType => 
+    ({type: SAVE_PHOTO_SUCCESS, photos})
 
 //side effect, thunks
 
-export const authUser = () => async (dispatch) => {
+export const authUser = () => async (dispatch: any) => {
         const data = await headerAPI.authUser()
         if (data.resultCode === 0) {
             let {
@@ -75,8 +108,8 @@ export const authUser = () => async (dispatch) => {
         }
     }
 
-export const login = (values) => {
-    return async (dispatch) => {
+export const login = (values:any) => {
+    return async (dispatch: any) => {
         const response = await loginApi.login(values);
         if (response.data.resultCode === 0) {
             dispatch(authUser());
@@ -91,7 +124,7 @@ export const login = (values) => {
     };
 }
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch: any) => {
     const response = await loginApi.logout();
     if (response.data.resultCode === 0) {
         dispatch(addAuthUserData(null, null, null, false))

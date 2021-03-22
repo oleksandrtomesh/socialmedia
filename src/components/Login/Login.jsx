@@ -28,7 +28,7 @@ const Login = (props) => {
     render={({handleSubmit, invalid, submitError, ...props})=> (
         <div>
           <form className={styles.loginForm} onSubmit={handleSubmit}>
-            <div>
+            <div className={styles.email}>
               <Field name={"email"} component={InputCustom} validate={composeValidators(required, maxLengthCreator(30))}/>
             </div>
             <div>

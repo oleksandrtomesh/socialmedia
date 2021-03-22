@@ -1,3 +1,8 @@
+type FriendsItemType = {
+    id: number
+    name: string
+}
+
 let initialState = {
     friendsItems: [
     {id: 1, name: "Tania"},
@@ -9,9 +14,11 @@ let initialState = {
     {id: 7, name: "Vova"},
     {id: 8, name: "Vova"},
     {id: 9, name: "Vova"}
-]
+] as Array<FriendsItemType>
 };
 
-const friendsItemsReducer = (state = initialState, action) => state;
+type InitialStateType = typeof initialState
+
+const friendsItemsReducer = (state = initialState, action: any):InitialStateType => state;
 
 export default friendsItemsReducer;

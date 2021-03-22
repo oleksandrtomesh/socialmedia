@@ -31,9 +31,17 @@ margin-left: 35%
   margin: 1rem;
 }
 
-.editModeForm h4,
-.editModeForm .lookingForAJob,
+.editMode h4
+{
+  margin-bottom: 1rem;
+}
+
 h5
+{
+  margin-bottom: 2rem;
+}
+
+.editModeForm div
 {
   margin-bottom: 1rem;
 }
