@@ -29,7 +29,7 @@ let initialState = {
     ] as Array<PostDataType>,
     newPostText: "" as string,
     userProfile: null as UserProfileType | null,
-    userStatus: "" as string,
+    userStatus: "" as string | null,
     isFetching: false as boolean
 };
 
@@ -99,14 +99,14 @@ export const addPost = (newPostText: string):AddPostType  => ({type: ADD_POST, n
 type UpdateTextAreaActionCreatorType = { type: typeof UPDATE_TEXT_AREA, newText: string }
 export const updateTextAreaActionCreator = (text: string):UpdateTextAreaActionCreatorType  => ({ type: UPDATE_TEXT_AREA, newText: text });
 
-type setProfile = {type:typeof SET_USER_PROFILE, profile: UserProfileType }
-export const setProfile = (profile: UserProfileType):setProfile => ({ type: SET_USER_PROFILE, profile });
+type SetProfileType = {type:typeof SET_USER_PROFILE, profile: UserProfileType }
+export const setProfile = (profile: UserProfileType):SetProfileType => ({ type: SET_USER_PROFILE, profile });
 
 type setUserStatusType = {type: typeof SET_USER_STATUS, status: string}
 export const setUserStatus = (status:string): setUserStatusType => ({type: SET_USER_STATUS, status});
 
-type savePhotoSuccess = {type: typeof SAVE_PHOTO_SUCCESS, photos: PhotosType}
-export const savePhotoSuccess = (photos: PhotosType):savePhotoSuccess  => ({type: SAVE_PHOTO_SUCCESS, photos})
+type SavePhotoSuccessType = {type: typeof SAVE_PHOTO_SUCCESS, photos: PhotosType}
+export const savePhotoSuccess = (photos: PhotosType):SavePhotoSuccessType  => ({type: SAVE_PHOTO_SUCCESS, photos})
 
 type isFetchingType = {type: typeof IS_FETCHING, isFetching: boolean}
 export const isFetching = (isFetching: boolean):isFetchingType  => ({type: IS_FETCHING, isFetching})

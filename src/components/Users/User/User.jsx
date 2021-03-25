@@ -17,7 +17,7 @@ let User = ({user, ...props}) => {
             </div>
             <div>
                 <Button type="submit" variant="dark" 
-                    disabled={props.isFollowFetching.some(id => id === user.id)} 
+                    disabled={props.followingInProgress.some(id => id === user.id)} 
                     onClick={() => {props.toggleFollowingUser(user.id, user.followed)}}
                 >
                     {user.followed ? "Unfollow" : "Follow"}

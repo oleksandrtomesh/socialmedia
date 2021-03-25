@@ -3,8 +3,19 @@ import React from 'react';
 import Pagination from 'react-js-pagination'
 import User from './User/User';
 import styles from './UsersPage.module.css'
+import { UsersType } from '../../redux/users-reducer';
 
-let Users = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) => {
+type PropsType = {
+    pageSize: number
+    totalUsersCount: number
+    onPageChange: (pageNumber: number) => void
+    currentPage: number
+    users: Array<UsersType>
+
+}
+
+
+let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) => {
 
 
     return (
@@ -24,5 +35,6 @@ let Users = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) =
         </div>
     );
 }
+
 
 export default Users

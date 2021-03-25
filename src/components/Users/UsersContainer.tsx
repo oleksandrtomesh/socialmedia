@@ -1,31 +1,36 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import {
     selectPage,
     getUsers,
     toggleIsFetching,
     setUsers,
-    toggleFollowingUser
+    toggleFollowingUser,
 } from '../../redux/users-reducer';
 import Users from './Users';
 import Loader from '../commonElements/loader/loader';
 import usersAPI from '../../api/api';
 import { compose } from 'redux';
 import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
+import { UserProfileType } from '../../types/types';
+import { AppStateType } from '../../redux/redux-store';
 
+type PropsFromRedux = ConnectedProps<typeof connector>
 
-class UsersPage extends React.Component {
+type PropsType = PropsFromRedux & {onPageChange: (pageNumber: number) => void}
+
+class UsersPage extends React.Component<PropsType> {
 
     componentDidMount = () => {
         //get users for page 1
         this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
-    onPageChange = (pageNumber) => {
+    onPageChange = (pageNumber: number) => {
         this.props.selectPage(pageNumber);
         this.props.toggleIsFetching(true);
         //getUsers function what get users from server
-        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then((data: any) => {
             this.props.toggleIsFetching(false);
             this.props.setUsers(data.items);    
         });
@@ -39,17 +44,6 @@ class UsersPage extends React.Component {
                 {this.props.isFetching 
                 ? <Loader /> 
                 : <Users 
-                    totalUsersCount={this.props.totalUsersCount}
-                    pageSize={this.props.pageSize}
-                    currentPage={this.props.currentPage}
-                    users={this.props.users}
-                    onPageChange={this.onPageChange}
-                    unfollow={this.props.unfollow}
-                    follow={this.props.follow} 
-                    toggleIsFollowFetching={this.props.toggleIsFollowFetching}
-                    isFollowFetching={this.props.isFollowFetching}
-                    unfollowUser={this.props.unfollowUser}
-                    followUser={this.props.followUser}
                     {...this.props}
                     />}
             </div>
@@ -58,20 +52,23 @@ class UsersPage extends React.Component {
 }
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        isFollowFetching: state.usersPage.isFollowFetching,
+        followingInProgress: state.usersPage.followingInProgress,
         isAuth: state.authorization.isAuth
     };
 };
 
+
+const connector = connect (mapStateToProps, { selectPage, toggleIsFetching, setUsers, getUsers, toggleFollowingUser})
+
 export default compose(
-    connect(mapStateToProps,{ selectPage, toggleIsFetching, setUsers, getUsers, toggleFollowingUser}),
+    connector,
     withAuthRedirect
 )(UsersPage);
 

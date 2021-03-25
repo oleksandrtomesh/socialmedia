@@ -13,7 +13,7 @@ const TOGGLE_FOLLOWING = 'TOGGLE_FOLLOWING';
 
 //Initial State
 
-type UsersType = {
+export type UsersType = {
     id: number
     name: string
     status: string
@@ -81,16 +81,16 @@ const usersReducer = (state = initialState, action: any):initialStateType => {
 
 
 //action creators
-type SetUsersType = { type: typeof SET_USERS, users: UsersType}
+export type SetUsersType = { type: typeof SET_USERS, users: UsersType}
 export const setUsers = (users: UsersType):SetUsersType  => ({ type: SET_USERS, users})
 
-type SelectPageType = {type:typeof SELECT_PAGE, currentPage: number}
+export type SelectPageType = {type:typeof SELECT_PAGE, currentPage: number}
 export const selectPage = (currentPage: number):SelectPageType  => ({ type: SELECT_PAGE, currentPage})
 
 type SetTotalCountType = {type:typeof SET_TOTAL_COUNT, totalCount: number}
 export const setTotalCount = (totalCount: number): SetTotalCountType => ({ type: SET_TOTAL_COUNT, totalCount})
 
-type ToggleIsFetchingType = { type:typeof TOGGLE_IS_FETCHING, isFetching:boolean}
+export type ToggleIsFetchingType = { type:typeof TOGGLE_IS_FETCHING, isFetching:boolean}
 export const toggleIsFetching = (isFetching: boolean):ToggleIsFetchingType  => ({ type: TOGGLE_IS_FETCHING, isFetching})
 
 type ToggleIsFollowFetchingType = { type:typeof TOGGLE_IS_FOLLOW_FETCHING, isFetching: boolean, userId: number}
