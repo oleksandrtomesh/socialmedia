@@ -8,15 +8,19 @@ import { UsersType } from '../../redux/users-reducer';
 type PropsType = {
     pageSize: number
     totalUsersCount: number
-    onPageChange: (pageNumber: number) => void
     currentPage: number
     users: Array<UsersType>
-
+    followingInProgress: Array<number>
+    toggleFollowingUser: (userId: number, followed: boolean) => void
+    handlePageChange: (pageNumber:number, pageSize: number) => void
 }
 
 
-let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, onPageChange, currentPage, ...props}) => {
+let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, currentPage, handlePageChange, users, ...props}) => {
 
+    const onPageChange = (pageNumber: number): void =>{
+        handlePageChange(pageNumber, pageSize);
+    }
 
     return (
         <div>
@@ -31,7 +35,7 @@ let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, onPageChange, curr
                 linkClass="page-link"
             />
             </div>
-            {props.users.map(user => <User key={user.id} user={user}  {...props}/>)}
+            {users.map(user => <User key={user.id} user={user}  {...props}/>)}
         </div>
     );
 }

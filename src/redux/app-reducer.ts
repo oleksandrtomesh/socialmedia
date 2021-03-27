@@ -1,4 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
 import { authUser } from './auth-reducer';
+import { AppStateType } from './redux-store';
 
 //Action types
 const INITIALIZE_APP = 'myApp/auth-reducer/INITIALIZE_APP';
@@ -14,7 +16,7 @@ type InitialStateType = typeof initialState
 //Reducer
 
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
+const appReducer = (state = initialState, action: ActionType): InitialStateType => {
 
     switch (action.type) {
         case INITIALIZE_APP:
@@ -30,19 +32,22 @@ const appReducer = (state = initialState, action: any): InitialStateType => {
 };
 
 //action creators
+type ActionType = initializingSuccessActionCreatorType;
 
 type initializingSuccessActionCreatorType = {
     type: typeof INITIALIZE_APP
-}
+};
 
 export const initializingSuccess = ():initializingSuccessActionCreatorType  => ({type: INITIALIZE_APP});
 
 //thunkCreator for auth user
-export const initialized = () => {
-    return (dispatch: any) => {
+
+export type ThunkType = ThunkAction <void, AppStateType, unknown, ActionType>
+
+export const initialized = (): ThunkType => {
+    //thunk what return resolve of all promises
+    return (dispatch, getState:any) => {
         let promise = dispatch(authUser());
-        //коли ми отримуємо resolve зі всіх промісів тоді dispatch (initializingSuccess) щоб властивіть 
-        //initialized змінилась на true
         Promise.all([promise]).then(() => {
             dispatch(initializingSuccess())
         })

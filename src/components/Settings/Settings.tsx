@@ -1,6 +1,7 @@
 //import c from './Settings.module.css'
+import React from 'react'
 
-const Settings = (props) => {
+const Settings: React.FC = (props) => {
     return (
         <div>
             Settings

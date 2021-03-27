@@ -1,3 +1,5 @@
+import { AppStateType } from './redux-store';
+import { ThunkAction } from "redux-thunk";
 import usersAPI from "../api/api";
 import { PhotosType } from "../types/types";
 
@@ -36,7 +38,7 @@ type initialStateType = typeof initialState
 
 //Reducer
 
-const usersReducer = (state = initialState, action: any):initialStateType => {
+const usersReducer = (state = initialState, action: ActionTypes):initialStateType => {
 
     switch (action.type) {
         //change following of user
@@ -81,8 +83,10 @@ const usersReducer = (state = initialState, action: any):initialStateType => {
 
 
 //action creators
-export type SetUsersType = { type: typeof SET_USERS, users: UsersType}
-export const setUsers = (users: UsersType):SetUsersType  => ({ type: SET_USERS, users})
+type ActionTypes = SetUsersType | SelectPageType | SetTotalCountType | ToggleIsFetchingType | ToggleIsFollowFetchingType | ToggleFollowingType
+
+export type SetUsersType = { type: typeof SET_USERS, users: Array<UsersType>}
+export const setUsers = (users: Array<UsersType>):SetUsersType  => ({ type: SET_USERS, users})
 
 export type SelectPageType = {type:typeof SELECT_PAGE, currentPage: number}
 export const selectPage = (currentPage: number):SelectPageType  => ({ type: SELECT_PAGE, currentPage})
@@ -103,8 +107,10 @@ export const toggleFollowing = (userId:number, userFollowed: boolean):ToggleFoll
 
 //thunk creators
 
-export const getUsers = (currentPage: number, pageSize: number) => {
-    return async (dispatch: any) => {
+type UserReducerThunkType = ThunkAction <void, AppStateType, unknown, ActionTypes>
+
+export const getUsers = (currentPage: number, pageSize: number): UserReducerThunkType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true));
         const data = await usersAPI.getUsers(currentPage, pageSize);
         dispatch(toggleIsFetching(false));
@@ -113,10 +119,20 @@ export const getUsers = (currentPage: number, pageSize: number) => {
     };
 };
 
+export const handlePageChange = (pageNumber:number, pageSize: number): UserReducerThunkType => async (dispatch) =>
+{
+    dispatch(selectPage(pageNumber));
+    dispatch(toggleIsFetching(true));
+    //getUsers function what get users from server
+    const data = await usersAPI.getUsers(pageNumber, pageSize);
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(data.items));    
+}
 
-export const toggleFollowingUser = (userId: number, userFollowed: boolean) => {
 
-    return async (dispatch:any) => {
+export const toggleFollowingUser = (userId: number, userFollowed: boolean): UserReducerThunkType => {
+
+    return async (dispatch) => {
         dispatch(toggleIsFollowFetching(true, userId));
         if (userFollowed === false){
             let data = await usersAPI.followUser(userId);

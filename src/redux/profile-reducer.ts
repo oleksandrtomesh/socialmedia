@@ -1,6 +1,8 @@
+import { ThunkAction } from 'redux-thunk';
 import { profileAPI } from '../api/api';
 import { UserProfileType, PhotosType } from '../types/types';
-import { saveAuthUserPhotoSuccess } from './auth-reducer';
+import { saveAuthUserPhotoSuccess, saveAuthUserPhotoSuccessActionCreatorType } from './auth-reducer';
+import { AppStateType } from './redux-store';
 
 
 //actions
@@ -36,7 +38,7 @@ let initialState = {
 type InitialStateType = typeof initialState
 
 //Reducer
-const profileReducer = (state = initialState, action: any):InitialStateType  => {
+const profileReducer = (state = initialState, action: ActionTypes):InitialStateType  => {
 
         switch (action.type) {
             case ADD_POST:
@@ -93,6 +95,9 @@ const profileReducer = (state = initialState, action: any):InitialStateType  => 
     }
 
 //Action Creators
+type ActionTypes = AddPostType | UpdateTextAreaActionCreatorType | SetProfileType | setUserStatusType |
+                    SavePhotoSuccessType | isFetchingType | saveAuthUserPhotoSuccessActionCreatorType
+
 type AddPostType = {type: typeof ADD_POST, newPostText: string}
 export const addPost = (newPostText: string):AddPostType  => ({type: ADD_POST, newPostText});
 
@@ -114,19 +119,21 @@ export const isFetching = (isFetching: boolean):isFetchingType  => ({type: IS_FE
 
 //side effects, Thinks
 
-export const addNewPost = (newPostText: string) => {
-    return (dispatch:any) => dispatch(addPost(newPostText))
+type ProfileReducerThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes> 
+
+export const addNewPost = (newPostText: string): ProfileReducerThunkType => {
+    return (dispatch) => dispatch(addPost(newPostText))
 };
 
-export const setUserProfile = (userId:number) => async (dispatch: any) => { 
+export const setUserProfile = (userId:number | null): ProfileReducerThunkType => async (dispatch) => { 
             dispatch(isFetching(true))
             const response = await profileAPI.getUserProfile(userId)
             dispatch(setProfile(response.data));
             dispatch(isFetching(false))
         }
 
-export const setStatus = (userId:number) => {
-    return ((dispatch:any) => {
+export const setStatus = (userId:number): ProfileReducerThunkType => {
+    return ((dispatch) => {
         profileAPI.getUserStatus(userId)
             .then((response: any) => {
                 dispatch(setUserStatus(response.data))
@@ -136,8 +143,8 @@ export const setStatus = (userId:number) => {
     )
 };
 
-export const updateStatus = (status: string) => {
-    return ((dispatch:any) => {
+export const updateStatus = (status: string): ProfileReducerThunkType => {
+    return ((dispatch) => {
             profileAPI.updateUserStatus(status)
                 .then((response: any) => {
                     if (response.resultCode === 0 ){
@@ -149,7 +156,7 @@ export const updateStatus = (status: string) => {
     )
 }
 
-export const saveUserPhoto = (photo: PhotosType) => async (dispatch:any) => {
+export const saveUserPhoto = (photo: PhotosType): ProfileReducerThunkType => async (dispatch) => {
     dispatch(isFetching(true))
     const response = await profileAPI.updateUserPhoto(photo)
         if (response.data.resultCode === 0 ){
@@ -159,8 +166,8 @@ export const saveUserPhoto = (photo: PhotosType) => async (dispatch:any) => {
     dispatch(isFetching(false))
 }
 
-export const saveProfileInfo = (profile: UserProfileType) => async (dispatch: any, getState: any) => {
-    const userId = getState().authorization.data.id;
+export const saveProfileInfo = (profile: UserProfileType): ProfileReducerThunkType => async (dispatch, getState: ()=> AppStateType) => {
+    const userId: number | null = getState().authorization.data!.id;
     const response = await profileAPI.updateUserProfile(profile)
     if (response.data.resultCode === 0){
         dispatch(setUserProfile(userId))

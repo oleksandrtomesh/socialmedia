@@ -3,8 +3,15 @@ import styles from './UsersPage.module.css';
 import userPhoto from "../../../assets/images/avatar.png";
 import { NavLink } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
+import { UsersType } from '../../../redux/users-reducer'
 
-let User = ({user, ...props}) => {
+type PropsType = {
+    user: UsersType
+    followingInProgress: Array<number>
+    toggleFollowingUser: (userId: number, followed: boolean) => void
+}
+
+let User: React.FC<PropsType> = ({user , followingInProgress, toggleFollowingUser}) => {
 
     return (
     <div className={styles.item}>
@@ -17,8 +24,8 @@ let User = ({user, ...props}) => {
             </div>
             <div>
                 <Button type="submit" variant="dark" 
-                    disabled={props.followingInProgress.some(id => id === user.id)} 
-                    onClick={() => {props.toggleFollowingUser(user.id, user.followed)}}
+                    disabled={followingInProgress.some(id => id === user.id)} 
+                    onClick={() => {toggleFollowingUser(user.id, user.followed)}}
                 >
                     {user.followed ? "Unfollow" : "Follow"}
                 </Button>
@@ -27,8 +34,8 @@ let User = ({user, ...props}) => {
         <div>
             <div>{user.name}</div>
             <div>{user.status}</div>
-            <div>{"u.location.country"}</div>
-            <div>{"u.location.city"}</div>
+            {/* <div>{"u.location.country"}</div>
+            <div>{"u.location.city"}</div> */}
         </div>
     </div>
     )

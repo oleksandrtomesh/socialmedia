@@ -1,17 +1,17 @@
-type Contacts = {
-    github: string | null
-    vk: string | null
-    facebook: string | null
-    instagram: string | null
-    twitter: string | null
-    website: string | null
-    youtube: string | null
-    mainLink: string | null
+export type Contacts = {
+    [github: string]: string 
+    vk: string 
+    facebook: string 
+    instagram: string
+    twitter: string 
+    website: string 
+    youtube: string 
+    mainLink: string 
 }
 
 export type PhotosType = {
-    small: string | null
-    large: string | null
+    small?: string | null
+    large?: string | null
 }
 export type UserProfileType = {
     userId?: number 
@@ -20,6 +20,6 @@ export type UserProfileType = {
     lookingForAJobDescription?: string
     fullName?: string
     contacts?: Contacts
-    photos?: PhotosType | null
+    photos?: PhotosType | undefined
     
 }

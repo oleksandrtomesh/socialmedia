@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
 type DialogType={
@@ -30,7 +32,7 @@ export type InitialStateType = typeof initialState
 
 
 
-const dialogsReducer = (state = initialState, action: any):InitialStateType  => {
+const dialogsReducer = (state = initialState, action: AddMessageActionCreatorType):InitialStateType  => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -52,6 +54,7 @@ const dialogsReducer = (state = initialState, action: any):InitialStateType  => 
 
 
 // action creators
+
 type AddMessageActionCreatorType = {
     type: typeof ADD_MESSAGE
     message: string
@@ -62,7 +65,7 @@ export const addMessageActionCreator = (message: string): AddMessageActionCreato
 //thunk creator
 
 export const addMessage = (message: string) => {
-    return (dispatch: any) => dispatch(addMessageActionCreator(message))
+    return (dispatch: Dispatch<AddMessageActionCreatorType>): void => dispatch(addMessageActionCreator(message))
 };
 
 

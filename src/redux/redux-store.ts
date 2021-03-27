@@ -22,6 +22,7 @@ type RootReducerType = typeof rootReducer // (globalState: AppStateType) => AppS
 //get type of response of function rootReducer
 export type AppStateType = ReturnType<RootReducerType> 
 
+
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));

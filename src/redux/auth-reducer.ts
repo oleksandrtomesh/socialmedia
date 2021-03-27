@@ -1,5 +1,7 @@
+import { ThunkAction } from 'redux-thunk';
 import { headerAPI, loginApi, profileAPI } from '../api/api';
 import { UserProfileType, PhotosType } from '../types/types';
+import { AppStateType } from './redux-store';
 
 //Actions
 const ADD_DATA = 'app/auth-reducer/ADD_DATA';
@@ -18,14 +20,14 @@ type DataType = {
 let initialState= {
     data: null as DataType | null,
     isAuth: false,  //check if user login
-    captcha: undefined,  //captcha url if result code === 10
-    authUserProfile: null as UserProfileType | null,
+    captcha: undefined as string | undefined,  //captcha url if result code === 10
+    authUserProfile: null as UserProfileType | null
 };
 
 type InitialStateType = typeof initialState
 
 //Reducer
-const authReducer = (state = initialState, action:any):InitialStateType => {
+const authReducer = (state = initialState, action:  ActionTypes):InitialStateType => {
 
     switch (action.type) {
 
@@ -64,6 +66,9 @@ const authReducer = (state = initialState, action:any):InitialStateType => {
 
 
 //Action Creators
+type ActionTypes = AuthReducerActionCreatorType | AddCaptchaUrlType | addAuthUserProfileActionCreatorType |
+                    saveAuthUserPhotoSuccessActionCreatorType 
+
 type AuthReducerActionCreatorType = {
     type: typeof ADD_DATA
     data: DataType
@@ -85,7 +90,7 @@ type addAuthUserProfileActionCreatorType ={
 export const addAuthUserProfile = (userProfile: UserProfileType):addAuthUserProfileActionCreatorType => 
     ({type: AUTH_USER_PROFILE, userProfile});
 
-type saveAuthUserPhotoSuccessActionCreatorType ={
+export type saveAuthUserPhotoSuccessActionCreatorType ={
     type: typeof SAVE_PHOTO_SUCCESS
     photos: PhotosType
 }
@@ -94,7 +99,9 @@ export const saveAuthUserPhotoSuccess = (photos: PhotosType):saveAuthUserPhotoSu
 
 //side effect, thunks
 
-export const authUser = () => async (dispatch: any) => {
+type AuthReducerThunkType = ThunkAction <void, AppStateType, unknown, ActionTypes>
+
+export const authUser = (): AuthReducerThunkType => async (dispatch) => {
         const data = await headerAPI.authUser()
         if (data.resultCode === 0) {
             let {
@@ -108,8 +115,13 @@ export const authUser = () => async (dispatch: any) => {
         }
     }
 
-export const login = (values:any) => {
-    return async (dispatch: any) => {
+type ValuesType = {
+    email: string
+    password: string
+}
+
+export const login = (values: ValuesType):AuthReducerThunkType => {
+    return async (dispatch) => {
         const response = await loginApi.login(values);
         if (response.data.resultCode === 0) {
             dispatch(authUser());
@@ -124,7 +136,7 @@ export const login = (values:any) => {
     };
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = ():AuthReducerThunkType => async (dispatch) => {
     const response = await loginApi.logout();
     if (response.data.resultCode === 0) {
         dispatch(addAuthUserData(null, null, null, false))
