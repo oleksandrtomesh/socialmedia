@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { headerAPI, loginApi, profileAPI } from '../api/api';
+import { headerAPI, loginApi, profileAPI, ResultCode } from '../api/api';
 import { UserProfileType, PhotosType } from '../types/types';
 import { AppStateType } from './redux-store';
 
@@ -15,7 +15,6 @@ type DataType = {
     login: string | null
     email: string | null
 }
-
 
 let initialState= {
     data: null as DataType | null,
@@ -103,7 +102,7 @@ type AuthReducerThunkType = ThunkAction <void, AppStateType, unknown, ActionType
 
 export const authUser = (): AuthReducerThunkType => async (dispatch) => {
         const data = await headerAPI.authUser()
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCode.success) {
             let {
                 id,
                 login,
@@ -123,11 +122,11 @@ type ValuesType = {
 export const login = (values: ValuesType):AuthReducerThunkType => {
     return async (dispatch) => {
         const loginResponse = await loginApi.login(values);
-        if (loginResponse.resultCode === 0) {
+        if (loginResponse.resultCode === ResultCode.success) {
             dispatch(authUser());
             dispatch(addCaptchaUrl(undefined));
         } else {
-            if (loginResponse.resultCode === 10){
+            if (loginResponse.resultCode === ResultCode.captchaIsRequired){
                 const captchaUrl = await loginApi.getCaptcha()
                 dispatch(addCaptchaUrl(captchaUrl))
             }
@@ -138,7 +137,7 @@ export const login = (values: ValuesType):AuthReducerThunkType => {
 
 export const logout = ():AuthReducerThunkType => async (dispatch) => {
     const logoutResponse = await loginApi.logout();
-    if (logoutResponse.resultCode === 0) {
+    if (logoutResponse.resultCode === ResultCode.success) {
         dispatch(addAuthUserData(null, null, null, false))
     }
 }

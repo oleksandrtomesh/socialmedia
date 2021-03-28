@@ -46,7 +46,7 @@ export type ThunkType = ThunkAction <void, AppStateType, unknown, ActionType>
 
 export const initialized = (): ThunkType => {
     //thunk what return resolve of all promises
-    return (dispatch, getState:any) => {
+    return (dispatch) => {
         let promise = dispatch(authUser());
         Promise.all([promise]).then(() => {
             dispatch(initializingSuccess())

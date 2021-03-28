@@ -1,6 +1,6 @@
 import { AppStateType } from './redux-store';
 import { ThunkAction } from "redux-thunk";
-import usersAPI from "../api/api";
+import usersAPI, { ResultCode } from "../api/api";
 import { PhotosType } from "../types/types";
 
 //Actions
@@ -22,7 +22,6 @@ export type UsersType = {
     photos: PhotosType
     followed: boolean
 }
-
 
 let initialState = {
     users:[] as Array<UsersType>,
@@ -136,13 +135,13 @@ export const toggleFollowingUser = (userId: number, userFollowed: boolean): User
         dispatch(toggleIsFollowFetching(true, userId));
         if (userFollowed === false){
             let data = await usersAPI.followUser(userId);
-            if (data.resultCode === 0) {
+            if (data.resultCode === ResultCode.success) {
                 dispatch(toggleFollowing(userId, true));
             }
         };
         if (userFollowed === true){
             let data = await usersAPI.unfollowUser(userId);
-            if (data.resultCode === 0) {
+            if (data.resultCode === ResultCode.success) {
                 dispatch(toggleFollowing(userId, false));
             }
         };

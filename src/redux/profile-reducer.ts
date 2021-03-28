@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { profileAPI } from '../api/api';
+import { profileAPI, ResultCode } from '../api/api';
 import { UserProfileType, PhotosType } from '../types/types';
 import { saveAuthUserPhotoSuccess, saveAuthUserPhotoSuccessActionCreatorType } from './auth-reducer';
 import { AppStateType } from './redux-store';
@@ -138,8 +138,8 @@ export const setStatus = (userId:number): ProfileReducerThunkType => async (disp
         }
 
 export const updateStatus = (status: string): ProfileReducerThunkType => async (dispatch) => {
-    const updateStatusSuccess = await profileAPI.updateUserStatus(status)
-        if (updateStatusSuccess === 0 ){
+    const updateStatusResultCode = await profileAPI.updateUserStatus(status)
+        if (updateStatusResultCode === ResultCode.success ){
             dispatch(setUserStatus(status))
         }
 }
@@ -147,7 +147,7 @@ export const updateStatus = (status: string): ProfileReducerThunkType => async (
 export const saveUserPhoto = (photo: PhotosType): ProfileReducerThunkType => async (dispatch) => {
     dispatch(isFetching(true))
     const updateUserPhotoResponse = await profileAPI.updateUserPhoto(photo)
-        if (updateUserPhotoResponse.resultCode === 0 ){
+        if (updateUserPhotoResponse.resultCode === ResultCode.success ){
             dispatch(savePhotoSuccess(updateUserPhotoResponse.data.photos));
             dispatch(saveAuthUserPhotoSuccess(updateUserPhotoResponse.data.photos));
         }
@@ -157,7 +157,7 @@ export const saveUserPhoto = (photo: PhotosType): ProfileReducerThunkType => asy
 export const saveProfileInfo = (profile: UserProfileType): ProfileReducerThunkType => async (dispatch, getState: ()=> AppStateType) => {
     const userId: number | null = getState().authorization.data!.id;
     const updateUserProfileResponse = await profileAPI.updateUserProfile(profile)
-    if (updateUserProfileResponse.resultCode === 0){
+    if (updateUserProfileResponse.resultCode === ResultCode.success){
         dispatch(setUserProfile(userId))
     } else {
         return updateUserProfileResponse.messages;

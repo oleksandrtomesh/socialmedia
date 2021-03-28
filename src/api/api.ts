@@ -2,11 +2,15 @@ import axios from 'axios';
 import { UsersType } from '../redux/users-reducer';
 import { PhotosType, UserProfileType } from '../types/types';
 
-//w tsiomu fajli zberigajutsia funkcji w kotrych widbuwajetsia zapyt na server
+//enum for resultCode
 
+export enum ResultCode {
+    success = 0,
+    error = 1,
+    captchaIsRequired = 10
+}
 
-//za dopomogo axios.create stworujemo zapyt axios i pomoszczajemo
-//tudy wsi parametry jaki powtorujutsia w konomu zapyti
+// create instance for request to server
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -15,6 +19,8 @@ const instance = axios.create({
     }
 });
 
+
+// response types for userApi request
 type GetUsersResponseType = {
     items: Array<UsersType>
     totalCount: number
