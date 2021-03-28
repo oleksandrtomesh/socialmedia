@@ -110,8 +110,8 @@ export const authUser = (): AuthReducerThunkType => async (dispatch) => {
                 email
             } = data.data;
             dispatch(addAuthUserData(id, login, email, true));
-            const response = await profileAPI.getUserProfile(id)
-            dispatch(addAuthUserProfile(response.data));
+            const userProfile = await profileAPI.getUserProfile(id)
+            dispatch(addAuthUserProfile(userProfile));
         }
     }
 
@@ -122,23 +122,23 @@ type ValuesType = {
 
 export const login = (values: ValuesType):AuthReducerThunkType => {
     return async (dispatch) => {
-        const response = await loginApi.login(values);
-        if (response.data.resultCode === 0) {
+        const loginResponse = await loginApi.login(values);
+        if (loginResponse.resultCode === 0) {
             dispatch(authUser());
             dispatch(addCaptchaUrl(undefined));
         } else {
-            if (response.data.resultCode === 10){
-                const captcha = await loginApi.getCaptcha()
-                dispatch(addCaptchaUrl(captcha.data.url))
+            if (loginResponse.resultCode === 10){
+                const captchaUrl = await loginApi.getCaptcha()
+                dispatch(addCaptchaUrl(captchaUrl))
             }
-            return response.data.messages[0]
+            return loginResponse.messages[0]
         }
     };
 }
 
 export const logout = ():AuthReducerThunkType => async (dispatch) => {
-    const response = await loginApi.logout();
-    if (response.data.resultCode === 0) {
+    const logoutResponse = await loginApi.logout();
+    if (logoutResponse.resultCode === 0) {
         dispatch(addAuthUserData(null, null, null, false))
     }
 }

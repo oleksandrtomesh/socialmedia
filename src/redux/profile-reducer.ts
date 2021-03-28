@@ -125,54 +125,42 @@ export const addNewPost = (newPostText: string): ProfileReducerThunkType => {
     return (dispatch) => dispatch(addPost(newPostText))
 };
 
-export const setUserProfile = (userId:number | null): ProfileReducerThunkType => async (dispatch) => { 
+export const setUserProfile = (userId: number | null): ProfileReducerThunkType => async (dispatch) => { 
             dispatch(isFetching(true))
-            const response = await profileAPI.getUserProfile(userId)
-            dispatch(setProfile(response.data));
+            const userProfile = await profileAPI.getUserProfile(userId)
+            dispatch(setProfile(userProfile));
             dispatch(isFetching(false))
         }
 
-export const setStatus = (userId:number): ProfileReducerThunkType => {
-    return ((dispatch) => {
-        profileAPI.getUserStatus(userId)
-            .then((response: any) => {
-                dispatch(setUserStatus(response.data))
-                }
-            )
+export const setStatus = (userId:number): ProfileReducerThunkType => async (dispatch) => {
+        const userStatus = await profileAPI.getUserStatus(userId)
+                dispatch(setUserStatus(userStatus))
         }
-    )
-};
 
-export const updateStatus = (status: string): ProfileReducerThunkType => {
-    return ((dispatch) => {
-            profileAPI.updateUserStatus(status)
-                .then((response: any) => {
-                    if (response.resultCode === 0 ){
-                        dispatch(setUserStatus(status))
-                    }
-                }
-            )
+export const updateStatus = (status: string): ProfileReducerThunkType => async (dispatch) => {
+    const updateStatusSuccess = await profileAPI.updateUserStatus(status)
+        if (updateStatusSuccess === 0 ){
+            dispatch(setUserStatus(status))
         }
-    )
 }
 
 export const saveUserPhoto = (photo: PhotosType): ProfileReducerThunkType => async (dispatch) => {
     dispatch(isFetching(true))
-    const response = await profileAPI.updateUserPhoto(photo)
-        if (response.data.resultCode === 0 ){
-            dispatch(savePhotoSuccess(response.data.data.photos));
-            dispatch(saveAuthUserPhotoSuccess(response.data.data.photos));
+    const updateUserPhotoResponse = await profileAPI.updateUserPhoto(photo)
+        if (updateUserPhotoResponse.resultCode === 0 ){
+            dispatch(savePhotoSuccess(updateUserPhotoResponse.data.photos));
+            dispatch(saveAuthUserPhotoSuccess(updateUserPhotoResponse.data.photos));
         }
     dispatch(isFetching(false))
 }
 
 export const saveProfileInfo = (profile: UserProfileType): ProfileReducerThunkType => async (dispatch, getState: ()=> AppStateType) => {
     const userId: number | null = getState().authorization.data!.id;
-    const response = await profileAPI.updateUserProfile(profile)
-    if (response.data.resultCode === 0){
+    const updateUserProfileResponse = await profileAPI.updateUserProfile(profile)
+    if (updateUserProfileResponse.resultCode === 0){
         dispatch(setUserProfile(userId))
     } else {
-        return response.data.messages;
+        return updateUserProfileResponse.messages;
     }
 }
 
