@@ -98,7 +98,7 @@ export const saveAuthUserPhotoSuccess = (photos: PhotosType):saveAuthUserPhotoSu
 
 //side effect, thunks
 
-type AuthReducerThunkType = ThunkAction <void, AppStateType, unknown, ActionTypes>
+export type AuthReducerThunkType = ThunkAction <void, AppStateType, unknown, ActionTypes>
 
 export const authUser = (): AuthReducerThunkType => async (dispatch) => {
         const data = await headerAPI.authUser()

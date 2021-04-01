@@ -1,22 +1,31 @@
+import React from 'react'
 import {Form, Field} from 'react-final-form'
 import { InputCustom, CustomButton} from '../commonElements/formComponent';
 import { composeValidators, maxLengthCreator, required } from '../../utilits/validators';
 import { Redirect } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';
 import styles from './Login.module.css'
+import { PropsFromRedux } from './LoginContainer';
 
 
 
-const Login = (props) => {
+const Login: React.FC<PropsFromRedux> = ({isAuth, captcha, login}) => {
 
-  const onSubmit = async values => {
-    let error = await props.login(values);
+type ValuesType = {
+  email: string
+  password: string
+  rememberMe: boolean
+  captcha: string | null
+}
+
+  const onSubmit = async (values: ValuesType) => {
+    let error = await login(values);
     if (error !== undefined) {
       return { [FORM_ERROR]: error }
     }
   }
 
-  if (props.isAuth === true){
+  if (isAuth === true){
     return <Redirect to="/profile" />
   }
   
@@ -24,24 +33,24 @@ const Login = (props) => {
   return(
   <Form
     onSubmit ={onSubmit}
-    captcha = {props.captcha}
-    render={({handleSubmit, invalid, submitError, ...props})=> (
+    captcha = {captcha}
+    render={({handleSubmit, submitError}) => (
         <div>
           <form className={styles.loginForm} onSubmit={handleSubmit}>
             <div className={styles.email}>
-              <Field name={"email"} component={InputCustom} validate={composeValidators(required, maxLengthCreator(30))}/>
+              <Field<string> name={"email"} component={InputCustom} validate={composeValidators(required, maxLengthCreator(30))}/>
             </div>
             <div>
-              <Field name={"password"} component={InputCustom} type="password" validate={composeValidators(required, maxLengthCreator(30))} />
+              <Field<string> name={"password"} component={InputCustom} type="password" validate={composeValidators(required, maxLengthCreator(30))} />
             </div>
             <div>
-              <Field name={"rememberMe"} component="input" type={"checkbox"} />
+              <Field<boolean> name={"rememberMe"} component="input" type={"checkbox"} />
               <span>remember me</span>
             </div>
-            {props.captcha &&
+            {captcha &&
               <div> 
-                <img src={props.captcha } alt="captcha"/>
-                <Field name="captcha" component={InputCustom}/>
+                <img src={captcha} alt="captcha"/>
+                <Field<string>  name="captcha" component={InputCustom}/>
               </div>}
             {submitError && <div className={styles.error}>{submitError}</div>}
             <div>

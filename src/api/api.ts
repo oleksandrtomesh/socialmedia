@@ -28,7 +28,7 @@ type GetUsersResponseType = {
 }
 
 type FollowedUserResponseType = {
-    resultCode: number
+    resultCode: ResultCode
     messages: Array<string>
     data: any
 }
@@ -63,7 +63,7 @@ type GetUserProfileResponseType = {
         email: string
         login: string
     }
-    resultCode: number
+    resultCode: ResultCode
     messages: Array<string>
 }
 
@@ -77,7 +77,7 @@ export const headerAPI ={
 }
 
 type ProfileApiResponseType = {
-    resultCode: number
+    resultCode: ResultCode
     messages: Array<string>
     data:any
 }
@@ -86,7 +86,7 @@ type UpdateUserPhotoResponseType = {
     data: {
         photos: PhotosType
     }
-    resultCode: number
+    resultCode: ResultCode
     messages: Array<string>
 }
 export const profileAPI = {
@@ -128,7 +128,7 @@ export const profileAPI = {
 }
 
 type LoginApiResponseType = {
-    resultCode: number
+    resultCode: ResultCode
     messages: Array<string>
     data:any
 }
