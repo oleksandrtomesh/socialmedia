@@ -5,32 +5,21 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import c from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
 import { UploadButton } from '../commonElements/formComponent';
-import { Contacts, PhotosType} from '../../types/types';
-
-export type UserProfileType = {
-  userId?: number 
-  aboutMe?: string 
-  lookingForAJob?: boolean
-  lookingForAJobDescription?: string
-  fullName?: string
-  contacts: Contacts
-  photos?: PhotosType | undefined
-  
-}
+import { UserProfileType} from '../../types/types';
 
 type PropsType = {
-  userProfile: UserProfileType
+  userProfile: UserProfileType |null
   isProfileFetching: boolean
   isOwner: boolean 
-  userStatus: string
+  userStatus: string | null
   saveUserPhoto: (photo: File) => void
   updateStatus: (status: string) => void
-  saveProfileInfo: (userId:number) => void
+  saveProfileInfo: (profile: UserProfileType) => void
 }
 
 
 const Profile: React.FC<PropsType> = ({userProfile, isProfileFetching, isOwner, userStatus, 
-                                        updateStatus, saveProfileInfo, saveUserPhoto, ...props}) => {
+                                        updateStatus, saveProfileInfo, saveUserPhoto}) => {
 
   const selectedMainPhotoFile = (event: ChangeEvent<HTMLInputElement>) => {
     if(event.target.files?.length){

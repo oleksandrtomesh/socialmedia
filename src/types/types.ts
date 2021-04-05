@@ -1,3 +1,5 @@
+
+//types for userProfile
 export type Contacts = {
     [github: string]: string 
     vk: string 
@@ -23,3 +25,8 @@ export type UserProfileType = {
     photos?: PhotosType | undefined
     
 }
+
+//type for actionCreators
+
+export type PropertiesType<T> = T extends {[key: string]: infer U} ? U: never //return type of properties from obj
+

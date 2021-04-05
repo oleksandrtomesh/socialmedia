@@ -97,7 +97,7 @@ export const profileAPI = {
     },
 
     //get user status from server
-    getUserStatus(userId: number){
+    getUserStatus(userId: number | null){
         return(
             instance.get<string>(`profile/status/` + userId).then(res => res.data)
         )

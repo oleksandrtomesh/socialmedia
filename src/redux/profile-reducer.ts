@@ -1,17 +1,9 @@
+import { PropertiesType } from './../types/types';
 import { ThunkAction } from 'redux-thunk';
 import { profileAPI, ResultCode } from '../api/api';
 import { UserProfileType, PhotosType } from '../types/types';
-import { saveAuthUserPhotoSuccess, saveAuthUserPhotoSuccessActionCreatorType } from './auth-reducer';
+import { authActionCreators, AuthActionTypes } from './auth-reducer';
 import { AppStateType } from './redux-store';
-
-
-//actions
-const ADD_POST = 'app/profile-reducer/ADD-POST';
-const UPDATE_TEXT_AREA ='app/profile-reducer/UPDATE-TEXT-AREA';
-const SET_USER_PROFILE ='app/profile-reducer/SET_USER_PROFILE';
-const SET_USER_STATUS = 'app/profile-reducer/SET_USER_STATUS';
-const SAVE_PHOTO_SUCCESS = 'app/profile-reducer/SAVE_PHOTO_SUCCESS';
-const IS_FETCHING = 'app/profile-reducer/IS_FETCHING'
 
 //initial State
 type PostDataType = {
@@ -38,10 +30,10 @@ let initialState = {
 type InitialStateType = typeof initialState
 
 //Reducer
-const profileReducer = (state = initialState, action: ActionTypes):InitialStateType  => {
+const profileReducer = (state = initialState, action: ProfileActionTypes):InitialStateType  => {
 
         switch (action.type) {
-            case ADD_POST:
+            case 'app/profile-reducer/ADD-POST':
                 let newPostObj = {
                     id: 5,
                     message: action.newPostText,
@@ -54,7 +46,7 @@ const profileReducer = (state = initialState, action: ActionTypes):InitialStateT
                     newPostText: ""
                 };
 
-            case UPDATE_TEXT_AREA: 
+            case 'app/profile-reducer/UPDATE-TEXT-AREA': 
 
                 return {
                     ...state,
@@ -62,28 +54,28 @@ const profileReducer = (state = initialState, action: ActionTypes):InitialStateT
                 };
             ;
 
-            case SET_USER_PROFILE: 
+            case 'app/profile-reducer/SET_USER_PROFILE': 
                 return {
                     ...state,
                     userProfile: action.profile
                 }
             ;
 
-            case SET_USER_STATUS: {
+            case 'app/profile-reducer/SET_USER_STATUS': {
                 return {
                     ...state,
                     userStatus: action.status
                 };
             }
 
-            case SAVE_PHOTO_SUCCESS: 
+            case 'app/profile-reducer/SAVE_PHOTO_SUCCESS': 
                 return {
                     ...state,
                     userProfile: {...state.userProfile, photos: action.photos},
                 }
             ;
 
-            case IS_FETCHING: 
+            case 'app/profile-reducer/IS_FETCHING': 
                 return {
                     ...state,
                     isFetching: action.isFetching
@@ -95,63 +87,56 @@ const profileReducer = (state = initialState, action: ActionTypes):InitialStateT
     }
 
 //Action Creators
-type ActionTypes = AddPostType | UpdateTextAreaActionCreatorType | SetProfileType | setUserStatusType |
-                    SavePhotoSuccessType | isFetchingType | saveAuthUserPhotoSuccessActionCreatorType
+type ProfileActionTypes = ReturnType<PropertiesType<typeof profileActionCreators>>
 
-type AddPostType = {type: typeof ADD_POST, newPostText: string}
-export const addPost = (newPostText: string):AddPostType  => ({type: ADD_POST, newPostText});
 
-type UpdateTextAreaActionCreatorType = { type: typeof UPDATE_TEXT_AREA, newText: string }
-export const updateTextAreaActionCreator = (text: string):UpdateTextAreaActionCreatorType  => ({ type: UPDATE_TEXT_AREA, newText: text });
 
-type SetProfileType = {type:typeof SET_USER_PROFILE, profile: UserProfileType }
-export const setProfile = (profile: UserProfileType):SetProfileType => ({ type: SET_USER_PROFILE, profile });
+export const profileActionCreators = {
+    addPost: (newPostText: string)  => ({type: 'app/profile-reducer/ADD-POST', newPostText} as const),
+    updateTextAreaActionCreator: (text: string)  => ({ type: 'app/profile-reducer/UPDATE-TEXT-AREA', newText: text } as const),
+    setProfile: (profile: UserProfileType) => ({ type: 'app/profile-reducer/SET_USER_PROFILE', profile } as const),
+    setUserStatus: (status:string) => ({type: 'app/profile-reducer/SET_USER_STATUS', status} as const),
+    savePhotoSuccess: (photos: PhotosType)  => ({type: 'app/profile-reducer/SAVE_PHOTO_SUCCESS', photos} as const),
+    isFetching: (isFetching: boolean)  => ({type: 'app/profile-reducer/IS_FETCHING', isFetching} as const)
+}
 
-type setUserStatusType = {type: typeof SET_USER_STATUS, status: string}
-export const setUserStatus = (status:string): setUserStatusType => ({type: SET_USER_STATUS, status});
-
-type SavePhotoSuccessType = {type: typeof SAVE_PHOTO_SUCCESS, photos: PhotosType}
-export const savePhotoSuccess = (photos: PhotosType):SavePhotoSuccessType  => ({type: SAVE_PHOTO_SUCCESS, photos})
-
-type isFetchingType = {type: typeof IS_FETCHING, isFetching: boolean}
-export const isFetching = (isFetching: boolean):isFetchingType  => ({type: IS_FETCHING, isFetching})
 
 
 //side effects, Thinks
 
-type ProfileReducerThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes> 
+type ProfileReducerThunkType = ThunkAction<void, AppStateType, unknown, ProfileActionTypes | AuthActionTypes> 
 
 export const addNewPost = (newPostText: string): ProfileReducerThunkType => {
-    return (dispatch) => dispatch(addPost(newPostText))
+    return (dispatch) => dispatch(profileActionCreators.addPost(newPostText))
 };
 
 export const setUserProfile = (userId: number | null): ProfileReducerThunkType => async (dispatch) => { 
-            dispatch(isFetching(true))
+            dispatch(profileActionCreators.isFetching(true))
             const userProfile = await profileAPI.getUserProfile(userId)
-            dispatch(setProfile(userProfile));
-            dispatch(isFetching(false))
+            dispatch(profileActionCreators.setProfile(userProfile));
+            dispatch(profileActionCreators.isFetching(false))
         }
 
-export const setStatus = (userId:number): ProfileReducerThunkType => async (dispatch) => {
+export const setStatus = (userId:number | null): ProfileReducerThunkType => async (dispatch) => {
         const userStatus = await profileAPI.getUserStatus(userId)
-                dispatch(setUserStatus(userStatus))
+                dispatch(profileActionCreators.setUserStatus(userStatus))
         }
 
 export const updateStatus = (status: string): ProfileReducerThunkType => async (dispatch) => {
     const updateStatusResultCode = await profileAPI.updateUserStatus(status)
         if (updateStatusResultCode === ResultCode.success ){
-            dispatch(setUserStatus(status))
+            dispatch(profileActionCreators.setUserStatus(status))
         }
 }
 
-export const saveUserPhoto = (photo: PhotosType): ProfileReducerThunkType => async (dispatch) => {
-    dispatch(isFetching(true))
+export const saveUserPhoto = (photo: File): ProfileReducerThunkType => async (dispatch) => {
+    dispatch(profileActionCreators.isFetching(true))
     const updateUserPhotoResponse = await profileAPI.updateUserPhoto(photo)
         if (updateUserPhotoResponse.resultCode === ResultCode.success ){
-            dispatch(savePhotoSuccess(updateUserPhotoResponse.data.photos));
-            dispatch(saveAuthUserPhotoSuccess(updateUserPhotoResponse.data.photos));
+            dispatch(profileActionCreators.savePhotoSuccess(updateUserPhotoResponse.data.photos));
+            dispatch(authActionCreators.saveAuthUserPhotoSuccess(updateUserPhotoResponse.data.photos));
         }
-    dispatch(isFetching(false))
+    dispatch(profileActionCreators.isFetching(false))
 }
 
 export const saveProfileInfo = (profile: UserProfileType): ProfileReducerThunkType => async (dispatch, getState: ()=> AppStateType) => {
