@@ -1,4 +1,4 @@
-import { PropertiesType } from './../types/types';
+import { PropertiesType, ThunkType } from './../types/types';
 import { ThunkAction } from 'redux-thunk';
 import { profileAPI, ResultCode } from '../api/api';
 import { UserProfileType, PhotosType } from '../types/types';
@@ -104,17 +104,17 @@ export const profileActionCreators = {
 
 //side effects, Thinks
 
-type ProfileReducerThunkType = ThunkAction<void, AppStateType, unknown, ProfileActionTypes | AuthActionTypes> 
+type ProfileReducerThunkType = ThunkType<ProfileActionTypes | AuthActionTypes> 
 
 export const addNewPost = (newPostText: string): ProfileReducerThunkType => {
     return (dispatch) => dispatch(profileActionCreators.addPost(newPostText))
 };
 
 export const setUserProfile = (userId: number | null): ProfileReducerThunkType => async (dispatch) => { 
-            dispatch(profileActionCreators.isFetching(true))
-            const userProfile = await profileAPI.getUserProfile(userId)
+            dispatch(profileActionCreators.isFetching(true));
+            const userProfile = await profileAPI.getUserProfile(userId);
             dispatch(profileActionCreators.setProfile(userProfile));
-            dispatch(profileActionCreators.isFetching(false))
+            dispatch(profileActionCreators.isFetching(false));
         }
 
 export const setStatus = (userId:number | null): ProfileReducerThunkType => async (dispatch) => {

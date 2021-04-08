@@ -1,4 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
+import { ThunkType } from '../types/types';
 import { authUser } from './auth-reducer';
 import { AppStateType } from './redux-store';
 
@@ -42,9 +43,9 @@ export const initializingSuccess = ():initializingSuccessActionCreatorType  => (
 
 //thunkCreator for auth user
 
-export type ThunkType = ThunkAction <void, AppStateType, unknown, ActionType>
+export type appThunkType = ThunkType<ActionType>
 
-export const initialized = (): ThunkType => {
+export const initialized = (): appThunkType => {
     //thunk what return resolve of all promises
     return (dispatch) => {
         let promise = dispatch(authUser());

@@ -1,7 +1,7 @@
 import { AppStateType } from './redux-store';
 import { ThunkAction } from "redux-thunk";
 import usersAPI, { ResultCode } from "../api/api";
-import { PhotosType, PropertiesType } from "../types/types";
+import { PhotosType, PropertiesType, ThunkType } from "../types/types";
 
 //Initial State
 
@@ -88,7 +88,7 @@ const userReducerActionsCreators = {
 
 //thunk creators
 
-type UserReducerThunkType = ThunkAction <void, AppStateType, unknown, UserReducerActionsTypes>
+type UserReducerThunkType = ThunkType<UserReducerActionsTypes>
 
 export const getUsers = (currentPage: number, pageSize: number): UserReducerThunkType => {
     return async (dispatch) => {

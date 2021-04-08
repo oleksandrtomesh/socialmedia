@@ -1,4 +1,5 @@
 import { Dispatch } from "react";
+import { PropertiesType, ThunkType } from "../types/types";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
@@ -32,7 +33,7 @@ export type InitialStateType = typeof initialState
 
 
 
-const dialogsReducer = (state = initialState, action: AddMessageActionCreatorType):InitialStateType  => {
+const dialogsReducer = (state = initialState, action: DialogActionCreatorsType):InitialStateType  => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -54,18 +55,18 @@ const dialogsReducer = (state = initialState, action: AddMessageActionCreatorTyp
 
 
 // action creators
+type DialogActionCreatorsType = ReturnType<PropertiesType<typeof dialogsActionCreators>>
 
-type AddMessageActionCreatorType = {
-    type: typeof ADD_MESSAGE
-    message: string
-}
-
-export const addMessageActionCreator = (message: string): AddMessageActionCreatorType => ({type: ADD_MESSAGE, message})
+const dialogsActionCreators ={
+    addMessageActionCreator: (message: string) => ({type: ADD_MESSAGE, message})
+} 
 
 //thunk creator
 
-export const addMessage = (message: string) => {
-    return (dispatch: Dispatch<AddMessageActionCreatorType>): void => dispatch(addMessageActionCreator(message))
+type DialogThunksType = ThunkType<DialogActionCreatorsType>
+
+export const addMessage = (message: string): DialogThunksType => {
+    return (dispatch)=> dispatch(dialogsActionCreators.addMessageActionCreator(message))
 };
 
 

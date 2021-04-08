@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import { headerAPI, loginApi, profileAPI, ResultCode } from '../api/api';
-import { UserProfileType, PhotosType, PropertiesType } from '../types/types';
+import { UserProfileType, PhotosType, PropertiesType, ThunkType } from '../types/types';
 import { AppStateType } from './redux-store';
 
 //Initial State
@@ -74,7 +74,7 @@ export const authActionCreators = {
 
 //side effect, thunks
 
-export type AuthReducerThunkType = ThunkAction <void, AppStateType, unknown, AuthActionTypes>
+export type AuthReducerThunkType = ThunkType<AuthActionTypes>
 
 export const authUser = (): AuthReducerThunkType => async (dispatch) => {
         const data = await headerAPI.authUser()

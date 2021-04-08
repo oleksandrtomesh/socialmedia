@@ -1,3 +1,6 @@
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { AppStateType } from './../redux/redux-store';
 
 //types for userProfile
 export type Contacts = {
@@ -26,7 +29,8 @@ export type UserProfileType = {
     
 }
 
-//type for actionCreators
+//types for reducers
 
 export type PropertiesType<T> = T extends {[key: string]: infer U} ? U: never //return type of properties from obj
 
+export type ThunkType<A extends Action> = ThunkAction <void, AppStateType, unknown, A>
