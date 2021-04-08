@@ -1,4 +1,3 @@
-import { Dispatch } from "react";
 import { PropertiesType, ThunkType } from "../types/types";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';

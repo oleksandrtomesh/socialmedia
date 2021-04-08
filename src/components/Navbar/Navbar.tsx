@@ -1,8 +1,9 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 //import Friends from './Friends/Friends';
 import c from './Navbar.module.css';
 
-const Navbar = (props) => {
+const Navbar: React.FC = (props) => {
   
   //let friendItem = props.friendsItems.friendsItems.map(friendsItems => <Friends id={friendsItems.id} name={friendsItems.name} />)
 

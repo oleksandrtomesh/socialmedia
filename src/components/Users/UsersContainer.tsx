@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux';
 import {
-    selectPage,
+    userReducerActionsCreators,
     getUsers,
     toggleFollowingUser,
     handlePageChange
@@ -51,6 +51,7 @@ let mapStateToProps = (state: AppStateType) => {
     };
 };
 
+const selectPage = userReducerActionsCreators.selectPage
 
 const connector = connect (mapStateToProps, { selectPage, getUsers, toggleFollowingUser, handlePageChange})
 

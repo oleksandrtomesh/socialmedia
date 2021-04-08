@@ -1,6 +1,6 @@
 import { PropertiesType, ThunkType } from './../types/types';
-import { ThunkAction } from 'redux-thunk';
-import { profileAPI, ResultCode } from '../api/api';
+import { ResultCode } from '../api/api';
+import { profileAPI } from "../api/profileAPI";
 import { UserProfileType, PhotosType } from '../types/types';
 import { authActionCreators, AuthActionTypes } from './auth-reducer';
 import { AppStateType } from './redux-store';

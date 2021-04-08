@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
+import { AppStateType } from '../../redux/redux-store';
 import Navbar from './Navbar';
 
-  let mapStateToProps = (state) =>{
+  let mapStateToProps = (state: AppStateType) =>{
     return {
       friendsItems: state.friendsItems
     }

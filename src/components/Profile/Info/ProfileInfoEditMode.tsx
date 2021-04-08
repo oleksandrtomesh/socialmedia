@@ -6,15 +6,24 @@ import {
 } from '../../commonElements/formComponent';
 import styles from './Info.module.css'
 import {checkError} from "../../../utilits/validators"
+import React from 'react';
+import { UserProfileType } from '../../../types/types';
 
-const ProfileInfoEditMode = (props) => { 
+type ProfileInfoEditModeType = {
+    saveProfileInfo: (profile: UserProfileType) => void
+    setEditMode: (mode: boolean) => void
+    userProfile: UserProfileType | null
+}
 
-    const saveProfile = async (values) => {
-        const messages = await props.saveProfileInfo(values)
+
+const ProfileInfoEditMode: React.FC<ProfileInfoEditModeType> = ({saveProfileInfo, setEditMode, userProfile, ...props}) => { 
+
+    const saveProfile = async (values: UserProfileType) => {
+        const messages = await saveProfileInfo(values)
         if (messages !== undefined){
             return { [FORM_ERROR]: messages }
         } else {
-            props.setEditMode(false)
+            setEditMode(false)
         }
     }
     
@@ -22,7 +31,7 @@ const ProfileInfoEditMode = (props) => {
         <h4>Edit Mode</h4>
         <Form
             onSubmit={saveProfile}
-            initialValues={props.userProfile}
+            initialValues={userProfile}
             render={({handleSubmit, submitError}) => {
                 return <form onSubmit={handleSubmit} className={styles.editModeForm}>
                     <div>
@@ -41,12 +50,12 @@ const ProfileInfoEditMode = (props) => {
                         {submitError && <div className={styles.error}>{checkError(submitError,"LookingForAJobDescription")}</div>}
                     </div>
                     <div>
-                        <h5>Contacts:</h5> {Object.keys(props.userProfile.contacts).map(key => {
+                        <h5>Contacts:</h5> {userProfile != null && Object.keys(userProfile.contacts!).map(key => {
                             return <div key={key}>
                                     <Field  name={"contacts." + key} component={InputCustom} label={key} />
                                     {submitError && <div className={styles.error}>{checkError(submitError, key)}</div>}
-                                </div>
-                        })}
+                                </div>}
+                        )}
                     </div>
                     <CustomButton>Save</CustomButton> 
                 </form>

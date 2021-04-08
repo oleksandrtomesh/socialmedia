@@ -1,7 +1,8 @@
-import { ThunkAction } from 'redux-thunk';
-import { headerAPI, loginApi, profileAPI, ResultCode } from '../api/api';
+import { ResultCode } from '../api/api';
+import { loginApi } from "../api/loginApi";
+import { profileAPI } from "../api/profileAPI";
+import { headerAPI } from "../api/headerAPI";
 import { UserProfileType, PhotosType, PropertiesType, ThunkType } from '../types/types';
-import { AppStateType } from './redux-store';
 
 //Initial State
 type DataType = {

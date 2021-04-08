@@ -1,7 +1,5 @@
-import { ThunkAction } from 'redux-thunk';
 import { ThunkType } from '../types/types';
 import { authUser } from './auth-reducer';
-import { AppStateType } from './redux-store';
 
 //Action types
 const INITIALIZE_APP = 'myApp/auth-reducer/INITIALIZE_APP';

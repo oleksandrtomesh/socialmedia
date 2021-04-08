@@ -1,6 +1,5 @@
-import { AppStateType } from './redux-store';
-import { ThunkAction } from "redux-thunk";
-import usersAPI, { ResultCode } from "../api/api";
+import { ResultCode } from "../api/api";
+import {usersAPI} from "../api/usersAPI";
 import { PhotosType, PropertiesType, ThunkType } from "../types/types";
 
 //Initial State
@@ -74,7 +73,7 @@ const usersReducer = (state = initialState, action: UserReducerActionsTypes):ini
 //action creators
 type UserReducerActionsTypes = ReturnType<PropertiesType<typeof userReducerActionsCreators>>
 
-const userReducerActionsCreators = {
+export const userReducerActionsCreators = {
     setUsers: (users: Array<UsersType>)  => ({ type: 'app/users-reducer/SET-USERS', users} as const),
     selectPage: (currentPage: number)  => ({ type: 'app/users-reducer/SELECT-PAGE', currentPage} as const),
     setTotalCount: (totalCount: number) => ({ type: 'app/users-reducer/SET-TOTAL-COUNT', totalCount} as const),

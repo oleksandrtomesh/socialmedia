@@ -14,12 +14,6 @@ import { compose } from 'redux';
 import Loader from '../commonElements/loader/loader';
 import {AppStateType} from '../../redux/redux-store'
 
-type PathParamTypes = {
-  userId: string
-}
-
-export type ProfilePropsType = ConnectedProps <typeof connector> & RouteComponentProps<PathParamTypes>
-
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
   
@@ -70,3 +64,10 @@ export default compose(
   withRouter,  
   withAuthRedirect //This is a HOC what verify does user authorised, if not redirect to "/login"
 )(ProfileContainer);
+
+
+type PathParamTypes = {
+  userId: string
+}
+
+export type ProfilePropsType = ConnectedProps <typeof connector> & RouteComponentProps<PathParamTypes>
