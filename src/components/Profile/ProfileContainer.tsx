@@ -63,7 +63,7 @@ export default compose(
   connector,
   withRouter,  
   withAuthRedirect //This is a HOC what verify does user authorised, if not redirect to "/login"
-)(ProfileContainer);
+)(ProfileContainer) as React.ComponentType;
 
 
 type PathParamTypes = {

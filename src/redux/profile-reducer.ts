@@ -1,4 +1,4 @@
-import { PropertiesType, ThunkType } from './../types/types';
+import { InferActionsType, ThunkType } from './../types/types';
 import { ResultCode } from '../api/api';
 import { profileAPI } from "../api/profileAPI";
 import { UserProfileType, PhotosType } from '../types/types';
@@ -87,7 +87,7 @@ const profileReducer = (state = initialState, action: ProfileActionTypes):Initia
     }
 
 //Action Creators
-type ProfileActionTypes = ReturnType<PropertiesType<typeof profileActionCreators>>
+type ProfileActionTypes = InferActionsType<typeof profileActionCreators>
 
 
 

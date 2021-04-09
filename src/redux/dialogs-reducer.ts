@@ -1,4 +1,4 @@
-import { PropertiesType, ThunkType } from "../types/types";
+import { InferActionsType, ThunkType } from "../types/types";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
@@ -54,7 +54,7 @@ const dialogsReducer = (state = initialState, action: DialogActionCreatorsType):
 
 
 // action creators
-type DialogActionCreatorsType = ReturnType<PropertiesType<typeof dialogsActionCreators>>
+type DialogActionCreatorsType = InferActionsType<typeof dialogsActionCreators>
 
 const dialogsActionCreators ={
     addMessageActionCreator: (message: string) => ({type: ADD_MESSAGE, message})

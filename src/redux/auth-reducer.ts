@@ -2,7 +2,7 @@ import { ResultCode } from '../api/api';
 import { loginApi } from "../api/loginApi";
 import { profileAPI } from "../api/profileAPI";
 import { headerAPI } from "../api/headerAPI";
-import { UserProfileType, PhotosType, PropertiesType, ThunkType } from '../types/types';
+import { UserProfileType, PhotosType, InferActionsType, ThunkType } from '../types/types';
 
 //Initial State
 type DataType = {
@@ -60,7 +60,7 @@ const authReducer = (state = initialState, action: AuthActionTypes):InitialState
 
 
 //Action Creators
-export type AuthActionTypes = ReturnType<PropertiesType<typeof authActionCreators>>
+export type AuthActionTypes = InferActionsType<typeof authActionCreators>
 
 export const authActionCreators = {
 

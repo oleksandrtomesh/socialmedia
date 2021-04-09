@@ -19,6 +19,6 @@ export default compose<ComponentType<DialogsPropsType>> (
 
     //HOC component to redirect if user not authorised
     withAuthRedirect
-)(Dialogs);
+)(Dialogs) as React.ComponentType;
 
 export type DialogsPropsType = ConnectedProps<typeof connector>

@@ -58,4 +58,4 @@ const connector = connect (mapStateToProps, { selectPage, getUsers, toggleFollow
 export default compose(
     connector,
     withAuthRedirect
-)(UsersPage);
+)(UsersPage) as React.ComponentType;

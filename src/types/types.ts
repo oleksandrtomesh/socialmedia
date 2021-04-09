@@ -31,6 +31,6 @@ export type UserProfileType = {
 
 //types for reducers
 
-export type PropertiesType<T> = T extends {[key: string]: infer U} ? U: never //return type of properties from obj
+export type InferActionsType<T> = T extends {[key: string]: (...args: any[]) => infer U} ? U: never //return type of actions 
 
 export type ThunkType<A extends Action> = ThunkAction <void, AppStateType, unknown, A>

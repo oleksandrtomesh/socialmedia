@@ -7,17 +7,18 @@ import NavbarContainer from './components/Navbar/NavbarContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/LoginContainer';
 import React, { lazy } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { initialized } from './redux/app-reducer';
 import Loader from './components/commonElements/loader/loader';
 import { Suspense } from 'react';
+import { AppStateType } from './redux/redux-store';
 
 //use React.lazy for code-splitting
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = lazy(() => import ('./components/Users/UsersContainer'));
 
-class App extends React.Component {
+class App extends React.Component<AppPropsType> {
 
   componentDidMount = () => {
     this.props.initialized();
@@ -50,12 +51,14 @@ class App extends React.Component {
   };
 }
 
-let  mapDispatchToProps = (state) => {
+let  mapDispatchToProps = (state: AppStateType) => {
   return {
     initialized: state.app.initialized
   }
 }
 
+const connector = connect(mapDispatchToProps, {initialized})
 
+export default connector(App);
 
-export default connect(mapDispatchToProps, {initialized})(App);
+type AppPropsType = ConnectedProps<typeof connector>

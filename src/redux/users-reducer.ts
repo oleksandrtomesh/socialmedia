@@ -1,6 +1,6 @@
 import { ResultCode } from "../api/api";
 import {usersAPI} from "../api/usersAPI";
-import { PhotosType, PropertiesType, ThunkType } from "../types/types";
+import { PhotosType, InferActionsType, ThunkType } from "../types/types";
 
 //Initial State
 
@@ -71,7 +71,7 @@ const usersReducer = (state = initialState, action: UserReducerActionsTypes):ini
 
 
 //action creators
-type UserReducerActionsTypes = ReturnType<PropertiesType<typeof userReducerActionsCreators>>
+type UserReducerActionsTypes = InferActionsType<typeof userReducerActionsCreators>
 
 export const userReducerActionsCreators = {
     setUsers: (users: Array<UsersType>)  => ({ type: 'app/users-reducer/SET-USERS', users} as const),
