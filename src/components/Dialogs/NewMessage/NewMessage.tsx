@@ -3,10 +3,14 @@ import { Field, Form, } from 'react-final-form';
 import c from './NewMessages.module.css';
 import { InputCustom, CustomButton } from '../../commonElements/formComponent';
 import {maxLengthCreator } from '../../../utilits/validators';
+import { NewMessagesPropsType } from './NewMessageContainer';
 
-const NewMessages = (props) => {
+const NewMessages: React.FC<NewMessagesPropsType> = (props) => {
 
-    let addNewMessage = (value) => {
+    type ValueType = {
+        message: string
+    }
+    let addNewMessage = (value: ValueType): void => {
         props.addMessage(value.message);
         value.message = "";
 
@@ -28,7 +32,7 @@ const NewMessages = (props) => {
                         />
                     </div>
                     <div>
-                        <CustomButton type="submit">Post</CustomButton>
+                        <CustomButton>Post</CustomButton>
                     </div>
                 </form>
                 )

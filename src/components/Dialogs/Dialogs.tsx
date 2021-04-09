@@ -1,13 +1,16 @@
+import React from 'react'
 import Dialog from './Dialog/Dialog'
 import c from './Dialogs.module.css'
+import { DialogsPropsType } from './DialogsContainer'
 import Messages from './Messages/Messages'
 import NewMessageContainer from './NewMessage/NewMessageContainer'
 
-const Dialogs = (props) => {
+
+const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
     let dialogElements = props.dialogPage.dialogData.map( d => <Dialog key={d.name} name={d.name} id={d.id} /> )
 
-    let messageElements = props.dialogPage.messageData.map( m => <Messages key={m.message} text={m.message} id={m.id} />)
+    let messageElements = props.dialogPage.messageData.map( m => <Messages key={m.message} message={m.message} id={m.id} />)
 
     return (
         <div className={c.dialogs}>
