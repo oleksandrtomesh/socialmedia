@@ -3,21 +3,23 @@ import styles from './Header.module.css';
 import { useStyles } from '../commonElements/formComponentCustomStyles';
 import { Button } from '@material-ui/core';
 import avatar from '../../assets/images/avatar.png'
+import React from 'react';
+import { HeaderPropsType } from './HeaderContainer';
 
-const Header = (props) => {
+const Header: React.FC<HeaderPropsType> = ({logout, userProfile, isAuth}) => {
     const classes = useStyles();
     const onSubmit = () =>{
-        props.logout()
+        logout()
     }
 
     return (
 
         <header className={styles.header}>
             <div className={styles.login}>
-                {props.isAuth && props.userProfile
+                {isAuth && userProfile
                     ? <NavLink to={"/profile/"}>
-                        <img src={props.userProfile.photos.small !== null ? props.userProfile.photos.small : avatar } alt="profile"></img>
-                        <span>{props.userProfile.fullName}</span>
+                        <img src={userProfile.photos?.small !== null ? userProfile.photos?.small : avatar } alt="profile"></img>
+                        <span>{userProfile.fullName}</span>
                     </NavLink>
                     :<NavLink to='/login'>Login</NavLink>}
                 <Button onClick={onSubmit} className={classes.LogoutButton} variant="contained" type="submit">Logout</Button>
