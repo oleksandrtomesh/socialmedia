@@ -1,6 +1,8 @@
+import React from 'react';
 import c from './Post.module.css';
 
-const Post = (props) => {
+
+const Post: React.FC<PropsType> = ({message, likeCounter}) => {
   return (
     <div>
       <div className={c.item}>
@@ -12,10 +14,10 @@ const Post = (props) => {
           </div>
         </div>
         <div className={c.message}>
-          {props.message}
+          {message}
         </div>
         <div className={c.like}>
-          Like {props.likeCounter}
+          Like {likeCounter}
         </div>
       </div>
     </div>
@@ -23,3 +25,9 @@ const Post = (props) => {
 }
 
 export default Post;
+
+
+type PropsType = {
+  message: string
+  likeCounter: number
+}

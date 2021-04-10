@@ -4,10 +4,14 @@ import { Field, Form } from 'react-final-form';
 import { maxLengthCreator} from '../../../../utilits/validators';
 import { CustomButton, InputCustom } from '../../../commonElements/formComponent';
 
-const AddNewPost = (props) => {
+type AddNewPostType = {
+  addNewPost: (newPostText: string) => void
+}
 
-  let addPost = (value) => {
-      props.addNewPost(value.newPostText);
+const AddNewPost: React.FC<AddNewPostType> = ({addNewPost}) => {
+
+  let addPost = (value: {newPostText: string}) => {
+      addNewPost(value.newPostText);
       value.newPostText = "";
   }
     
@@ -17,14 +21,15 @@ const AddNewPost = (props) => {
       render={ ({handleSubmit}) => (
           <form onSubmit={handleSubmit} className={c.Textarea}>
             <div>
-              <Field  className={c.inputField}
-              name="newPostText" 
-              component= {InputCustom} 
-              label="Something new?"
-              validate={maxLengthCreator(150)}/>
+              <Field<string> className={c.inputField}
+                name="newPostText" 
+                component= {InputCustom} 
+                label="Something new?"
+                validate={maxLengthCreator(150)}
+              />
             </div>
             <div>
-              <CustomButton type="submit">Post</CustomButton>
+              <CustomButton>Post</CustomButton>
             </div>
             
             

@@ -11,7 +11,7 @@ type PropsType = {
   userStatus: string | null
   userProfile: UserProfileType | null
   isOwner: boolean
-  updateStatus: (status: string) => void
+  updateStatus: (status: string | null) => void
   saveProfileInfo: (profile: UserProfileType) => void
 }
 

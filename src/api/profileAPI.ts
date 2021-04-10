@@ -16,7 +16,7 @@ export const profileAPI = {
     },
 
     //update auth user status
-    updateUserStatus(status: string) {
+    updateUserStatus(status: string | null) {
         return (
             instance.put<ProfileApiResponseType>(`profile/status`, { status: status })
                 .then(res => res.data.resultCode)

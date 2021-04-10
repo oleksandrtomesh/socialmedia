@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './ProfileStatus.module.css';
 import { TextField } from '@material-ui/core';
 
+type PropsType = {
+    userStatus: string | null
+    updateStatus: (status: string | null) => void
+}
 
-const ProfileStatusWithHooks = (props) => {
+const ProfileStatusWithHooks: React.FC<PropsType> = ({userStatus, updateStatus}) => {
 
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.userStatus);
+    let [status, setStatus] = useState(userStatus);
     
-    useEffect( () => {setStatus(props.userStatus)}, [props.userStatus] );
+    useEffect( () => {setStatus(userStatus)}, [userStatus] );
 
     const activateStatusEditor = () => {
         setEditMode(true);
@@ -16,10 +20,10 @@ const ProfileStatusWithHooks = (props) => {
 
     const deactivateStatusEditor = () => {
         setEditMode(false);
-        props.updateStatus(status);
+        updateStatus(status);
     }
 
-    const onStatusChange = (event) => {
+    const onStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
         setStatus(event.currentTarget.value);
     }
 

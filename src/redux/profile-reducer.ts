@@ -6,7 +6,7 @@ import { authActionCreators, AuthActionTypes } from './auth-reducer';
 import { AppStateType } from './redux-store';
 
 //initial State
-type PostDataType = {
+export type PostDataType = {
     id: number
     message: string
     likeCounter: number
@@ -95,7 +95,7 @@ export const profileActionCreators = {
     addPost: (newPostText: string)  => ({type: 'app/profile-reducer/ADD-POST', newPostText} as const),
     updateTextAreaActionCreator: (text: string)  => ({ type: 'app/profile-reducer/UPDATE-TEXT-AREA', newText: text } as const),
     setProfile: (profile: UserProfileType) => ({ type: 'app/profile-reducer/SET_USER_PROFILE', profile } as const),
-    setUserStatus: (status:string) => ({type: 'app/profile-reducer/SET_USER_STATUS', status} as const),
+    setUserStatus: (status:string | null) => ({type: 'app/profile-reducer/SET_USER_STATUS', status} as const),
     savePhotoSuccess: (photos: PhotosType)  => ({type: 'app/profile-reducer/SAVE_PHOTO_SUCCESS', photos} as const),
     isFetching: (isFetching: boolean)  => ({type: 'app/profile-reducer/IS_FETCHING', isFetching} as const)
 }
@@ -122,7 +122,7 @@ export const setStatus = (userId:number | null): ProfileReducerThunkType => asyn
                 dispatch(profileActionCreators.setUserStatus(userStatus))
         }
 
-export const updateStatus = (status: string): ProfileReducerThunkType => async (dispatch) => {
+export const updateStatus = (status: string | null): ProfileReducerThunkType => async (dispatch) => {
     const updateStatusResultCode = await profileAPI.updateUserStatus(status)
         if (updateStatusResultCode === ResultCode.success ){
             dispatch(profileActionCreators.setUserStatus(status))
