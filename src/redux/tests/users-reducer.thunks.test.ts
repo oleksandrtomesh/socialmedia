@@ -1,7 +1,7 @@
 import { handlePageChange } from './../users-reducer';
 import { ResultCode } from '../../api/api';
 import { usersAPI, GetUsersResponseType, FollowedUserResponseType } from '../../api/usersAPI';
-import { getUsers, toggleFollowingUser, userReducerActionsCreators } from '../users-reducer';
+import { getUsersWithFilter, toggleFollowingUser, userReducerActionsCreators } from '../users-reducer';
 
 //jest.mock make whatever return from './../../api/usersAPI' fake
 jest.mock('../../api/usersAPI')
@@ -70,15 +70,16 @@ test('success getUsers thunk', async () => {
     //with help of mockReturnValue assign return value for userAPI methods
     usersAPIMock.getUsers.mockReturnValue(Promise.resolve(getUsersResult))
     //call thunkCreator getUsers that create thunk
-    const thunk = getUsers(1, 1)
+    const thunk = getUsersWithFilter(1, 1)
     
     await thunk(dispatchMock, getState, {})
 
-    expect(dispatchMock).toBeCalledTimes(4)
+    expect(dispatchMock).toBeCalledTimes(5)
     expect(dispatchMock).toHaveBeenNthCalledWith(1, userReducerActionsCreators.toggleIsFetching(true))
-    expect(dispatchMock).toHaveBeenNthCalledWith(2, userReducerActionsCreators.toggleIsFetching(false))
-    expect(dispatchMock).toHaveBeenNthCalledWith(3, userReducerActionsCreators.setUsers(getUsersResult.items))
-    expect(dispatchMock).toHaveBeenNthCalledWith(4, userReducerActionsCreators.setTotalCount(getUsersResult.totalCount))
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, userReducerActionsCreators.setFilter({term: "", friend: null}))
+    expect(dispatchMock).toHaveBeenNthCalledWith(3, userReducerActionsCreators.toggleIsFetching(false))
+    expect(dispatchMock).toHaveBeenNthCalledWith(4, userReducerActionsCreators.setUsers(getUsersResult.items))
+    expect(dispatchMock).toHaveBeenNthCalledWith(5, userReducerActionsCreators.setTotalCount(getUsersResult.totalCount))
 })
 
 test('success handlePageChange thunk', async () => {

@@ -1,6 +1,6 @@
 //import styles from "./formComponent.module.css";
 import {useStyles} from './formComponentCustomStyles';
-import { Button, TextField} from '@material-ui/core';
+import { Button, Select, TextField} from '@material-ui/core';
 import React, { ChangeEvent } from 'react'; 
 import {FieldRenderProps} from "react-final-form";
 
@@ -54,4 +54,33 @@ export const UploadButton: React.FC<UploadButtonPropsType> = ({onChangeHandler, 
             {buttonAssign}
     </Button>
     </label>
+}
+
+//material UI for Formik
+
+export const InputFormik: React.FC<InputFormikPropsType> = (props) => {
+    return (
+        <TextField
+            variant="outlined"
+            color="primary" 
+            label={props.name}
+            size="small"
+        />
+    )
+}
+
+export const SelectFormik: React.FC<{name: string}> = (props) => {
+
+    return (
+        <Select variant="outlined" name={props.name}>
+            <option value="null">All users</option>
+            <option value="true">Only followed</option>
+            <option value="false">Only unfollowed</option>
+        </Select>
+
+    )
+}
+
+type InputFormikPropsType = {
+    name: string
 }

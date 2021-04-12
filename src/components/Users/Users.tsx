@@ -3,20 +3,11 @@ import React from 'react';
 import Pagination from 'react-js-pagination'
 import User from './User/User';
 import styles from './UsersPage.module.css'
-import { UsersType } from '../../redux/users-reducer';
-
-type PropsType = {
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    users: Array<UsersType>
-    followingInProgress: Array<number>
-    toggleFollowingUser: (userId: number, followed: boolean) => void
-    handlePageChange: (pageNumber:number, pageSize: number) => void
-}
+import { FilterType, UsersType } from '../../redux/users-reducer';
+import FilterUsersBar from './FilterUsersBar/FilterUsersBar';
 
 
-let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, currentPage, handlePageChange, users, ...props}) => {
+let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, currentPage, term, users, handlePageChange,  handleFilterSubmit, ...props}) => {
 
     const onPageChange = (pageNumber: number): void =>{
         handlePageChange(pageNumber, pageSize);
@@ -24,6 +15,7 @@ let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, currentPage, handl
 
     return (
         <div>
+            
             <div className={styles.pagination}>
             <Pagination
                 activePage={currentPage}
@@ -35,6 +27,9 @@ let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, currentPage, handl
                 linkClass="page-link"
             />
             </div>
+            <div className={styles.filterUsersBar}>
+                <FilterUsersBar handleFilterSubmit={handleFilterSubmit} term={term}/>
+            </div>
             {users.map(user => <User key={user.id} user={user}  {...props}/>)}
         </div>
     );
@@ -42,3 +37,15 @@ let Users: React.FC<PropsType> = ({pageSize, totalUsersCount, currentPage, handl
 
 
 export default Users
+
+type PropsType = {
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    users: Array<UsersType>
+    followingInProgress: Array<number>
+    term: string
+    toggleFollowingUser: (userId: number, followed: boolean) => void
+    handlePageChange: (pageNumber:number, pageSize: number) => void
+    handleFilterSubmit: (filter: FilterType) => void
+}

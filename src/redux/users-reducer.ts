@@ -19,10 +19,14 @@ let initialState = {
     currentPage: 1,
     isFetching: false,
     isFollow: false,
-    followingInProgress: [] as Array<number> // array of users id`s
+    followingInProgress: [] as Array<number>, // array of users id`s
+    filter: {
+        term: "",
+        friend: null as boolean | null
+    }
 };
 
-export type initialStateType = typeof initialState
+
 
 //Reducer
 
@@ -46,6 +50,10 @@ const usersReducer = (state = initialState, action: UserReducerActionsTypes):ini
         case 'app/users-reducer/SET-USERS':
             return {...state, users: action.users};
         
+        //set filter options
+        case 'app/users-reducer/SET-FILTER':
+            return {...state, filter: action.payload.filter}
+
         //set current page of users
         case 'app/users-reducer/SELECT-PAGE':
             return {...state, currentPage: action.currentPage};
@@ -76,6 +84,8 @@ type UserReducerActionsTypes = InferActionsType<typeof userReducerActionsCreator
 export const userReducerActionsCreators = {
     setUsers: (users: Array<UsersType>)  => ({ type: 'app/users-reducer/SET-USERS', users} as const),
     selectPage: (currentPage: number)  => ({ type: 'app/users-reducer/SELECT-PAGE', currentPage} as const),
+    setFilter: (filter: FilterType)  => 
+        ({ type: 'app/users-reducer/SET-FILTER', payload: {filter}} as const),
     setTotalCount: (totalCount: number) => ({ type: 'app/users-reducer/SET-TOTAL-COUNT', totalCount} as const),
     toggleIsFetching: (isFetching: boolean)  => ({ type: 'app/users-reducer/TOGGLE_IS_FETCHING', isFetching} as const),
     toggleIsFollowFetching: (isFetching: boolean, userId: number) => 
@@ -87,12 +97,13 @@ export const userReducerActionsCreators = {
 
 //thunk creators
 
-type UserReducerThunkType = ThunkType<UserReducerActionsTypes>
 
-export const getUsers = (currentPage: number, pageSize: number): UserReducerThunkType => {
+
+export const getUsersWithFilter = (currentPage: number, pageSize: number, filter: FilterType = {term: "", friend: null}): UserReducerThunkType => {
     return async (dispatch) => {
         dispatch(userReducerActionsCreators.toggleIsFetching(true));
-        const data = await usersAPI.getUsers(currentPage, pageSize);
+        dispatch(userReducerActionsCreators.setFilter(filter))
+        const data = await usersAPI.getUsers(currentPage, pageSize, filter);
         dispatch(userReducerActionsCreators.toggleIsFetching(false));
         dispatch(userReducerActionsCreators.setUsers(data.items));
         dispatch(userReducerActionsCreators.setTotalCount(data.totalCount));
@@ -133,3 +144,7 @@ export const toggleFollowingUser = (userId: number, userFollowed: boolean): User
 }
 
 export default usersReducer;
+
+export type initialStateType = typeof initialState
+type UserReducerThunkType = ThunkType<UserReducerActionsTypes>
+export type FilterType = typeof initialState.filter

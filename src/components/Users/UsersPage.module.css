@@ -2,3 +2,12 @@
   width: 35%;
   margin: 0 auto;
 }
+
+.filterUsersBar {
+  width: 45%;
+  margin: 0 auto;
+}
+
+.filterUsersBar input, select {
+  margin-right: 10px;
+}
