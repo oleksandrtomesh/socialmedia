@@ -22,7 +22,7 @@ let initialState = {
     followingInProgress: [] as Array<number> // array of users id`s
 };
 
-type initialStateType = typeof initialState
+export type initialStateType = typeof initialState
 
 //Reducer
 
