@@ -110,19 +110,18 @@ export const getUsersWithFilter = (currentPage: number, pageSize: number, filter
     };
 };
 
-export const handlePageChange = (pageNumber:number, pageSize: number): UserReducerThunkType => async (dispatch) =>
+export const handlePageChange = (pageNumber:number, pageSize: number, filter: FilterType): UserReducerThunkType => async (dispatch) =>
 {
     dispatch(userReducerActionsCreators.selectPage(pageNumber));
     dispatch(userReducerActionsCreators.toggleIsFetching(true));
     //getUsers function what get users from server
-    const data = await usersAPI.getUsers(pageNumber, pageSize);
+    const data = await usersAPI.getUsers(pageNumber, pageSize, filter);
     dispatch(userReducerActionsCreators.toggleIsFetching(false));
     dispatch(userReducerActionsCreators.setUsers(data.items));    
 }
 
 
 export const toggleFollowingUser = (userId: number, userFollowed: boolean): UserReducerThunkType => {
-
     return async (dispatch) => {
         dispatch(userReducerActionsCreators.toggleIsFollowFetching(true, userId));
         if (userFollowed === false){

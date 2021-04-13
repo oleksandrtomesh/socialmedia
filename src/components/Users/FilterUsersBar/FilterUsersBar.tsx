@@ -7,23 +7,22 @@ const filterUsersBarValidation = (value: any) => {
 
 }
 
-const FilterUsersBar: React.FC<PropsType> = ({handleFilterSubmit, term}) => {
+const FilterUsersBar: React.FC<PropsType> = ({handleFilterSubmit, filter}) => {
 
     const submit = (values: FormValuesType , { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
 
         //object to convert string values into boolean in values.friend
-        const filter:FilterType  = {
+        const filterBoolean: FilterType  = {
             term: values.term,
-            friend: values.friend === 'null' ? null : values.friend === 'true' ? true : false
-
+            friend: values.friend === 'false' ? false : values.friend === 'true' ? true : null
         }
 
         //function execute getUsersWithFilter thunk 
-        handleFilterSubmit(filter)
+        handleFilterSubmit(filterBoolean)
         setSubmitting(false);       
     }
     return (<Formik
-        initialValues={{ term: term, friend: null }}
+        initialValues={{ term: filter.term, friend: "null" }}
         validate={filterUsersBarValidation}
         onSubmit={submit}
     >
@@ -48,7 +47,7 @@ export default FilterUsersBar
 
 type PropsType = {
     handleFilterSubmit: (filter: FilterType) => void
-    term: string
+    filter: FilterType
 }
 
 type FormValuesType = {

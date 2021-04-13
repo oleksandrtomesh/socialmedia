@@ -5,21 +5,24 @@ import { composeValidators, maxLengthCreator, required } from '../../utilits/val
 import { Redirect } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';
 import styles from './Login.module.css'
-import { PropsFromRedux } from './LoginContainer';
+import { getIsAuth } from '../../redux/selectors/usersSelectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppStateType } from '../../redux/redux-store';
+import { login } from '../../redux/auth-reducer';
 
 
 
-const Login: React.FC<PropsFromRedux> = ({isAuth, captcha, login}) => {
+const Login: React.FC = () => {
 
-type ValuesType = {
-  email: string
-  password: string
-  rememberMe: boolean
-  captcha: string | null
-}
+  const isAuth = useSelector(getIsAuth)
+  const captcha = useSelector((state: AppStateType) => state.authorization.captcha)
+
+  const dispatch = useDispatch()
+
+
 
   const onSubmit = async (values: ValuesType) => {
-    let error = await login(values);
+    let error = await dispatch(login(values));
     if (error !== undefined) {
       return { [FORM_ERROR]: error }
     }
@@ -67,3 +70,10 @@ type ValuesType = {
 }
 
 export default Login;
+
+type ValuesType = {
+  email: string
+  password: string
+  rememberMe: boolean
+  captcha: string | null
+}

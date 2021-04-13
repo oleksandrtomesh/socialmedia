@@ -4,8 +4,8 @@
 }
 
 .filterUsersBar {
-  width: 45%;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .filterUsersBar input, select {
