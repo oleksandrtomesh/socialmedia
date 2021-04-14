@@ -1,66 +1,56 @@
-import React from 'react';
-import { connect, ConnectedProps} from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector} from 'react-redux'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect'
 import {
     setUserProfile,
     setStatus,
-    updateStatus,
-    saveUserPhoto,
-    saveProfileInfo,
-} from '../../redux/profile-reducer';
-import Profile from './Profile';
-import { compose } from 'redux';
-import Loader from '../commonElements/loader/loader';
-import {AppStateType} from '../../redux/redux-store'
+} from '../../redux/profile-reducer'
+import Profile from './Profile'
+import { compose } from 'redux'
+import Loader from '../commonElements/loader/loader'
+import { getAuthUserData, getIsProfileFetching } from '../../redux/selectors/profileSelectors' 
 
-
-class ProfileContainer extends React.Component<ProfilePropsType> {
+const ProfileContainer: React.FC<ProfilePropsType> = (props) => {
   
-  refreshProfile(){
-    let userId: number | null = parseInt(this.props.match.params.userId);
-    if(!userId && this.props.authorizedUserId != null){
-      userId = this.props.authorizedUserId.id;
+  const dispatch = useDispatch()
+
+  const authorizedUserId = useSelector(getAuthUserData)
+  const isProfileFetching = useSelector(getIsProfileFetching)
+
+  const setProfile = (userId: number | null) => {
+    dispatch(setUserProfile(userId))
+  }
+  const setUserStatus = (userId: number | null) => {
+    dispatch(setStatus(userId))
+  }
+  
+  const refreshProfile = (id: string) => {
+    let userId: number | null = parseInt(id)
+    if(!userId && authorizedUserId != null){
+      userId = authorizedUserId.id
     }
-    this.props.setUserProfile(userId);
-    this.props.setStatus(userId);
+    setProfile(userId)
+    setUserStatus(userId)
   }
 
-  componentDidMount (){
-    this.refreshProfile()
-  };
-
-  componentDidUpdate(prevProps: ProfilePropsType) {
-    if(this.props.match.params.userId !== prevProps.match.params.userId){
-      this.refreshProfile();
-    }
-  }
-  render = () => { 
+  useEffect(() => {
+    refreshProfile(props.match.params.userId)
+  }, [props.match.params.userId])
+  
     return (
       <div>
-        {this.props.isProfileFetching
+        {isProfileFetching
           ?<Loader/>
-          :<Profile isOwner={!this.props.match.params.userId} {...this.props} />
+          :<Profile isOwner={!props.match.params.userId} />
         }
       </div>
-        )};
+        )
 }
 
 
-let mapStateToProps = (state: AppStateType) => {
-  return{
-    userProfile: state.profilePage.userProfile,
-    authUserId: state.authorization,
-    userStatus: state.profilePage.userStatus,
-    authorizedUserId: state.authorization.data,
-    isProfileFetching: state.profilePage.isFetching
-  };
-}
-
-const connector = connect(mapStateToProps,{setUserProfile, setStatus, updateStatus, saveUserPhoto, saveProfileInfo});
 
 export default compose(
-  connector,
   withRouter,  
   withAuthRedirect //This is a HOC what verify does user authorised, if not redirect to "/login"
 )(ProfileContainer) as React.ComponentType;
@@ -70,4 +60,4 @@ type PathParamTypes = {
   userId: string
 }
 
-export type ProfilePropsType = ConnectedProps <typeof connector> & RouteComponentProps<PathParamTypes>
+export type ProfilePropsType = RouteComponentProps<PathParamTypes>

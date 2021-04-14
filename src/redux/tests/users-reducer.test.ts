@@ -26,7 +26,11 @@ beforeEach( () => {
     currentPage: 1,
     isFetching: false,
     isFollow: false,
-    followingInProgress: [] 
+    followingInProgress: [],
+    filter: {
+        term: "",
+        friend: null as boolean | null
+    } 
     }
 })
 test('usersReducer follow success', () => {

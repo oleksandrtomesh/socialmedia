@@ -21,10 +21,7 @@ import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
 
 let Users: React.FC = () => {
 
-    //get users for first page
-    useEffect(() => {
-        dispatch(getUsersWithFilter(currentPage, pageSize))
-    }, [])
+    
 
     const dispatch = useDispatch()
 
@@ -39,14 +36,17 @@ let Users: React.FC = () => {
     const handleFilterSubmit = (filter: FilterType) => {
         dispatch(getUsersWithFilter(1, pageSize, filter))
     }
-
     const onPageChange = (pageNumber: number): void =>{
         dispatch(handlePageChange(pageNumber, pageSize, filter))
     }
-
     const toggleFollowingUsers = (userId: number, followed: boolean) =>{
         dispatch(toggleFollowingUser(userId, followed))
     }
+
+    //get users for first page
+    useEffect(() => {
+        dispatch(getUsersWithFilter(currentPage, pageSize))
+    }, [currentPage, pageSize, dispatch])
 
     return (
             isFetching

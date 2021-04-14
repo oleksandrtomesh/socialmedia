@@ -1,31 +1,41 @@
 import React, { ChangeEvent} from 'react'
 import Loader from '../commonElements/loader/loader';
 import Info from './Info/Info';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
+import MyPosts from './MyPosts/MyPosts';
 import c from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
 import { UploadButton } from '../commonElements/formComponent';
 import { UserProfileType} from '../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsProfileFetching, getUserProfile, getUserStatus } from '../../redux/selectors/profileSelectors';
+import { saveProfileInfo, saveUserPhoto, updateStatus } from '../../redux/profile-reducer';
 
 type PropsType = {
-  userProfile: UserProfileType |null
-  isProfileFetching: boolean
   isOwner: boolean 
-  userStatus: string | null
-  saveUserPhoto: (photo: File) => void
-  updateStatus: (status: string | null) => void
-  saveProfileInfo: (profile: UserProfileType) => void
 }
 
 
-const Profile: React.FC<PropsType> = ({userProfile, isProfileFetching, isOwner, userStatus, 
-                                        updateStatus, saveProfileInfo, saveUserPhoto}) => {
+const Profile: React.FC<PropsType> = ({isOwner}) => {
 
+  const dispatch = useDispatch()
+
+  const userProfile = useSelector(getUserProfile)
+  const isProfileFetching = useSelector(getIsProfileFetching)
+  const userStatus = useSelector(getUserStatus)
+
+  const updateUserStatus = (status: string | null) => {
+    dispatch(updateStatus(status))
+  }
+  const saveUserProfileInfo = (profile: UserProfileType) => {
+    dispatch(saveProfileInfo(profile))
+  }
+  const savePhoto = (photo: File) => {
+    dispatch(saveUserPhoto(photo))
+  }
   const selectedMainPhotoFile = (event: ChangeEvent<HTMLInputElement>) => {
     if(event.target.files?.length){
-      saveUserPhoto(event.target.files[0]);
-    }
-    
+      savePhoto(event.target.files[0])
+    }    
   }
 
   if(!userProfile){
@@ -46,12 +56,12 @@ const Profile: React.FC<PropsType> = ({userProfile, isProfileFetching, isOwner, 
         <Info 
           userProfile={userProfile}
           userStatus={userStatus}
-          updateStatus={updateStatus}
-          saveProfileInfo={saveProfileInfo}
+          updateStatus={updateUserStatus}
+          saveProfileInfo={saveUserProfileInfo}
           isOwner={isOwner}
         />
       </div>
-      <MyPostsContainer isOwner={isOwner}/>
+      <MyPosts isOwner={isOwner}/>
     </div>
   );
 }
