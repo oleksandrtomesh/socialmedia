@@ -3,8 +3,8 @@ import {Redirect, Route, Switch } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import NavbarContainer from './components/Navbar/NavbarContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
+import Navbar from './components/Navbar/Navbar';
+import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import React, { lazy } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -14,7 +14,7 @@ import { Suspense } from 'react';
 import { AppStateType } from './redux/redux-store';
 
 //use React.lazy for code-splitting
-const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
+const DialogsContainer = lazy(() => import('./components/Dialogs/Dialogs'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersPage = lazy(() => import ('./components/Users/Users'));
 
@@ -30,16 +30,16 @@ class App extends React.Component<AppPropsType> {
       }
 
       return <div className="app-wrapper">
-        <HeaderContainer />
-        <NavbarContainer />
+        <Header />
+        <Navbar />
         <div className="app-wrapper-content">
           <Suspense fallback={<Loader/>}>
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/profile"/>} />
-              <Route path="/login" render={ () => <Login />} />
-              <Route path="/users" render={ () => <UsersPage />} />
-              <Route path="/dialogs" render={ () => <DialogsContainer />} />
-              <Route path="/profile/:userId?" render={ () => <ProfileContainer />} />
+              <Route path="/login" render={() => <Login />} />
+              <Route path="/users" render={() => <UsersPage />} />
+              <Route path="/dialogs" render={() => <DialogsContainer />} />
+              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
               <Route path="/news" component={News} />
               <Route path="/music" component={Music} />
               <Route path="/settings" component={Settings} />
