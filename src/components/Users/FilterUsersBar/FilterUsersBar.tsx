@@ -22,7 +22,7 @@ const FilterUsersBar: React.FC<PropsType> = ({handleFilterSubmit, filter}) => {
         setSubmitting(false);       
     }
     return (<Formik
-        initialValues={{ term: filter.term, friend: "null" }}
+        initialValues={{ term: filter.term, friend: String(filter.friend) as Friend }}
         validate={filterUsersBarValidation}
         onSubmit={submit}
     >
@@ -50,7 +50,8 @@ type PropsType = {
     filter: FilterType
 }
 
+type Friend = "true" | "null" | "false"
 type FormValuesType = {
     term: string
-    friend: "true" | "null" | "false" | null
+    friend: Friend
 }

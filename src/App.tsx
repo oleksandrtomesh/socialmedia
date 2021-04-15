@@ -12,10 +12,10 @@ import { initialized } from './redux/app-reducer';
 import Loader from './components/commonElements/loader/loader';
 import { Suspense } from 'react';
 import { AppStateType } from './redux/redux-store';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 //use React.lazy for code-splitting
 const DialogsContainer = lazy(() => import('./components/Dialogs/Dialogs'));
-const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersPage = lazy(() => import ('./components/Users/Users'));
 
 class App extends React.Component<AppPropsType> {

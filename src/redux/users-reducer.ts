@@ -1,6 +1,7 @@
 import { ResultCode } from "../api/api";
 import {usersAPI} from "../api/usersAPI";
 import { PhotosType, InferActionsType, ThunkType } from "../types/types";
+import { friendsItemsActions, FriendItemsActionsType } from "./friendItems-reducer";
 
 //Initial State
 
@@ -122,18 +123,22 @@ export const handlePageChange = (pageNumber:number, pageSize: number, filter: Fi
 
 
 export const toggleFollowingUser = (userId: number, userFollowed: boolean): UserReducerThunkType => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         dispatch(userReducerActionsCreators.toggleIsFollowFetching(true, userId));
         if (userFollowed === false){
             let data = await usersAPI.followUser(userId);
             if (data.resultCode === ResultCode.success) {
-                dispatch(userReducerActionsCreators.toggleFollowing(userId, true));
+                let state = getState()
+                const user = state.usersPage.users.filter(item => item.id === userId)[0]
+                dispatch(userReducerActionsCreators.toggleFollowing(userId, true))
+                dispatch(friendsItemsActions.addFollowingUser(user))
             }
         };
         if (userFollowed === true){
             let data = await usersAPI.unfollowUser(userId);
             if (data.resultCode === ResultCode.success) {
-                dispatch(userReducerActionsCreators.toggleFollowing(userId, false));
+                dispatch(userReducerActionsCreators.toggleFollowing(userId, false))
+                dispatch(friendsItemsActions.removeUserFromFriendsItems(userId))
             }
         };
         
@@ -145,5 +150,5 @@ export const toggleFollowingUser = (userId: number, userFollowed: boolean): User
 export default usersReducer;
 
 export type initialStateType = typeof initialState
-type UserReducerThunkType = ThunkType<UserReducerActionsTypes>
+type UserReducerThunkType = ThunkType<UserReducerActionsTypes | FriendItemsActionsType>
 export type FilterType = typeof initialState.filter

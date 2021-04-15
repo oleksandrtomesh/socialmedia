@@ -1,24 +1,39 @@
-type FriendsItemType = {
-    id: number
-    name: string
-}
+import { UsersType } from './users-reducer';
+import { InferActionsType } from './../types/types';
+
 
 let initialState = {
     friendsItems: [
-    {id: 1, name: "Tania"},
-    {id: 2, name: "Pietia"},
-    {id: 3, name: "Sasha"},
-    {id: 4, name: "Vova"},
-    {id: 5, name: "Vova"},
-    {id: 6, name: "Vova"},
-    {id: 7, name: "Vova"},
-    {id: 8, name: "Vova"},
-    {id: 9, name: "Vova"}
-] as Array<FriendsItemType>
+] as Array<UsersType>
 };
 
 type InitialStateType = typeof initialState
 
-const friendsItemsReducer = (state = initialState, action: any):InitialStateType => state;
+const friendsItemsReducer = (state = initialState, action: FriendItemsActionsType):InitialStateType => {
+    
+        switch (action.type){
+            case 'app/friendsItems-reducer/ADD-FOLLOWING-USER':
+                return {
+                    ...state,
+                    friendsItems: [...state.friendsItems, action.user]
+                }
+            case 'app/friendsItems-reducer/REMOVE-USER':
+                return {
+                    ...state,
+                    friendsItems: state.friendsItems.filter((friend) => friend.id !== action.id)
+                }
+
+            default: 
+                return state
+        }
+    
+}
+
+export type FriendItemsActionsType = InferActionsType<typeof friendsItemsActions>
+
+export const friendsItemsActions = {
+    addFollowingUser: (user: UsersType) => ({type: 'app/friendsItems-reducer/ADD-FOLLOWING-USER', user} as const),
+    removeUserFromFriendsItems: (id: number) => ({type: 'app/friendsItems-reducer/REMOVE-USER', id} as const)
+}
 
 export default friendsItemsReducer;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router-dom'
 import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect'
 import {
     setUserProfile,
@@ -11,13 +11,15 @@ import { compose } from 'redux'
 import Loader from '../commonElements/loader/loader'
 import { getAuthUserData, getIsProfileFetching } from '../../redux/selectors/profileSelectors' 
 
-const ProfileContainer: React.FC<ProfilePropsType> = (props) => {
+const ProfileContainer: React.FC = React.memo(() => {
   
   const dispatch = useDispatch()
 
+  //get data from profile reducer
   const authorizedUserId = useSelector(getAuthUserData)
   const isProfileFetching = useSelector(getIsProfileFetching)
 
+  
   const setProfile = (userId: number | null) => {
     dispatch(setUserProfile(userId))
   }
@@ -25,6 +27,7 @@ const ProfileContainer: React.FC<ProfilePropsType> = (props) => {
     dispatch(setStatus(userId))
   }
   
+  //function for set or refresh user profile
   const refreshProfile = (id: string) => {
     let userId: number | null = parseInt(id)
     if(!userId && authorizedUserId != null){
@@ -34,30 +37,25 @@ const ProfileContainer: React.FC<ProfilePropsType> = (props) => {
     setUserStatus(userId)
   }
 
+  //get params (userId) from URL
+  let {userId}: {userId: string} = useParams()
+  
+  //refresh user profile
   useEffect(() => {
-    refreshProfile(props.match.params.userId)
-  }, [props.match.params.userId])
+    refreshProfile(userId)
+    debugger
+  }, [userId])
   
     return (
       <div>
         {isProfileFetching
           ?<Loader/>
-          :<Profile isOwner={!props.match.params.userId} />
+          :<Profile isOwner={!userId} />
         }
       </div>
         )
 }
+)
 
-
-
-export default compose(
-  withRouter,  
-  withAuthRedirect //This is a HOC what verify does user authorised, if not redirect to "/login"
-)(ProfileContainer) as React.ComponentType;
-
-
-type PathParamTypes = {
-  userId: string
-}
-
-export type ProfilePropsType = RouteComponentProps<PathParamTypes>
+//This is a HOC what verify does user authorised, if not redirect to "/login"
+export default  withAuthRedirect(ProfileContainer) as React.ComponentType;

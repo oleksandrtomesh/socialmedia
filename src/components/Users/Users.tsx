@@ -17,9 +17,11 @@ import {
 } from '../../redux/selectors/usersSelectors';
 import Loader from '../commonElements/loader/loader';
 import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
+import { useHistory } from 'react-router';
+import * as queryString from 'querystring'
 
 
-let Users: React.FC = () => {
+let Users: React.FC =React.memo( () => {
 
     
 
@@ -43,10 +45,44 @@ let Users: React.FC = () => {
         dispatch(toggleFollowingUser(userId, followed))
     }
 
+    //useHistory same as withRouter HOC. It`s gat data from URL
+    const history = useHistory()
+    debugger
+
     //get users for first page
     useEffect(() => {
-        dispatch(getUsersWithFilter(currentPage, pageSize))
-    }, [currentPage, pageSize, dispatch])
+
+        //parse string(make an object) from url(without ? on the begin substr delete it)
+        const parse = queryString.parse(history.location.search.substr(1))
+        // parse = {
+        //     term: '',
+        //     friend: 'true' | 'false' | 'null'
+        //     page: number
+        // }
+
+        //start actual data
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        //if url come not empty change our actual data onto data from url query
+        if (!!parse.page) actualPage = Number(parse.page)
+        if (!!parse.term) actualFilter = {...actualFilter, term: parse.term as string }
+        if (!!parse.friend) actualFilter = 
+            {...actualFilter, friend: parse.friend === "true" ? true : parse.friend === "false" ? false: null}
+        
+        //dispatch getUsersWithFilter thunk already with actual data from url
+        dispatch(getUsersWithFilter(actualPage, pageSize, actualFilter))
+    }, [])
+
+    //synchronization of url depends on filter data
+    useEffect ( ()=> {
+
+        //push filter data into url
+        history.push({
+            pathname: '/users',
+            search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+        })
+    }, [filter, currentPage])
 
     return (
             isFetching
@@ -70,7 +106,7 @@ let Users: React.FC = () => {
                 toggleFollowingUser = {toggleFollowingUsers} followingInProgress={followingInProgress}/>)}
         </div>
     );
-}
+})
 
 const UsersPage = withAuthRedirect(Users)
 export default UsersPage

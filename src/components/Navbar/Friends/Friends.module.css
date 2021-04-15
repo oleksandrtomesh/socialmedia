@@ -8,4 +8,7 @@
 
 .friend div{
   text-align: center;
+  width: min-content;
+  white-space: normal;
+  
 }
