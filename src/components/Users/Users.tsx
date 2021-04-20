@@ -47,7 +47,6 @@ let Users: React.FC =React.memo( () => {
 
     //useHistory same as withRouter HOC. It`s gat data from URL
     const history = useHistory()
-    debugger
 
     //get users for first page
     useEffect(() => {

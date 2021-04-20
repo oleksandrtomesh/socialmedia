@@ -1,5 +1,5 @@
 import './App.css';
-import {Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -13,10 +13,11 @@ import Loader from './components/commonElements/loader/loader';
 import { Suspense } from 'react';
 import { AppStateType } from './redux/redux-store';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import { Grid } from '@material-ui/core';
 
 //use React.lazy for code-splitting
 const DialogsContainer = lazy(() => import('./components/Dialogs/Dialogs'));
-const UsersPage = lazy(() => import ('./components/Users/Users'));
+const UsersPage = lazy(() => import('./components/Users/Users'));
 
 class App extends React.Component<AppPropsType> {
 
@@ -25,39 +26,48 @@ class App extends React.Component<AppPropsType> {
   }
 
   render = () => {
-      if(!this.props.initialized){
-        return <Loader />
-      }
+    if (!this.props.initialized) {
+      return <Loader />
+    }
 
-      return <div className="app-wrapper">
-        <Header />
-        <Navbar />
-        <div className="app-wrapper-content">
-          <Suspense fallback={<Loader/>}>
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/profile"/>} />
-              <Route path="/login" render={() => <Login />} />
-              <Route path="/users" render={() => <UsersPage />} />
-              <Route path="/dialogs" render={() => <DialogsContainer />} />
-              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-              <Route path="/news" component={News} />
-              <Route path="/music" component={Music} />
-              <Route path="/settings" component={Settings} />
-              <Route path="*" render={() => <div>404 NOT FOUND</div>} />
-            </Switch>
+    return (
+    <Grid container direction="column" spacing={2}>
+        <Grid item xs={12}>
+          <Header />
+        </Grid>
+        <Grid item container direction="row" spacing={2}>
+          <Grid item sm={1}/>
+          <Grid item xs={12} sm={2}>
+            <Navbar />
+          </Grid>
+          <Grid item sm={8}>
+            <Suspense fallback={<Loader />}>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/profile" />} />
+                <Route path="/login" render={() => <Login />} />
+                <Route path="/users" render={() => <UsersPage />} />
+                <Route path="/dialogs" render={() => <DialogsContainer />} />
+                <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+                <Route path="/news" component={News} />
+                <Route path="/music" component={Music} />
+                <Route path="/settings" component={Settings} />
+                <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+              </Switch>
             </Suspense>
-        </div>
-      </div>
+          </Grid>
+          <Grid item sm={1}/>
+        </Grid>
+      </Grid>)
   };
 }
 
-let  mapDispatchToProps = (state: AppStateType) => {
+let mapDispatchToProps = (state: AppStateType) => {
   return {
     initialized: state.app.initialized
   }
 }
 
-const connector = connect(mapDispatchToProps, {initialized})
+const connector = connect(mapDispatchToProps, { initialized })
 
 export default connector(App);
 

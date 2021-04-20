@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './ProfileStatus.module.css';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 
 type PropsType = {
     userStatus: string | null
@@ -42,12 +42,12 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({userStatus, updateStatus})
                         />
                     </div>
                     
-                    : <div className={styles.status}>
-                        <span onDoubleClick={activateStatusEditor}> <b>Status: </b>{status || `No Status`}</span>
+                    : <Typography> 
+                        <Typography variant="overline" onDoubleClick={activateStatusEditor}> <b>Status: </b>{status || `No Status`}</Typography>
                         <div>
                             <i>DoubleClick to change</i>
                         </div>
-                    </div>
+                    </Typography>
 
             }
         </div>

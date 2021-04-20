@@ -1,34 +1,20 @@
-.header{
-    grid-area: header;
-    background-color: #2d2d2d;
-    border-radius: 5px;
-    box-shadow: 0 0 4px rgb(189, 185, 185);
+.headerText {
+  flex: 1;
 }
 
 .logo{
-    width: 100px;
-    margin-top: 0.2%;
-    margin-left: 10px;
+    width: 50px;
     border-radius: 100%;
+    margin-right: 1rem;
   }
 
-.login {
-  display: flex;
-  float: right;
-  margin-top: 8px;
-  margin-right: 20px;
-}
-
-.login a{
-  white-space: nowrap;
-  color: antiquewhite;
-  font-size: 20px;
+.headerUserData{
+  color: white;
+  font-size: 17px;
   text-decoration: none;
-  padding-right: 5%; 
+  margin-right: 1rem; 
 }
-
-.login img{
-  max-width: 40px;
-  margin-right: 1rem;
-  border-radius: 50%;
+.headerUserData:hover {
+  color: rgb(145, 141, 141);
+  text-decoration: none;
 }

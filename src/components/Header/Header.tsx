@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useStyles } from '../commonElements/formComponentCustomStyles';
-import { Button } from '@material-ui/core';
+import { Button, Toolbar, Typography } from '@material-ui/core';
 import avatar from '../../assets/images/avatar.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsAuth } from '../../redux/selectors/usersSelectors';
 import { logout } from '../../redux/auth-reducer';
 import { getAuthUserProfile } from '../../redux/selectors/authSelectors';
+import { AppBar } from '@material-ui/core';
 
 const Header: React.FC = () => {
     const dispatch = useDispatch()
@@ -22,18 +23,20 @@ const Header: React.FC = () => {
     }
 
     return (
-
-        <header className={styles.header}>
-            <div className={styles.login}>
+        <AppBar position="static">
+            <Toolbar>
+                <Typography className={styles.headerText}>Social Network</Typography>
                 {isAuth && authUserProfile
-                    ? <NavLink to={"/profile/"}>
-                        <img src={authUserProfile.photos?.small !== null ? authUserProfile.photos?.small : avatar } alt="profile"></img>
+                    ? <NavLink to={"/profile/"} className={styles.headerUserData}>
+                        <img className={styles.logo} src={authUserProfile.photos?.small !== null ? authUserProfile.photos?.small : avatar} alt="profile"></img>
                         <span>{authUserProfile.fullName}</span>
                     </NavLink>
-                    :<NavLink to='/login'>You are not authorized</NavLink>}
+                    : <NavLink className={styles.headerUserData} to='/login'>
+                        <Typography>You are not authorized</Typography>
+                    </NavLink>}
                 <Button onClick={onSubmit} className={classes.LogoutButton} variant="contained" type="submit">Logout</Button>
-            </div>
-        </header>
+            </Toolbar>
+        </AppBar>
     );
 }
 

@@ -30,7 +30,7 @@ type PropsType = {
 export const CustomButton: React.FC<PropsType> = ({children}) => {
 
     const classes = useStyles()
-    return <Button className={classes.LoginButton} variant="contained" type="submit">{children}</Button> 
+    return <Button className={classes.LoginButton} variant="contained" type="submit" fullWidth>{children}</Button> 
 }
 
 type UploadButtonPropsType ={
@@ -50,7 +50,7 @@ export const UploadButton: React.FC<UploadButtonPropsType> = ({onChangeHandler, 
             type="file"
             onChange={onChangeHandler}
         />
-        <Button className={classes.UploadButton} variant="contained" component="span">
+        <Button className={classes.UploadButton} variant="contained" component="span" fullWidth={true}>
             {buttonAssign}
     </Button>
     </label>

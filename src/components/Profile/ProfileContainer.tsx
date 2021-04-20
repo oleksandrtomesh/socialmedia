@@ -43,7 +43,6 @@ const ProfileContainer: React.FC = React.memo(() => {
   //refresh user profile
   useEffect(() => {
     refreshProfile(userId)
-    debugger
   }, [userId])
   
     return (

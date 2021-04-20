@@ -8,18 +8,21 @@ import styles from './Info.module.css'
 import {checkError} from "../../../utilits/validators"
 import React from 'react';
 import { UserProfileType } from '../../../types/types';
+import { useDispatch } from 'react-redux';
+import { saveProfileInfo } from '../../../redux/profile-reducer';
 
 type ProfileInfoEditModeType = {
-    saveProfileInfo: (profile: UserProfileType) => void
     setEditMode: (mode: boolean) => void
     userProfile: UserProfileType | null
 }
 
 
-const ProfileInfoEditMode: React.FC<ProfileInfoEditModeType> = ({saveProfileInfo, setEditMode, userProfile, ...props}) => { 
+const ProfileInfoEditMode: React.FC<ProfileInfoEditModeType> = ({setEditMode, userProfile, ...props}) => { 
+
+    const dispatch = useDispatch();
 
     const saveProfile = async (values: UserProfileType) => {
-        const messages = await saveProfileInfo(values)
+        const messages = await dispatch(saveProfileInfo(values))
         if (messages !== undefined){
             return { [FORM_ERROR]: messages }
         } else {
@@ -41,10 +44,10 @@ const ProfileInfoEditMode: React.FC<ProfileInfoEditModeType> = ({saveProfileInfo
                         <Field name="aboutMe" component={InputCustom} label="About Me"/> 
                         {submitError && <div className={styles.error}>{checkError(submitError, "AboutMe")}</div>}
                     </div>
-                    <div className={styles.lookingForAJob}>
+                    {/* <div className={styles.lookingForAJob}>
                         <b>Looking for job: </b>
                             <Field name="lookingForAJob" component='input' type='checkbox'/>
-                    </div>
+                    </div> */}
                     <div>
                         <Field name="lookingForAJobDescription" label="My professional skill" component={InputCustom}/> 
                         {submitError && <div className={styles.error}>{checkError(submitError,"LookingForAJobDescription")}</div>}

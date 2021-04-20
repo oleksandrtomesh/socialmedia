@@ -2,21 +2,12 @@
   margin: 1rem;
 }
 
-.info h1{
-  white-space: nowrap;
-  width: min-content;
-  margin: 0 auto;
+.info h3{
   margin-bottom: 1rem;
 }
 
 .info div{
   margin: 3px;
-}
-
-.info button,
-.editModeForm button
-{
-margin-left: 35%
 }
 
 .job{
@@ -33,18 +24,14 @@ margin-left: 35%
 
 .editMode h4
 {
-  margin-bottom: 1rem;
-}
-
-h5
-{
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .editModeForm div
 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
+
 
 
 

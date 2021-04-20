@@ -5,28 +5,25 @@
     "profile-layout-photo"
     "profile-info"
     "MyPosts";
-    background-color: #F5F5F5;
-    box-sizing: border-box;    
+    background-color: #F5F5F5; 
   }
   
   .profile_info{ 
-    display: grid;
-    grid-template-columns: 2fr 4fr;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 1px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
   }
   .profile_info img{
-    
-    border-radius: 5px;
-    width: 300px;
+    width: 100%;
+    border-radius: 1px;
 
   }
 
   .profile_photo{
-    margin: 1rem;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
   }
-
   .profile_photo input{
     margin: 1rem;
   }
