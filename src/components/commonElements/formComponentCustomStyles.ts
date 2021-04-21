@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core";
 export const useStyles = makeStyles({
     textField:{
         width: '100%',
-        marginBottom: '15px'
     },
     LoginButton:{
         background: 'linear-gradient(45deg, gray, #2d2d2d)',

@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect'
 import {
     setUserProfile,
     setStatus,
 } from '../../redux/profile-reducer'
 import Profile from './Profile'
-import { compose } from 'redux'
 import Loader from '../commonElements/loader/loader'
 import { getAuthUserData, getIsProfileFetching } from '../../redux/selectors/profileSelectors' 
 

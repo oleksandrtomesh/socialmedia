@@ -1,9 +1,10 @@
 import React from 'react';
-import styles from './UsersPage.module.css';
 import userPhoto from "../../../assets/images/avatar.png";
 import { NavLink } from 'react-router-dom';
-import Button from 'react-bootstrap/Button'
 import { UsersType } from '../../../redux/users-reducer'
+import { Button, Grid, Paper } from '@material-ui/core';
+import { useStyles } from './UserStyles';
+import { Typography } from '@material-ui/core';
 
 type PropsType = {
     user: UsersType
@@ -13,31 +14,34 @@ type PropsType = {
 
 let User: React.FC<PropsType> = ({user , followingInProgress, toggleFollowingUser}) => {
 
+    const classes = useStyles()
     return (
-    <div className={styles.item}>
-        <div className={styles.avatarButton}>
+        <Grid container direction="column" justify="center" className={classes.containerGrid}>
+        <Paper className={classes.paper}>
             <div>
                 <NavLink to={"/profile/" + user.id}>
-                    <img alt="small avatar" className={styles.profileImg}
+                    <img alt="small avatar" className={classes.userPhoto}
                         src={user.photos.small !== null ? user.photos.small : userPhoto} />
                 </NavLink>
             </div>
             <div>
-                <Button type="submit" variant="dark" 
-                    disabled={followingInProgress.some(id => id === user.id)} 
-                    onClick={() => {toggleFollowingUser(user.id, user.followed)}}
+                <Typography noWrap className={classes.userName}>{user.name}</Typography>
+                {/* <div>{"u.location.country"}</div>
+            <div>{"u.location.city"}</div> */}
+            </div>
+            <div>
+                <Button
+                    className={classes.button}
+                    fullWidth
+                    disabled={followingInProgress.some(id => id === user.id)}
+                    onClick={() => { toggleFollowingUser(user.id, user.followed) }}
                 >
                     {user.followed ? "Unfollow" : "Follow"}
                 </Button>
             </div>
-        </div>
-        <div>
-            <div>{user.name}</div>
-            <div>{user.status}</div>
-            {/* <div>{"u.location.country"}</div>
-            <div>{"u.location.city"}</div> */}
-        </div>
-    </div>
+        </Paper>
+        </Grid>
+    
     )
 
 }

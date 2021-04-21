@@ -39,15 +39,16 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({userStatus, updateStatus})
                             value={status} 
                             label="Status"
                             variant="outlined"
+                            size="small"
                         />
                     </div>
                     
-                    : <Typography> 
-                        <Typography variant="overline" onDoubleClick={activateStatusEditor}> <b>Status: </b>{status || `No Status`}</Typography>
+                    : <div>
+                        <Typography variant="overline" onClick={activateStatusEditor}> <b>Status: </b>{status || `No Status`}</Typography>
                         <div>
-                            <i>DoubleClick to change</i>
+                            <i>Click to change</i>
                         </div>
-                    </Typography>
+                    </div>
 
             }
         </div>

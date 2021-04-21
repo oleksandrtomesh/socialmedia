@@ -1,8 +1,8 @@
 import React from 'react';
-import c from './AddNewPost.module.css';
 import { Field, Form } from 'react-final-form';
 import { maxLengthCreator} from '../../../../utilits/validators';
 import { CustomButton, InputCustom } from '../../../commonElements/formComponent';
+import { Grid} from '@material-ui/core';
 
 type AddNewPostType = {
   addNewPost: (newPostText: string) => void
@@ -16,22 +16,23 @@ const AddNewPost: React.FC<AddNewPostType> = ({addNewPost}) => {
   }
     
   return (
-  <div>
+  <div >
     <Form onSubmit={addPost}
       render={ ({handleSubmit}) => (
-          <form onSubmit={handleSubmit} className={c.Textarea}>
-            <div>
-              <Field<string> className={c.inputField}
+          <form onSubmit={handleSubmit} style={{padding:"15px"}}>
+            <Grid container direction="row" spacing={2} >
+            <Grid item xs={9}>
+              <Field<string> 
                 name="newPostText" 
                 component= {InputCustom} 
                 label="Something new?"
                 validate={maxLengthCreator(150)}
               />
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={3}>
               <CustomButton>Post</CustomButton>
-            </div>
-            
+            </Grid>
+            </Grid>
             
           </form>
         )

@@ -52,14 +52,12 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({setEditMode, userProfile,i
       <Typography variant="overline" component="div">
         {userProfile.lookingForAJobDescription && <span><b>My professional skill:</b> {userProfile.lookingForAJobDescription}</span>}
       </Typography>
-      <Typography variant="overline" component="div">
-        <b>Contacts</b>: {Object.keys(userProfile.contacts!).map(key => {
+        <Typography variant="overline">Contacts:</Typography> {Object.keys(userProfile.contacts!).map(key => {
           if(userProfile.contacts != null){
             return <Contact key={key} contactTitle={key} contactValue={userProfile.contacts[key]!} />
           }
           return null
         })}
-      </Typography>
       {isOwner && <Button onClick={changeEditMode} className={classes.LoginButton} variant="contained" type="submit" fullWidth>Edit Mode</Button>}
     </div>
   }
@@ -75,7 +73,12 @@ const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
   
   return <div>
     {contactValue && 
-      <span><b>{contactTitle}: </b><a href={contactValue} target="_blank" rel="noreferrer" >{contactValue}</a>  </span> 
+      <span>
+        <Typography variant="overline">
+          <b>{contactTitle}: </b>
+          <a href={contactValue} target="_blank" rel="noreferrer" >{contactValue}</a>
+        </Typography>
+      </span>
     } 
   </div>
   }

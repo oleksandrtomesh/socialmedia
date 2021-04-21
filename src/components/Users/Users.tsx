@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 //import styles from './UsersPage.module.css';
 import Pagination from 'react-js-pagination'
 import User from './User/User';
-import styles from './UsersPage.module.css'
 import { FilterType, handlePageChange, getUsersWithFilter, toggleFollowingUser } from '../../redux/users-reducer';
 import FilterUsersBar from './FilterUsersBar/FilterUsersBar';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,6 +18,7 @@ import Loader from '../commonElements/loader/loader';
 import withAuthRedirect from '../../HightOrderComponent(hoc)/withAuthRedirect';
 import { useHistory } from 'react-router';
 import * as queryString from 'querystring'
+import { Grid } from '@material-ui/core';
 
 
 let Users: React.FC =React.memo( () => {
@@ -84,26 +84,33 @@ let Users: React.FC =React.memo( () => {
     }, [filter, currentPage])
 
     return (
-            isFetching
-            ?<Loader /> 
-            :<div>
-            <div className={styles.pagination}>
-            <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={pageSize}
-                totalItemsCount={totalUsersCount}
-                pageRangeDisplayed={5}
-                onChange={onPageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-            />
-            </div>
-            <div className={styles.filterUsersBar}>
-                <FilterUsersBar handleFilterSubmit={handleFilterSubmit} filter={filter}/>
-            </div>
-            {users.map(user => <User key={user.id} user={user}  
-                toggleFollowingUser = {toggleFollowingUsers} followingInProgress={followingInProgress}/>)}
-        </div>
+        isFetching
+            ? <Loader />
+            :
+            <Grid container direction="column" alignItems="center">
+                <Grid item>
+                    <Pagination
+                        activePage={currentPage}
+                        itemsCountPerPage={pageSize}
+                        totalItemsCount={totalUsersCount}
+                        pageRangeDisplayed={5}
+                        onChange={onPageChange}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                    />
+                </Grid>
+                <Grid item>
+                    <FilterUsersBar handleFilterSubmit={handleFilterSubmit} filter={filter} />
+                </Grid>
+                <Grid item container direction='row' alignItems="center" spacing={2}>
+                    {users.map(user =>
+                        <Grid item xs={12} sm={6} md={4} justify="center">
+                        <User key={user.id} user={user}
+                            toggleFollowingUser={toggleFollowingUsers} followingInProgress={followingInProgress} />
+                        </Grid>
+                        )}
+                </Grid>
+            </Grid>
     );
 })
 

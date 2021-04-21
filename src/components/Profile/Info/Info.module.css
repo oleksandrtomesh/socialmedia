@@ -1,8 +1,9 @@
 .info{
-  margin: 1rem;
+margin: 1rem;
 }
 
-.info h3{
+.info h3,
+.info h5{
   margin-bottom: 1rem;
 }
 
@@ -27,7 +28,8 @@
   margin-bottom: 0.5rem;
 }
 
-.editModeForm div
+.editModeForm div,
+.editModeForm h5
 {
   margin-bottom: 0.5rem;
 }

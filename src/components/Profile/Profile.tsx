@@ -2,14 +2,13 @@ import React, { ChangeEvent } from 'react'
 import Loader from '../commonElements/loader/loader';
 import Info from './Info/Info';
 import MyPosts from './MyPosts/MyPosts';
-import c from './Profile.module.css';
+import styles from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
 import { UploadButton } from '../commonElements/formComponent';
-import { UserProfileType } from '../../types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsProfileFetching, getUserProfile, getUserStatus } from '../../redux/selectors/profileSelectors';
 import { saveUserPhoto, updateStatus } from '../../redux/profile-reducer';
-import { Grid as div, Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 
 type PropsType = {
   isOwner: boolean
@@ -42,14 +41,15 @@ const Profile: React.FC<PropsType> = ({ isOwner }) => {
   }
 
   return (
-<div style={{ padding: 8 }}>
-    <Grid container direction="column" spacing={2}>
+
+    <Grid container direction="column">
       <Paper square={true}>
         <Grid item container direction="row">
-          <Grid item container direction="column" spacing={2} justify="flex-start" alignContent="center" xs={12} md={5}>
-            <Grid item>
+          <Grid item container direction="column" spacing={2} justify="flex-start" alignContent="center" xs={12} md={5}
+            style={{ marginTop: "1rem" }}>
+            <Grid item >
               {!isProfileFetching
-                ? <img src={userProfile.photos?.large !== null ? userProfile.photos?.large : avatar} alt="profile" style={{marginTop: 15}}></img>
+                ? <img className={styles.img} src={userProfile.photos?.large !== null ? userProfile.photos?.large : avatar} alt="profile"></img>
                 : <Loader />}
             </Grid>
             <Grid item>
@@ -64,15 +64,13 @@ const Profile: React.FC<PropsType> = ({ isOwner }) => {
               isOwner={isOwner}
             />
           </Grid>
-          
         </Grid>
-        </Paper>
-      
-      <Grid item>
+      </Paper>
+      <Grid item container style={{ marginTop: 20 }}>
         <MyPosts isOwner={isOwner} />
       </Grid>
     </Grid>
-    </div>
+    
   );
 }
 

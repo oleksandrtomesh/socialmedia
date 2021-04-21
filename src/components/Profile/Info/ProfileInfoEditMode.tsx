@@ -10,6 +10,7 @@ import React from 'react';
 import { UserProfileType } from '../../../types/types';
 import { useDispatch } from 'react-redux';
 import { saveProfileInfo } from '../../../redux/profile-reducer';
+import { Typography } from '@material-ui/core';
 
 type ProfileInfoEditModeType = {
     setEditMode: (mode: boolean) => void
@@ -31,7 +32,7 @@ const ProfileInfoEditMode: React.FC<ProfileInfoEditModeType> = ({setEditMode, us
     }
     
     return <div className={styles.editMode}>
-        <h4>Edit Mode</h4>
+        <Typography variant="h4">Edit Mode</Typography>
         <Form
             onSubmit={saveProfile}
             initialValues={userProfile}
@@ -53,11 +54,12 @@ const ProfileInfoEditMode: React.FC<ProfileInfoEditModeType> = ({setEditMode, us
                         {submitError && <div className={styles.error}>{checkError(submitError,"LookingForAJobDescription")}</div>}
                     </div>
                     <div>
-                        <h5>Contacts:</h5> {userProfile != null && Object.keys(userProfile.contacts!).map(key => {
-                            return <div key={key}>
-                                    <Field  name={"contacts." + key} component={InputCustom} label={key} />
-                                    {submitError && <div className={styles.error}>{checkError(submitError, key)}</div>}
-                                </div>}
+                        <Typography variant="h5">Contacts:</Typography> 
+                            {userProfile != null && Object.keys(userProfile.contacts!).map(key => {
+                                return <div key={key}>
+                                        <Field  name={"contacts." + key} component={InputCustom} label={key} />
+                                        {submitError && <div className={styles.error}>{checkError(submitError, key)}</div>}
+                                    </div>}
                         )}
                     </div>
                     <CustomButton>Save</CustomButton> 

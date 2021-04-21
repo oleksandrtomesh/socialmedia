@@ -13,8 +13,8 @@
     border-radius: 1px;
     box-shadow: 0 0 4px rgb(189, 185, 185);
   }
-  .profile_info img{
-    width: 100%;
+  .img{
+    width: 300px;
     border-radius: 1px;
 
   }
