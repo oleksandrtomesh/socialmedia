@@ -3,7 +3,7 @@
 This is my project of social media for React.JS developers. 
 With help of this project I am learning React.JS and other cool stuff because I want to cheange path of my profecional development and become React developer. 
 
-## Till this time in this project I was using:
+## In this project I use:
 - React.JS
 - Redux (Redux Thunk, Redux Ducks)
 - React Router
