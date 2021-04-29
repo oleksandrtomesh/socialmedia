@@ -15,9 +15,11 @@ import { AppStateType } from './redux/redux-store';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import { Grid } from '@material-ui/core';
 
+
 //use React.lazy for code-splitting
 const DialogsContainer = lazy(() => import('./components/Dialogs/Dialogs'));
 const UsersPage = lazy(() => import('./components/Users/Users'));
+const ChatPage = lazy(() => import('./components/ChatPage/ChatPage'))
 
 class App extends React.Component<AppPropsType> {
 
@@ -51,6 +53,7 @@ class App extends React.Component<AppPropsType> {
                 <Route path="/news" component={News} />
                 <Route path="/music" component={Music} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/chat" render={() => <ChatPage/>} />
                 <Route path="*" render={() => <div>404 NOT FOUND</div>} />
               </Switch>
             </Suspense>
