@@ -9,6 +9,7 @@ With help of this project I am learning React.JS and other cool stuff because I 
 - React Router
 - React hooks
 - Axios
+- WebSocket
 - TypeScript
 - Formik and React-final-form
 - Material UI
