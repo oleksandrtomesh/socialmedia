@@ -7,6 +7,7 @@ With help of this project I am learning React.JS and other cool stuff because I 
 - React.JS
 - Redux (Redux Thunk, Redux Ducks)
 - React Router
+- React hooks
 - Axios
 - TypeScript
 - Formik and React-final-form
