@@ -6,6 +6,7 @@ import usersReducer from "./users-reducer";
 import authReducer from './auth-reducer';
 import thunkMiddleware from 'redux-thunk'
 import appReducer from './app-reducer';
+import chatReducer from './chat-reducer';
 
 //combine reducers function what make new reducer
 let rootReducer = combineReducers ({
@@ -14,7 +15,8 @@ let rootReducer = combineReducers ({
     friendsItems: friendsItemsReducer,
     usersPage: usersReducer,
     authorization: authReducer,
-    app: appReducer
+    app: appReducer,
+    chat: chatReducer
 })
 
 //get type of function rootReducer
