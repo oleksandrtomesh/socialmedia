@@ -1,6 +1,7 @@
 import React from 'react'
 import {Form, Field} from 'react-final-form'
-import { InputCustom, CustomButton} from '../commonElements/formComponent';
+import { InputCustom } from "../commonElements/InputCustom";
+import { CustomButton } from "../commonElements/CustomButton";
 import { composeValidators, maxLengthCreator, required } from '../../utilits/validators';
 import { Redirect } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';

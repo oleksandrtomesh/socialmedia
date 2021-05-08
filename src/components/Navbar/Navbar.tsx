@@ -23,7 +23,7 @@ const Navbar: React.FC = (props) => {
             <NavLink className={c.item} activeClassName={c.activeLink} to="/dialogs">Messages</NavLink>
           </div>
           <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="chat">Chat</NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/chat">Chat</NavLink>
           </div>
           <div>
             <NavLink className={c.item} activeClassName={c.activeLink} to="/news">News</NavLink>

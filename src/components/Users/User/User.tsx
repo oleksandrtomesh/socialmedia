@@ -17,8 +17,8 @@ let User: React.FC<PropsType> = ({user , followingInProgress, toggleFollowingUse
     const classes = useStyles()
     return (
         <Grid container direction="column" justify="center" className={classes.containerGrid}>
-        <Paper className={classes.paper}>
-            <div>
+        <Paper className={classes.paper} square>
+            <div> 
                 <NavLink to={"/profile/" + user.id}>
                     <img alt="small avatar" className={classes.userPhoto}
                         src={user.photos.small !== null ? user.photos.small : userPhoto} />

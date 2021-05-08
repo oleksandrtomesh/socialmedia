@@ -6,21 +6,21 @@ export const useStyles = makeStyles({
     textField:{
         width: '100%',
     },
-    LoginButton:{
+    loginButton:{
         background: 'linear-gradient(45deg, gray, #2d2d2d)',
-        color: 'white'
+        color: 'white',
+        height: '2.5rem'
     },
-
-    LogoutButton:{
+    logoutButton:{
         width: '10rem',
         background: 'white',
         color: 'black'
     },
 
-    UploadButton: {
+    uploadButton: {
         background: 'linear-gradient(45deg, gray, #2d2d2d)',
         color: 'white',
-        width: '150%'
+        width: '163%'
     }
     
 })

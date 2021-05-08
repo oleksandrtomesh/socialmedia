@@ -4,7 +4,7 @@ import Info from './Info/Info';
 import MyPosts from './MyPosts/MyPosts';
 import styles from './Profile.module.css';
 import avatar from '../../assets/images/avatar.png';
-import { UploadButton } from '../commonElements/formComponent';
+import { UploadButton } from "../commonElements/UploadButton";
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsProfileFetching, getUserProfile, getUserStatus } from '../../redux/selectors/profileSelectors';
 import { saveUserPhoto, updateStatus } from '../../redux/profile-reducer';

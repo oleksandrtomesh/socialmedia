@@ -1,9 +1,7 @@
 import {Form, Field} from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
-import {
-    InputCustom,
-    CustomButton
-} from '../../commonElements/formComponent';
+import { InputCustom } from "../../commonElements/InputCustom";
+import { CustomButton } from "../../commonElements/CustomButton";
 import styles from './Info.module.css'
 import {checkError} from "../../../utilits/validators"
 import React from 'react';

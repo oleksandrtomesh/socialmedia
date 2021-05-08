@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
-import { useStyles } from '../commonElements/formComponentCustomStyles';
+import { useStyles } from '../commonElements/componentsStyles';
 import { Button, Toolbar, Typography } from '@material-ui/core';
 import avatar from '../../assets/images/avatar.png'
 import React from 'react';
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
                     : <NavLink className={styles.headerUserData} to='/login'>
                         <Typography>You are not authorized</Typography>
                     </NavLink>}
-                <Button onClick={onSubmit} className={classes.LogoutButton} variant="contained" type="submit">Logout</Button>
+                <Button onClick={onSubmit} className={classes.logoutButton} variant="contained" type="submit">Logout</Button>
             </Toolbar>
         </AppBar>
     );

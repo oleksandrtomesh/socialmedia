@@ -3,7 +3,7 @@ import styles from './Info.module.css';
 import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
 import { useState } from 'react';
 import ProfileInfoEditMode from './ProfileInfoEditMode';
-import { useStyles } from '../../commonElements/formComponentCustomStyles';
+import { useStyles } from '../../commonElements/componentsStyles';
 import { Button, Typography } from '@material-ui/core';
 import { UserProfileType} from '../../../types/types';
 
@@ -58,7 +58,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({setEditMode, userProfile,i
           }
           return null
         })}
-      {isOwner && <Button onClick={changeEditMode} className={classes.LoginButton} variant="contained" type="submit" fullWidth>Edit Mode</Button>}
+      {isOwner && <Button onClick={changeEditMode} className={classes.loginButton} variant="contained" type="submit" fullWidth>Edit Mode</Button>}
     </div>
   }
   return null

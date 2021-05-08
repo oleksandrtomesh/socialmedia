@@ -8,18 +8,19 @@ import { AppStateType } from './redux-store';
 //initial State
 export type PostDataType = {
     id: number
+    date: string
     message: string
     likeCounter: number
 }
 
 let initialState = {
     postData: [
-        {id: 1, message: "Hi, how are you?", likeCounter: 12},
-        {id: 2, message: "It's my firs post", likeCounter: 13},
-        {id: 3, message: "It's my second post", likeCounter: 14},
-        {id: 4, message: "It's my third post", likeCounter: 15},
-        {id: 5, message: "It's my fourth post", likeCounter: 16},
-        {id: 6, message: "It's my fifth post", likeCounter: 17}
+        {id: 1, date: '04/12/2020', message: "Hi, how are you?", likeCounter: 12},
+        {id: 2, date: '04/12/2020', message: "It's my firs post", likeCounter: 13},
+        {id: 3, date: '04/12/2020', message: "It's my second post", likeCounter: 14},
+        {id: 4, date: '04/12/2020', message: "It's my third post", likeCounter: 15},
+        {id: 5, date: '04/12/2020', message: "It's my fourth post", likeCounter: 16},
+        {id: 6, date: '04/12/2020', message: "It's my fifth post", likeCounter: 17}
     ] as Array<PostDataType>,
     newPostText: "" as string,
     userProfile: null as UserProfileType | null,
@@ -36,6 +37,7 @@ const profileReducer = (state = initialState, action: ProfileActionTypes):Initia
             case 'app/profile-reducer/ADD-POST':
                 let newPostObj = {
                     id: 5,
+                    date: action.date,
                     message: action.newPostText,
                     likeCounter: 0
                 };
@@ -92,7 +94,7 @@ type ProfileActionTypes = InferActionsType<typeof profileActionCreators>
 
 
 export const profileActionCreators = {
-    addPost: (newPostText: string)  => ({type: 'app/profile-reducer/ADD-POST', newPostText} as const),
+    addPost: (newPostText: string, date: string)  => ({type: 'app/profile-reducer/ADD-POST', newPostText, date} as const),
     updateTextAreaActionCreator: (text: string)  => ({ type: 'app/profile-reducer/UPDATE-TEXT-AREA', newText: text } as const),
     setProfile: (profile: UserProfileType) => ({ type: 'app/profile-reducer/SET_USER_PROFILE', profile } as const),
     setUserStatus: (status:string | null) => ({type: 'app/profile-reducer/SET_USER_STATUS', status} as const),
@@ -106,8 +108,8 @@ export const profileActionCreators = {
 
 type ProfileReducerThunkType = ThunkType<ProfileActionTypes | AuthActionTypes> 
 
-export const addNewPost = (newPostText: string): ProfileReducerThunkType => {
-    return (dispatch) => dispatch(profileActionCreators.addPost(newPostText))
+export const addNewPost = (newPostText: string, date: string): ProfileReducerThunkType => {
+    return (dispatch) => dispatch(profileActionCreators.addPost(newPostText, date))
 };
 
 export const setUserProfile = (userId: number | null): ProfileReducerThunkType => async (dispatch) => { 

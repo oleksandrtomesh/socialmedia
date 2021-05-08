@@ -1,7 +1,8 @@
 import React from 'react';
 import { Field, Form, } from 'react-final-form';
 import c from './NewMessages.module.css';
-import { InputCustom, CustomButton } from '../../commonElements/formComponent';
+import { InputCustom } from "../../commonElements/InputCustom";
+import { CustomButton } from "../../commonElements/CustomButton";
 import {maxLengthCreator } from '../../../utilits/validators';
 import { NewMessagesPropsType } from './NewMessageContainer';
 

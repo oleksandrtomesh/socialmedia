@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { v1 } from 'uuid';
 
 
-type ChatMessageType =  {
+export type ChatMessageType =  {
     message: string
     photo:  string
     userId: number

@@ -105,8 +105,8 @@ let Users: React.FC =React.memo( () => {
                 <Grid item container direction='row' alignItems="center" spacing={2}>
                     {users.map(user =>
                         <Grid item xs={12} sm={6} md={4} justify="center">
-                        <User key={user.id} user={user}
-                            toggleFollowingUser={toggleFollowingUsers} followingInProgress={followingInProgress} />
+                            <User key={user.id} user={user}
+                                toggleFollowingUser={toggleFollowingUsers} followingInProgress={followingInProgress} />
                         </Grid>
                         )}
                 </Grid>

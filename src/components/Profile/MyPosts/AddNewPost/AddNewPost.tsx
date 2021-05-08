@@ -1,7 +1,8 @@
 import React from 'react';
 import { Field, Form } from 'react-final-form';
 import { maxLengthCreator} from '../../../../utilits/validators';
-import { CustomButton, InputCustom } from '../../../commonElements/formComponent';
+import { InputCustom } from "../../../commonElements/InputCustom";
+import { CustomButton } from "../../../commonElements/CustomButton";
 import { Grid} from '@material-ui/core';
 
 type AddNewPostType = {
