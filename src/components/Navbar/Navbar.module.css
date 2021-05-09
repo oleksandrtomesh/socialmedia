@@ -20,7 +20,8 @@
   }
 
   .item:hover{
-    text-decoration: underline;
+    color: rgb(145, 141, 141);
+    text-decoration: none;
   }
 
   a.activeLink{

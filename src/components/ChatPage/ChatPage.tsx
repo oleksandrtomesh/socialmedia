@@ -82,7 +82,7 @@ const Messages: React.FC = React.memo(() => {
 const Message: React.FC<{message: ChatMessageType}> = React.memo(({message}) => {
     return(
         <div>
-            <img src={message.photo ? message.photo: avatar} style={{ width: '30px'}} alt='user chat avatar'/> 
+            <img src={message.photo ? message.photo: avatar} style={{ width: '30px', marginRight: '1rem'}} alt='user chat avatar'/> 
             <b>{message.userName}</b>
             <br/>
             <Typography>

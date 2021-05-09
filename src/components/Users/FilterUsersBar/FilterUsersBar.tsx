@@ -1,7 +1,8 @@
-import { Grid } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
+import { FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
+import { Field, Form, Formik, useFormik } from 'formik';
 import React from 'react'
 import { FilterType } from '../../../redux/users-reducer';
+import { CustomButton } from '../../commonElements/CustomButton';
 
 
 const filterUsersBarValidation = (value: any) => {
@@ -20,36 +21,61 @@ const FilterUsersBar: React.FC<PropsType> = ({handleFilterSubmit, filter}) => {
 
         //function execute getUsersWithFilter thunk 
         handleFilterSubmit(filterBoolean)
-        setSubmitting(false);       
+        setSubmitting(false); 
     }
-    return (<Formik
-        initialValues={{ term: filter.term, friend: String(filter.friend) as Friend }}
-        validate={filterUsersBarValidation}
-        onSubmit={submit}
-    >
-        {({ isSubmitting }) => (
-            <Form>
-                <Grid container direction="row" spacing={2} justify="center">
-                    <Grid item>
-                        <Field type='text' name='term' placeholder="Provide filter query" />
+
+    const formik = useFormik({
+        initialValues: {
+            term: filter.term,
+            friend: String(filter.friend) as Friend,
+        },
+        //validationSchema: validationSchema,
+        onSubmit: submit
+    })
+    return (
+        
+        <form onSubmit={formik.handleSubmit}>
+            <Paper square style={{padding: '1rem'}}>
+                <Grid container direction='row' spacing={2}>
+                    <Grid item xs={12} md={4}>
+                        <TextField
+                            id='term'
+                            name='term'
+                            label='Provide filter query'
+                            size='small'
+                            variant='outlined'
+                            color='primary'
+                            fullWidth
+                            value={formik.values.term}
+                            onChange={formik.handleChange}
+                        />
                     </Grid>
-                    <Grid item>
-                        <Field as='select' name='friend' >
-                            <option value="null">All users</option>
-                            <option value="true">Only followed</option>
-                            <option value="false">Only unfollowed</option>
-                        </Field>
+                    <Grid item xs={12} md={4}>
+                        <FormControl variant="outlined" fullWidth size='small'>
+                            <InputLabel id="friend">Filter following users</InputLabel>
+                            <Select
+                                labelId="friend"
+                                id="selects"
+                                value={formik.values.friend}
+                                onChange={formik.handleChange('friend')}
+                                label='Filter following users'
+                            >
+                                <MenuItem value='null'>All users</MenuItem>
+                                <MenuItem value='true'>Only followed</MenuItem>
+                                <MenuItem value='false'>Only unfollowed</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
-                    <Grid item>
-                        <button type="submit" disabled={isSubmitting}>
+                    <Grid item xs={12} md={4}>
+                        <CustomButton>
                             Submit
-                        </button>
+            </CustomButton>
                     </Grid>
                 </Grid>
-            </Form>
-            
-        )}
-    </Formik>)
+            </Paper>
+        </form>
+        
+    )
 
 }
 

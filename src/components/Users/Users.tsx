@@ -87,8 +87,8 @@ let Users: React.FC =React.memo( () => {
         isFetching
             ? <Loader />
             :
-            <Grid container direction="column" alignItems="center">
-                <Grid item>
+            <Grid container direction="column">
+                <Grid item xs={12} justify='center' style={{display: 'flex'}}>
                     <Pagination
                         activePage={currentPage}
                         itemsCountPerPage={pageSize}
@@ -99,7 +99,7 @@ let Users: React.FC =React.memo( () => {
                         linkClass="page-link"
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} >
                     <FilterUsersBar handleFilterSubmit={handleFilterSubmit} filter={filter} />
                 </Grid>
                 <Grid item container direction='row' alignItems="center" spacing={2}>

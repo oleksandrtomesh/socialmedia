@@ -12,4 +12,4 @@ export const CustomButton: React.FC<PropsType> = ({ children, disabled }) => {
 type PropsType = {
     children: string
     disabled?: boolean
-}
+} 

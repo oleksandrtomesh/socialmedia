@@ -1,7 +1,11 @@
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 //import Friends from './Friends/Friends';
 import c from './Navbar.module.css';
+import { NavbarTypography } from './NavbarTypography';
+
+
 
 const Navbar: React.FC = (props) => {
   //const friendsItems = useSelector(getFriendsItems)
@@ -13,27 +17,41 @@ const Navbar: React.FC = (props) => {
     <div>
       <div className={c.nav}>
         <nav >
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/profile">Profile</NavLink>
-          </div>
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/users">Users</NavLink>
-          </div>
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/dialogs">Messages</NavLink>
-          </div>
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/chat">Chat</NavLink>
-          </div>
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/news">News</NavLink>
-          </div>
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/music">Music</NavLink>
-          </div>
-          <div>
-            <NavLink className={c.item} activeClassName={c.activeLink} to="/settings">Settings</NavLink>
-          </div>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/profile">
+              <NavbarTypography>
+                Profile
+              </NavbarTypography>
+            </NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/users">
+              <NavbarTypography>
+                Users
+              </NavbarTypography>
+            </NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/dialogs">
+              <NavbarTypography>
+                Messages
+              </NavbarTypography>
+            </NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/chat">
+              <NavbarTypography>
+                Chat
+              </NavbarTypography>
+            </NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/news">
+              <NavbarTypography>
+                News
+              </NavbarTypography>
+            </NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/music">
+              <NavbarTypography>
+                Music
+              </NavbarTypography>
+            </NavLink>
+            <NavLink className={c.item} activeClassName={c.activeLink} to="/settings">
+              <NavbarTypography>
+                Settings
+              </NavbarTypography>
+            </NavLink>
         </nav>
       </div>
       {/* <div className={c.friendsItems}>
