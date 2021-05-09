@@ -3,10 +3,10 @@
     "static/js/0.ed31abc8.chunk.js": "/socialnetwork/static/js/0.ed31abc8.chunk.js",
     "static/js/0.ed31abc8.chunk.js.map": "/socialnetwork/static/js/0.ed31abc8.chunk.js.map",
     "main.css": "/socialnetwork/static/css/main.f149ef3e.chunk.css",
-    "main.js": "/socialnetwork/static/js/main.c2cd46a6.chunk.js",
-    "main.js.map": "/socialnetwork/static/js/main.c2cd46a6.chunk.js.map",
-    "runtime-main.js": "/socialnetwork/static/js/runtime-main.022067f2.js",
-    "runtime-main.js.map": "/socialnetwork/static/js/runtime-main.022067f2.js.map",
+    "main.js": "/socialnetwork/static/js/main.33d492c8.chunk.js",
+    "main.js.map": "/socialnetwork/static/js/main.33d492c8.chunk.js.map",
+    "runtime-main.js": "/socialnetwork/static/js/runtime-main.c27818be.js",
+    "runtime-main.js.map": "/socialnetwork/static/js/runtime-main.c27818be.js.map",
     "static/css/3.4c97ca4f.chunk.css": "/socialnetwork/static/css/3.4c97ca4f.chunk.css",
     "static/js/3.d78b60ee.chunk.js": "/socialnetwork/static/js/3.d78b60ee.chunk.js",
     "static/js/3.d78b60ee.chunk.js.map": "/socialnetwork/static/js/3.d78b60ee.chunk.js.map",
@@ -15,8 +15,8 @@
     "static/js/4.226aafa4.chunk.js.map": "/socialnetwork/static/js/4.226aafa4.chunk.js.map",
     "static/js/5.83c5b999.chunk.js": "/socialnetwork/static/js/5.83c5b999.chunk.js",
     "static/js/5.83c5b999.chunk.js.map": "/socialnetwork/static/js/5.83c5b999.chunk.js.map",
-    "static/js/6.abc568eb.chunk.js": "/socialnetwork/static/js/6.abc568eb.chunk.js",
-    "static/js/6.abc568eb.chunk.js.map": "/socialnetwork/static/js/6.abc568eb.chunk.js.map",
+    "static/js/6.849baab5.chunk.js": "/socialnetwork/static/js/6.849baab5.chunk.js",
+    "static/js/6.849baab5.chunk.js.map": "/socialnetwork/static/js/6.849baab5.chunk.js.map",
     "static/js/7.476346c5.chunk.js": "/socialnetwork/static/js/7.476346c5.chunk.js",
     "static/js/7.476346c5.chunk.js.map": "/socialnetwork/static/js/7.476346c5.chunk.js.map",
     "static/js/8.449e6e8e.chunk.js": "/socialnetwork/static/js/8.449e6e8e.chunk.js",
@@ -30,10 +30,10 @@
     "static/media/Spinner.7593a230.svg": "/socialnetwork/static/media/Spinner.7593a230.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.022067f2.js",
+    "static/js/runtime-main.c27818be.js",
     "static/css/3.4c97ca4f.chunk.css",
     "static/js/3.d78b60ee.chunk.js",
     "static/css/main.f149ef3e.chunk.css",
-    "static/js/main.c2cd46a6.chunk.js"
+    "static/js/main.33d492c8.chunk.js"
   ]
 }
